@@ -73,8 +73,7 @@
             "
             :key="activeMenu.id"
             ref="megaMenuReference"
-            :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40"
+            class="hidden md:grid absolute top-full left-0 w-full gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 outline-none z-40"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -223,7 +222,9 @@ const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu()
 const { setDrawerOpen } = useDrawerState();
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
-const { referenceRef, floatingRef, style } = useDropdown({
+
+// NOTE: Removed 'style' from destructuring below to avoid unused variable warning
+const { referenceRef, floatingRef } = useDropdown({
   isOpen,
   onClose: close,
   placement: 'bottom-start',
@@ -244,7 +245,7 @@ let removeHook: () => void;
 const trapFocusOptions = {
   activeState: isOpen,
   arrowKeysUpDown: true,
-  initialFocus: 'container',
+  initialFocus: false,
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
