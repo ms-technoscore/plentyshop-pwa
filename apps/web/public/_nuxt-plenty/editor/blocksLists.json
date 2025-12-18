@@ -1021,7 +1021,7 @@
     ]
   },
 "icon-text": {
-    "category": "content",
+    "category": "icon-text", 
     "accessControl": ["content", "productCategory", "product"],
     "title": "Icon & Text",
     "blockName": "IconText",
