@@ -1020,6 +1020,60 @@
       }
     ]
   },
+  "icon-text": {
+    "category": "content",
+    "accessControl": ["content", "productCategory", "product"],
+    "title": "Icon & Text",
+    "blockName": "IconText",
+    "variations": [
+      {
+        "title": "Icon Left, Text Right",
+        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+        "template": {
+          "en": {
+            "name": "IconText",
+            "type": "content",
+            "meta": { "uuid": "icon-text-en-uuid-123456" },
+            "content": {
+              "icon": {
+                "url": "",
+                "alt": "Icon"
+              },
+              "text": {
+                "content": "Reliable dealer and supplier...",
+                "color": "#000000",
+                "fontSize": "text-base"
+              },
+              "layout": {
+                "gap": "gap-4",
+                "iconWidth": "w-16"
+              }
+            }
+          },
+          "de": {
+            "name": "IconText",
+            "type": "content",
+            "meta": { "uuid": "icon-text-de-uuid-123456" },
+            "content": {
+              "icon": {
+                "url": "",
+                "alt": "Icon"
+              },
+              "text": {
+                "content": "Zuverlässiger Händler und Lieferant...",
+                "color": "#000000",
+                "fontSize": "text-base"
+              },
+              "layout": {
+                "gap": "gap-4",
+                "iconWidth": "w-16"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
   "product-galleries": {
     "category": "product-galleries",
     "accessControl": ["content", "productCategory", "product"],
