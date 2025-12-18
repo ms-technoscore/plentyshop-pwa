@@ -25,6 +25,27 @@
 
     <div class="py-2">
       <div class="flex justify-between mb-2">
+        <UiFormLabel>{{ getEditorTranslation('height-label') }}</UiFormLabel>
+      </div>
+      <label>
+        <SfInput 
+          v-model="uiImageTextBlock.image.height" 
+          type="text" 
+          data-testid="height-input" 
+          :placeholder="getEditorTranslation('height-placeholder')"
+        >
+          <template #suffix>
+             <SfIconInfo size="sm" class="text-gray-400" />
+          </template>
+        </SfInput>
+        <span class="text-xs text-gray-500 mt-1 block">
+          {{ getEditorTranslation('height-hint') }}
+        </span>
+      </label>
+    </div>
+
+    <div class="py-2">
+      <div class="flex justify-between mb-2">
         <UiFormLabel>{{ getEditorTranslation('alt-label') }}</UiFormLabel>
       </div>
       <label>
@@ -563,6 +584,10 @@ const clampBrightness = (event: Event, type: string) => {
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
 
+    "height-label": "Image Height",
+    "height-placeholder": "e.g. 400px, 50vh, or auto",
+    "height-hint": "Enter 'auto' to use the image's natural size, or a specific value like '450px'.",
+
     "layout-label": "Layout",
 
     "alt-label": "Alt",
@@ -615,6 +640,10 @@ const clampBrightness = (event: Event, type: string) => {
     "image-scalling-fit-label": "Fit",
     "image-scalling-fill-label": "Fill",
     "background-color-label": "Background Color",
+
+    "height-label": "Bildhöhe",
+    "height-placeholder": "z.B. 400px, 50vh, oder auto",
+    "height-hint": "Geben Sie 'auto' für die natürliche Größe ein, oder einen Wert wie '450px'.",
 
     "layout-label": "Layout",
 

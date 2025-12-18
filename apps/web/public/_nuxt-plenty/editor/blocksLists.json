@@ -65,7 +65,7 @@
       },
       {
         "title": "MultiGrid 2-2-2-2-2-2 (6 Col)",
-        "image": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/two-column-grid.png",
+        "image": "https://placehold.co/100x100/orange/white?text=6-COL",
         "template": {
           "en": {
             "name": "MultiGrid",

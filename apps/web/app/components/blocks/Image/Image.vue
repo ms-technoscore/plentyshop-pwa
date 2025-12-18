@@ -7,12 +7,16 @@
       :aria-label="ariaLabel"
       v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
       data-testid="image-link"
+      class="w-full h-full"
     >
       <NuxtImg
         :src="getImageUrl()"
         :alt="props.content.image.alt"
-        class="absolute inset-0 w-full h-full"
-        :class="props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover'"
+        class="w-full h-full"
+        :class="[
+          imageClasses,
+          props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover'
+        ]"
         :style="{
           display: 'block',
           filter:
@@ -70,35 +74,49 @@ const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
 
 const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
 
-const getAspectRatio = () => {
-  switch (viewport.breakpoint.value) {
-    case '4xl': {
-      return props.content?.image?.aspectRatio || '16 / 9';
-    }
-    case 'lg': {
-      return props.content?.image?.aspectRatio || '16 / 9';
-    }
-    case 'md': {
-      return props.content?.image?.aspectRatio || '4 / 3';
-    }
-    default: {
-      return props.content?.image?.aspectRatio || '1 / 1';
-    }
-  }
-};
-
 const depth = getBlockDepth(props.meta.uuid);
+
+// Logic to determine if we are using 'auto' height or fixed/ratio height
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const isAutoHeight = computed(() => {
+  const h = props.content?.image?.height;
+  return h === 'auto' || !h; // Default to auto if empty? Or default to aspect ratio? 
+  // Let's stick to: if it's explicitly 'auto', do auto. If empty, fallback to ratio.
+});
+
 const wrapperStyle = computed(() => {
+  const userHeight = props.content?.image?.height;
+
+  // 1. If inside a nested block (depth > 0), force a fixed height
   if (depth > 0) {
-    return {
-      position: 'relative' as const,
-      height: '24rem',
-    };
+    return { position: 'relative' as const, height: '24rem' };
   }
+
+  // 2. If user set 'auto', let content dictate height (no fixed height on wrapper)
+  if (userHeight === 'auto') {
+    return { position: 'relative' as const, height: 'auto' };
+  }
+
+  // 3. If user set a specific height (e.g. '500px' or '50vh')
+  if (userHeight && userHeight.trim() !== '') {
+    // If user just typed "500", append "px". If "500px", keep it.
+    const finalHeight = /^\d+$/.test(userHeight) ? `${userHeight}px` : userHeight;
+    return { position: 'relative' as const, height: finalHeight };
+  }
+
+  // 4. Fallback: Default Aspect Ratio (Old behavior) if input is empty
   return {
-    aspectRatio: getAspectRatio(),
+    aspectRatio: '16 / 9',
     position: 'relative' as const,
   };
+});
+
+// If height is 'auto', image is relative. If height is fixed, image is absolute to fill the fixed box.
+const imageClasses = computed(() => {
+  const h = props.content?.image?.height;
+  if (h === 'auto') return 'relative';
+  // If specific height or empty (fallback to ratio), use absolute to fill the container
+  return 'absolute inset-0'; 
 });
 
 const getImageUrl = () => {
