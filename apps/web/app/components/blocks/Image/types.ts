@@ -21,8 +21,12 @@ export type ImageContent = {
     imageAlignment: 'left' | 'right';
     brightness?: number;
     fillMode?: 'fill' | 'fit';
-    // CHANGED: aspectRatio -> height
+    
+    // NEW: User controls height manually
     height?: string;
+
+    // RESTORED: Kept for backward compatibility and to fix build errors
+    aspectRatio?: string; 
   };
   text: {
     textOverlay?: string;
