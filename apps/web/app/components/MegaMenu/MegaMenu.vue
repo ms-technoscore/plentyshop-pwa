@@ -1,5 +1,5 @@
 <template>
-  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-10">
+  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-50">
     <div
       class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
@@ -43,24 +43,24 @@
       >
         <li v-if="categoryTree.length === 0" class="h-10" />
 
-        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
+<li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
           <div
             ref="triggerReference"
             data-testid="category-button"
             class="inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer"
-            @click="onCategoryTap(menuNode)"
           >
-            <template v-if="menuNode.childCount > 0">
+            <NuxtLink 
+  :to="localePath(generateCategoryLink(menuNode))" 
+  class="flex items-center gap-2 w-full"
+  @click="close()"
+>
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              <SfIconChevronRight
-                class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
-              />
-            </template>
-            <template v-else>
-              <NuxtLink :to="localePath(generateCategoryLink(menuNode))" class="flex items-center gap-2 w-full">
-                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              </NuxtLink>
-            </template>
+            </NuxtLink>
+
+            <SfIconChevronRight
+              v-if="menuNode.childCount > 0"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+            />
           </div>
 
           <div
@@ -79,41 +79,15 @@
             @keydown.esc="focusTrigger(index)"
           >
             <template v-for="node in activeMenu.children" :key="node.id">
-              <template v-if="node.childCount === 0">
-                <ul>
-                  <SfListItem
-                    :tag="NuxtLink"
-                    size="sm"
-                    :href="localePath(generateCategoryLink(node))"
-                    class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
-                  >
-                    {{ categoryTreeGetters.getName(node) }}
-                  </SfListItem>
-                </ul>
-              </template>
-              <div v-else>
-                <SfListItem
-                  :tag="NuxtLink"
-                  size="sm"
-                  :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded"
-                >
-                  {{ categoryTreeGetters.getName(node) }}
-                </SfListItem>
-                <ul class="mt-2 mb-3">
-                  <li v-for="child in node.children" :key="child.id">
-                    <SfListItem
-                      v-if="categoryTreeGetters.getName(child)"
-                      :tag="NuxtLink"
-                      size="sm"
-                      :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
-                    >
-                      {{ categoryTreeGetters.getName(child) }}
-                    </SfListItem>
-                  </li>
-                </ul>
-              </div>
+              <SfListItem
+                :tag="NuxtLink"
+                size="sm"
+                :to="localePath(generateCategoryLink(node))"
+                class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                @click="close()"
+              >
+                {{ categoryTreeGetters.getName(node) }}
+              </SfListItem>
             </template>
           </div>
         </li>
@@ -305,6 +279,7 @@ const handleFirstTouch = (menuNode: CategoryTreeItem) => {
   onCategoryMouseEnter(menuNode);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const onCategoryTap = (menuNode: CategoryTreeItem) => {
   if (menuNode.childCount > 0 && isTouchDevice.value && !tappedCategories.value.get(menuNode.id)) {
     return handleFirstTouch(menuNode);
