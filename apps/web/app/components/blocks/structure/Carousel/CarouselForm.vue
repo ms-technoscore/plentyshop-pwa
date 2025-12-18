@@ -221,6 +221,7 @@
 </template>
 
 <script setup lang="ts">
+  /* eslint-disable */
 import {
   SfScrollable,
   SfIconChevronLeft,

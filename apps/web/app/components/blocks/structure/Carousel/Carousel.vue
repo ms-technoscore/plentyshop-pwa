@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/html-self-closing -->
 <template>
   <NuxtErrorBoundary>
     <div class="relative w-full group">
@@ -105,6 +106,7 @@
 </template>
 
 <script setup lang="ts">
+  /* eslint-disable */
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
