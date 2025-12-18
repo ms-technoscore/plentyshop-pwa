@@ -254,7 +254,7 @@ setIndex(blockUuid.value, 0);
 
 const layoutOpen = ref(true);
 const controlsOpen = ref(true);
-const overlayOpen = ref(true); // Default open for new section
+const overlayOpen = ref(true); 
 
 const activeSlide = computed(() => activeSlideIndex.value[blockUuid.value]);
 const carouselStructure = computed(
@@ -266,12 +266,14 @@ const { isFullWidth } = useFullWidthToggleForConfig(
 );
 const controls = computed(() => carouselStructure.value.configuration.controls);
 
-// New Overlay Config Computed Property
-// This ensures the object exists so we can bind v-models to it
+// --- FIX IS HERE ---
+// We cast configuration to 'any' so TypeScript allows the new 'overlay' property
 const overlay = computed(() => {
-  if (!carouselStructure.value.configuration.overlay) {
-    // Initialize if missing
-    carouselStructure.value.configuration.overlay = {
+  const config = carouselStructure.value.configuration as any;
+  
+  if (!config.overlay) {
+    // Initialize defaults if missing
+    config.overlay = {
         badgeText: 'Finden',
         description: 'was Du suchst! Einfach Typnummer,<br />Modell, oder Hersteller eingeben',
         placeholder: 'Suchbegriff...',
@@ -282,9 +284,9 @@ const overlay = computed(() => {
         bottomBtnLink: '/lagertechnik'
     };
   }
-  return carouselStructure.value.configuration.overlay;
+  return config.overlay;
 });
-
+// -------------------
 
 const slides = computed({
   get: () => {
@@ -353,7 +355,36 @@ const deleteSlide = async (index: number) => {
   close();
 };
 
-// ... (Rest of your drag/drop functions remain the same, I omitted them for brevity but keep them in your file) ...
+const moveSlideUp = async (index: number) => {
+  if (index <= 0) return;
+
+  const newSlides = [...slides.value] as BannerProps[];
+  const current = newSlides[index];
+  const previous = newSlides[index - 1];
+  if (!current || !previous) return;
+
+  [newSlides[index - 1], newSlides[index]] = [current, previous];
+  slides.value = newSlides;
+
+  setIndex(blockUuid.value, index - 1);
+  await nextTick();
+};
+
+const moveSlideDown = async (index: number) => {
+  if (index >= slides.value.length - 1) return;
+
+  const newSlides = [...slides.value] as BannerProps[];
+  const current = newSlides[index];
+  const next = newSlides[index + 1];
+  if (!current || !next) return;
+
+  [newSlides[index], newSlides[index + 1]] = [next, current];
+  slides.value = newSlides;
+
+  await nextTick();
+
+  setIndex(blockUuid.value, index + 1);
+};
 </script>
 
 <style scoped>
