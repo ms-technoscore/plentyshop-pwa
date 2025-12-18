@@ -62,6 +62,48 @@
         </div>
 
         <div v-if="multiGridStructure.configuration.layout" class="py-2">
+          <UiFormLabel>{{ getEditorTranslation('padding-label') }}</UiFormLabel>
+          <div class="grid grid-cols-4 gap-px rounded-md overflow-hidden border border-gray-300">
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowUpward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.paddingTop"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-top"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowDownward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.paddingBottom"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-bottom"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white border-r">
+              <span><SfIconArrowBack /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.paddingLeft"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-left"
+              />
+            </div>
+            <div class="flex items-center justify-center gap-1 px-2 py-1 bg-white">
+              <span><SfIconArrowForward /></span>
+              <input
+                v-model.number="multiGridStructure.configuration.layout.paddingRight"
+                type="number"
+                class="w-12 text-center outline-none"
+                data-testid="padding-right"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div v-if="multiGridStructure.configuration.layout" class="py-2">
           <UiFormLabel>{{ getEditorTranslation('gap-label') }}</UiFormLabel>
           <div class="border-b py-1 flex gap-2">
             <button
@@ -191,21 +233,33 @@ const defaultMarginBottom = computed(() => {
 
 const multiGridStructure = computed(() => {
   const block = (findOrDeleteBlockByUuid(data.value, blockUuid.value) as ColumnBlock) || { content: [] };
+  
   if (!block.configuration.layout) {
     block.configuration.layout = {
       marginTop: 0,
       marginBottom: defaultMarginBottom.value,
       marginLeft: 40,
       marginRight: 40,
+      // Initialize Padding Defaults
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
       backgroundColor: '#ffffff',
       gap: 'M',
     };
   } else {
+    // Safety checks to ensure properties exist if they were missing in DB
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
     if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
     if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
       block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
+    // Initialize Padding if missing
+    if (block.configuration.layout.paddingTop === undefined) block.configuration.layout.paddingTop = 0;
+    if (block.configuration.layout.paddingBottom === undefined) block.configuration.layout.paddingBottom = 0;
+    if (block.configuration.layout.paddingLeft === undefined) block.configuration.layout.paddingLeft = 0;
+    if (block.configuration.layout.paddingRight === undefined) block.configuration.layout.paddingRight = 0;
   }
   return block;
 });
@@ -263,6 +317,7 @@ const layoutBackground = ref(false);
   "en": {
     "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
+    "padding-label": "Padding (px)",
     "background-color-label": "Background Color",
     "gap-label": "Gap",
     "gap-size-none": "None",
@@ -280,6 +335,7 @@ const layoutBackground = ref(false);
   "de": {
     "layout-settings": "Layout Settings",
     "margin-label": "Margin (px)",
+    "padding-label": "Padding (px)",
     "background-color-label": "Background Color",
     "gap-label": "Gap",
     "gap-size-none": "None",

@@ -89,8 +89,10 @@ const defaultMarginBottom = computed(() => {
   }
 });
 
+// FIX: Updated to include Padding styles
 const gridInlineStyle = computed(() => ({
   backgroundColor: configuration.layout?.backgroundColor ?? 'transparent',
+  // Margins
   marginTop: configuration.layout?.marginTop !== undefined ? `${configuration.layout.marginTop}px` : '0px',
   marginBottom:
     configuration.layout?.marginBottom !== undefined
@@ -98,7 +100,14 @@ const gridInlineStyle = computed(() => ({
       : `${defaultMarginBottom.value}px`,
   marginLeft: configuration.layout?.marginLeft !== undefined ? `${configuration.layout.marginLeft}px` : '40px',
   marginRight: configuration.layout?.marginRight !== undefined ? `${configuration.layout.marginRight}px` : '40px',
+  
+  // Padding - NEW LOGIC HERE
+  paddingTop: configuration.layout?.paddingTop !== undefined ? `${configuration.layout.paddingTop}px` : '0px',
+  paddingBottom: configuration.layout?.paddingBottom !== undefined ? `${configuration.layout.paddingBottom}px` : '0px',
+  paddingLeft: configuration.layout?.paddingLeft !== undefined ? `${configuration.layout.paddingLeft}px` : '0px',
+  paddingRight: configuration.layout?.paddingRight !== undefined ? `${configuration.layout.paddingRight}px` : '0px',
 }));
+
 const getGridClasses = () => {
   return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };

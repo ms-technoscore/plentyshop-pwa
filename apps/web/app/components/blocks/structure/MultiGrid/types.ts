@@ -5,6 +5,13 @@ interface MultiGridLayout {
   marginBottom?: number;
   marginLeft?: number;
   marginRight?: number;
+  
+  // ADDED PADDING HERE
+  paddingTop?: number;
+  paddingBottom?: number;
+  paddingLeft?: number;
+  paddingRight?: number;
+
   backgroundColor?: string;
   gap?: string;
 }
@@ -52,6 +59,13 @@ export type ColumnBlock = Block & {
       marginBottom?: number;
       marginLeft?: number;
       marginRight?: number;
+      
+      // ADDED PADDING HERE TOO
+      paddingTop?: number;
+      paddingBottom?: number;
+      paddingLeft?: number;
+      paddingRight?: number;
+
       backgroundColor?: string;
       fullWidth?: boolean;
     };
