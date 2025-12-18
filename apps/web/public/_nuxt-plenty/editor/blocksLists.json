@@ -1020,7 +1020,7 @@
       }
     ]
   },
-  "icon-text": {
+"icon-text": {
     "category": "content",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Icon & Text",
@@ -1033,7 +1033,7 @@
           "en": {
             "name": "IconText",
             "type": "content",
-            "meta": { "uuid": "icon-text-en-uuid-123456" },
+            "meta": { "uuid": "9f2b3c4d-5e6f-4789-9a0b-1c2d3e4f5a6b" },
             "content": {
               "icon": {
                 "url": "",
@@ -1053,7 +1053,7 @@
           "de": {
             "name": "IconText",
             "type": "content",
-            "meta": { "uuid": "icon-text-de-uuid-123456" },
+            "meta": { "uuid": "8e1d2c3b-4a5f-4678-8b9c-0d1e2f3a4b5c" },
             "content": {
               "icon": {
                 "url": "",
