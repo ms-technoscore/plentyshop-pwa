@@ -906,6 +906,44 @@
       }
     ]
   },
+  "promo-card": {
+    "category": "promo-card",
+    "accessControl": ["content", "productCategory", "product"],
+    "title": "Promo Card",
+    "blockName": "PromoCard",
+    "variations": [
+      {
+        "title": "Promo Card (Default)",
+        "image": "https://placehold.co/100x100/black/white?text=Promo",
+        "template": {
+          "en": {
+            "name": "PromoCard",
+            "type": "content",
+            "meta": { "uuid": "aa11bb22-cc33-44dd-55ee-ff6677889900" },
+            "content": {
+              "title": "Produktions- & Industriebedarf",
+              "link": "/",
+              "image": "",
+              "alt": "Promo Image",
+              "height": "400px"
+            }
+          },
+          "de": {
+            "name": "PromoCard",
+            "type": "content",
+            "meta": { "uuid": "aa11bb22-cc33-44dd-55ee-ff6677889900" },
+            "content": {
+              "title": "Produktions- & Industriebedarf",
+              "link": "/",
+              "image": "",
+              "alt": "Promo Image",
+              "height": "400px"
+            }
+          }
+        }
+      }
+    ]
+  },
   "rich-text": {
     "category": "rich-text",
     "accessControl": ["content", "productCategory", "product"],
