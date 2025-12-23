@@ -6,8 +6,8 @@
       :class="content.layout?.iconWidth || 'w-16'"
     >
       <NuxtImg
-        v-if="content.icon?.url"
-        :src="content.icon.url"
+        v-if="content.icon?.url && typeof content.icon.url === 'string'" 
+  :src="content.icon.url"
         :alt="content.icon.alt || ''"
         class="w-full h-auto object-contain"
         loading="lazy"

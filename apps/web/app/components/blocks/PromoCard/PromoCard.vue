@@ -1,11 +1,11 @@
 <template>
   <NuxtLink
     :to="localePath(content.link)"
-    class="relative block w-full overflow-hidden group cursor-pointer"
+    class="relative block w-full overflow-hidden group cursor-pointer rounded-xl"
     :style="{ height: content.height || '400px' }"
   >
     <NuxtImg
-      v-if="content.image && typeof content.image === 'string'"
+      v-if="isValidImage(content.image)"
       :src="content.image"
       :alt="content.alt"
       class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -14,12 +14,10 @@
       No Image
     </div>
 
-    <div class="absolute inset-0 flex items-center p-8">
-      <div class="bg-white/90 px-6 py-4 shadow-sm max-w-[85%] backdrop-blur-sm">
-        <h3 class="text-3xl font-extrabold text-black italic uppercase leading-tight transform -skew-x-6">
-          <span class="not-italic inline-block transform skew-x-6">
+    <div class="absolute inset-0 flex items-start justify-start px-4 pt-16 pb-4 pointer-events-none">
+      <div class="bg-white/85 px-6 py-5 shadow-sm backdrop-blur-md rounded-lg max-w-[90%] md:max-w-[70%] mr-4 pointer-events-auto">
+        <h3 class="text-xl md:text-2xl font-bold text-gray-900 leading-snug">
             {{ content.title }}
-          </span>
         </h3>
       </div>
     </div>
@@ -30,4 +28,9 @@
 import type { PromoCardProps } from './types';
 const localePath = useLocalePath();
 defineProps<PromoCardProps>();
+
+// Helper function to check if image is valid
+const isValidImage = (url: string | null | undefined): boolean => {
+  return !!url && typeof url === 'string' && url.trim() !== '';
+};
 </script>
