@@ -2,7 +2,7 @@
   <div class="relative w-full flex justify-center" :style="wrapperStyle" data-testid="image-block">
     <component
       :is="linkTag"
-      v-if="hasImage"
+      v-if="finalImageUrl"
       :to="linkTarget"
       :aria-label="ariaLabel"
       v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
@@ -10,8 +10,8 @@
       class="w-full h-full"
     >
       <NuxtImg
-        :src="getImageUrl()"
-        :alt="props.content.image.alt"
+        :src="finalImageUrl"
+        :alt="props.content.image.alt || 'Image'"
         class="w-full h-full"
         :class="[
           imageClasses,
@@ -65,7 +65,24 @@ const { getBlockDepth } = useBlockManager();
 
 const props = defineProps<ImageProps>();
 
-const hasImage = computed(() => !!props.content?.image);
+// FIX 3: Helper to get the raw URL safely
+const getImageUrl = () => {
+  if (!props.content?.image) return '';
+  switch (viewport.breakpoint.value) {
+    case '4xl': return props.content.image.wideScreen || props.content.image.desktop || '';
+    case 'lg': return props.content.image.desktop || '';
+    case 'md': return props.content.image.tablet || props.content.image.desktop || '';
+    default: return props.content.image.mobile || props.content.image.desktop || '';
+  }
+};
+
+// FIX 4: Computed property that acts as the Gatekeeper.
+// It checks if the URL is a real string. If not, it returns null.
+const finalImageUrl = computed(() => {
+  const url = getImageUrl();
+  return (url && typeof url === 'string') ? url : null;
+});
+
 const linkTarget = computed(() =>
   props.content?.image?.linktarget?.trim() ? localePath(props.content.image.linktarget) : undefined,
 );
@@ -80,61 +97,37 @@ const depth = getBlockDepth(props.meta.uuid);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isAutoHeight = computed(() => {
   const h = props.content?.image?.height;
-  return h === 'auto' || !h; // Default to auto if empty? Or default to aspect ratio? 
-  // Let's stick to: if it's explicitly 'auto', do auto. If empty, fallback to ratio.
+  return h === 'auto' || !h; 
 });
 
 const wrapperStyle = computed(() => {
   const userHeight = props.content?.image?.height;
 
-  // 1. If inside a nested block (depth > 0), force a fixed height
   if (depth > 0) {
     return { position: 'relative' as const, height: '24rem' };
   }
 
-  // 2. If user set 'auto', let content dictate height (no fixed height on wrapper)
   if (userHeight === 'auto') {
     return { position: 'relative' as const, height: 'auto' };
   }
 
-  // 3. If user set a specific height (e.g. '500px' or '50vh')
   if (userHeight && userHeight.trim() !== '') {
-    // If user just typed "500", append "px". If "500px", keep it.
     const finalHeight = /^\d+$/.test(userHeight) ? `${userHeight}px` : userHeight;
     return { position: 'relative' as const, height: finalHeight };
   }
 
-  // 4. Fallback: Default Aspect Ratio (Old behavior) if input is empty
   return {
     aspectRatio: '16 / 9',
     position: 'relative' as const,
   };
 });
 
-// If height is 'auto', image is relative. If height is fixed, image is absolute to fill the fixed box.
 const imageClasses = computed(() => {
   const h = props.content?.image?.height;
   if (h === 'auto') return 'relative';
-  // If specific height or empty (fallback to ratio), use absolute to fill the container
   return 'absolute inset-0'; 
 });
 
-const getImageUrl = () => {
-  switch (viewport.breakpoint.value) {
-    case '4xl': {
-      return props.content?.image?.wideScreen;
-    }
-    case 'lg': {
-      return props.content?.image?.desktop;
-    }
-    case 'md': {
-      return props.content?.image?.tablet;
-    }
-    default: {
-      return props.content?.image?.mobile;
-    }
-  }
-};
 const overlayAlignClasses = computed(() => {
   const vertical =
     props.content?.text.textOverlayAlignY === 'top'
@@ -152,20 +145,13 @@ const overlayAlignClasses = computed(() => {
 
   return [vertical, horizontal];
 });
+
 const getImageDimensions = (): ImageDimensions => {
   switch (viewport.breakpoint.value) {
-    case '4xl': {
-      return { width: 696, height: 392 };
-    }
-    case 'lg': {
-      return { width: 712, height: 474 };
-    }
-    case 'md': {
-      return { width: 757, height: 483 };
-    }
-    default: {
-      return { width: 320, height: 320 };
-    }
+    case '4xl': return { width: 696, height: 392 };
+    case 'lg': return { width: 712, height: 474 };
+    case 'md': return { width: 757, height: 483 };
+    default: return { width: 320, height: 320 };
   }
 };
 

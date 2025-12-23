@@ -5,7 +5,7 @@
     :style="{ height: content.height || '400px' }"
   >
     <NuxtImg
-      v-if="content.image"
+      v-if="content.image && typeof content.image === 'string'"
       :src="content.image"
       :alt="content.alt"
       class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
