@@ -10,23 +10,27 @@
       buttons-placement="floating"
       drag
     >
-      <template #previousButton>
+      <template #previousButton="{ disabled, onClick }">
         <SfButton
           variant="secondary"
           size="lg"
           square
           class="!rounded-full bg-white border-neutral-200 shadow-md absolute left-4 z-10 hidden md:flex"
+          :disabled="disabled"
+          @click="onClick"
         >
           <SfIconChevronLeft />
         </SfButton>
       </template>
 
-      <template #nextButton>
+      <template #nextButton="{ disabled, onClick }">
         <SfButton
           variant="secondary"
           size="lg"
           square
           class="!rounded-full bg-white border-neutral-200 shadow-md absolute right-4 z-10 hidden md:flex"
+          :disabled="disabled"
+          @click="onClick"
         >
           <SfIconChevronRight />
         </SfButton>
@@ -43,7 +47,7 @@
           class="flex items-center justify-center w-full h-24"
         >
           <NuxtImg
-            v-if="item.image"
+            v-if="item.image && typeof item.image === 'string'"
             :src="item.image"
             :alt="item.alt || 'Brand Logo'"
             class="max-w-full max-h-full object-contain"
@@ -76,7 +80,6 @@ const itemStyle = computed(() => {
   }
 
   // Calculate percentage width minus the gap approximation
-  // flex-basis: calc(100% / count)
   return {
     flex: `0 0 calc(100% / ${count} - 16px)`, // 16px roughly accounts for gap
   };
