@@ -1,11 +1,7 @@
 {
-  "layout": {
+"layout": {
     "category": "layout",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Layout",
     "blockName": "MultiGrid",
     "variations": [
@@ -16,21 +12,21 @@
           "en": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "layout-2col-en-0000-0000-000000000001" },
+            "meta": { "uuid": "layout-2col-en-001" },
             "configuration": { "columnWidths": [6, 6], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0001-0000-0000-000000000001" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0002-0000-0000-000000000002" }, "parent_slot": 1, "content": [] }
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-en-slot1" }, "parent_slot": 0, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-en-slot2" }, "parent_slot": 1, "content": [] }
             ]
           },
           "de": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "layout-2col-de-0000-0000-000000000001" },
+            "meta": { "uuid": "layout-2col-de-001" },
             "configuration": { "columnWidths": [6, 6], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0003-0000-0000-000000000003" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0004-0000-0000-000000000004" }, "parent_slot": 1, "content": [] }
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-de-slot1" }, "parent_slot": 0, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-de-slot2" }, "parent_slot": 1, "content": [] }
             ]
           }
         }
@@ -42,23 +38,23 @@
           "en": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "layout-3col-en-0000-0000-000000000002" },
+            "meta": { "uuid": "layout-3col-en-001" },
             "configuration": { "columnWidths": [4, 4, 4], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0005-0000-0000-000000000005" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0006-0000-0000-000000000006" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0007-0000-0000-000000000007" }, "parent_slot": 2, "content": [] }
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-en-slot1" }, "parent_slot": 0, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-en-slot2" }, "parent_slot": 1, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-en-slot3" }, "parent_slot": 2, "content": [] }
             ]
           },
           "de": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "layout-3col-de-0000-0000-000000000002" },
+            "meta": { "uuid": "layout-3col-de-001" },
             "configuration": { "columnWidths": [4, 4, 4], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0008-0000-0000-000000000008" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0009-0000-0000-000000000009" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0010-0000-0000-000000000010" }, "parent_slot": 2, "content": [] }
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-de-slot1" }, "parent_slot": 0, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-de-slot2" }, "parent_slot": 1, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-de-slot3" }, "parent_slot": 2, "content": [] }
             ]
           }
         }
@@ -70,29 +66,29 @@
           "en": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "layout-6col-en-0000-0000-000000000003" },
+            "meta": { "uuid": "layout-6col-en-001" },
             "configuration": { "columnWidths": [2, 2, 2, 2, 2, 2], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0011-0000-0000-000000000011" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0012-0000-0000-000000000012" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0013-0000-0000-000000000013" }, "parent_slot": 2, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0014-0000-0000-000000000014" }, "parent_slot": 3, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0015-0000-0000-000000000015" }, "parent_slot": 4, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0016-0000-0000-000000000016" }, "parent_slot": 5, "content": [] }
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-01" }, "parent_slot": 0, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-02" }, "parent_slot": 1, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-03" }, "parent_slot": 2, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-04" }, "parent_slot": 3, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-05" }, "parent_slot": 4, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-06" }, "parent_slot": 5, "content": [] }
             ]
           },
           "de": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "layout-6col-de-0000-0000-000000000003" },
+            "meta": { "uuid": "layout-6col-de-001" },
             "configuration": { "columnWidths": [2, 2, 2, 2, 2, 2], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0017-0000-0000-000000000017" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0018-0000-0000-000000000018" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0019-0000-0000-000000000019" }, "parent_slot": 2, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0020-0000-0000-000000000020" }, "parent_slot": 3, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0021-0000-0000-000000000021" }, "parent_slot": 4, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-0022-0000-0000-000000000022" }, "parent_slot": 5, "content": [] }
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-01" }, "parent_slot": 0, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-02" }, "parent_slot": 1, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-03" }, "parent_slot": 2, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-04" }, "parent_slot": 3, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-05" }, "parent_slot": 4, "content": [] },
+              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-06" }, "parent_slot": 5, "content": [] }
             ]
           }
         }
@@ -112,23 +108,74 @@
           "en": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "banner-left-en-0000-0000-000000000001" },
-            "configuration": { "controls": { "color": "#000" }, "layout": { "fullWidth": true } },
+            "meta": { "uuid": "11111111-1111-4111-8111-111111111111" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
+            },
             "content": [
               {
                 "name": "Banner",
                 "type": "content",
-                "meta": { "uuid": "banner-content-left-en-0000-00000001" },
+                "meta": { "uuid": "22222222-2222-4222-8222-222222222222" },
                 "content": {
                   "image": {
                     "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "", "brightness": 0.5
+                    "alt": "",
+                    "brightness": 0.5
                   },
-                  "text": { "color": "#000", "bgcolor": "#fff", "bgopacity": 0.9, "pretitle": "Pretitle", "title": "h1 heading", "htmlDescription": "Text that supports HTML formatting", "textAlignment": "left", "justify": "top", "align": "left", "background": true },
-                  "button": { "label": "Button", "link": "/", "variant": "primary" }
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 0.9,
+                    "pretitle": "Pretitle",
+                    "title": "h1 heading",
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "left",
+                    "background": true
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
+                }
+              },
+              {
+                "name": "Banner",
+                "type": "content",
+                "meta": { "uuid": "33333333-3333-4333-8333-333333333333" },
+                "content": {
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "",
+                    "brightness": 0.75
+                  },
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 1,
+                    "pretitle": "Pretitle",
+                    "title": "h1 heading",
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "left",
+                    "background": true
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -136,23 +183,75 @@
           "de": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "banner-left-de-0000-0000-000000000001" },
-            "configuration": { "controls": { "color": "#000" }, "layout": { "fullWidth": true } },
+            "meta": { "uuid": "44444444-4444-4444-8444-444444444444" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
+            },
             "content": [
               {
                 "name": "Banner",
                 "type": "content",
-                "meta": { "uuid": "banner-content-left-de-0000-00000001" },
+                "meta": { "uuid": "55555555-5555-4555-8555-555555555555" },
                 "content": {
                   "image": {
                     "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "", "brightness": 0.5
+                    "alt": "",
+                    "brightness": 0.5
                   },
-                  "text": { "color": "#000", "bgcolor": "#fff", "bgopacity": 0.9, "pretitle": "Vortitel", "title": "h1 Titel", "subtitle": "Untertitel", "htmlDescription": "Text mit HTML-Formatierung", "textAlignment": "left", "justify": "top", "align": "left", "background": true },
-                  "button": { "label": "Button", "link": "/", "variant": "primary" }
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 0.9,
+                    "pretitle": "Vortitel",
+                    "title": "h1 Titel",
+                    "subtitle": "Untertitel",
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "left",
+                    "background": true
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
+                }
+              },
+              {
+                "name": "Banner",
+                "type": "content",
+                "meta": { "uuid": "66666666-6666-4666-8666-666666666666" },
+                "content": {
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "",
+                    "brightness": 0.75
+                  },
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 1,
+                    "pretitle": "Vortitel",
+                    "title": "h1 Titel",
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "left",
+                    "background": true
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -166,23 +265,72 @@
           "en": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "banner-right-en-0000-0000-000000000002" },
-            "configuration": { "controls": { "color": "#000" }, "layout": { "fullWidth": true } },
+            "meta": { "uuid": "77777777-7777-4777-8777-777777777777" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
+            },
             "content": [
               {
                 "name": "Banner",
                 "type": "content",
-                "meta": { "uuid": "banner-content-right-en-0000-00000002" },
+                "meta": { "uuid": "88888888-8888-4888-8888-888888888888" },
                 "content": {
                   "image": {
                     "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "", "brightness": 0.5
+                    "alt": "",
+                    "brightness": 0.5
                   },
-                  "text": { "color": "#000", "bgcolor": "#fff", "bgopacity": 0.9, "pretitle": "Pretitle", "title": "h1 heading", "htmlDescription": "Text that supports HTML formatting", "textAlignment": "left", "justify": "top", "align": "right" },
-                  "button": { "label": "Button", "link": "/", "variant": "primary" }
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 0.9,
+                    "pretitle": "Pretitle",
+                    "title": "h1 heading",
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "right"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
+                }
+              },
+              {
+                "name": "Banner",
+                "type": "content",
+                "meta": { "uuid": "99999999-9999-4999-8999-999999999999" },
+                "content": {
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "",
+                    "brightness": 0.75
+                  },
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 1,
+                    "pretitle": "Pretitle",
+                    "title": "h1 heading",
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "right"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -190,23 +338,73 @@
           "de": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "banner-right-de-0000-0000-000000000002" },
-            "configuration": { "controls": { "color": "#000" }, "layout": { "fullWidth": true } },
+            "meta": { "uuid": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
+            },
             "content": [
               {
                 "name": "Banner",
                 "type": "content",
-                "meta": { "uuid": "banner-content-right-de-0000-00000002" },
+                "meta": { "uuid": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb" },
                 "content": {
                   "image": {
                     "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "", "brightness": 0.5
+                    "alt": "",
+                    "brightness": 0.5
                   },
-                  "text": { "color": "#000", "bgcolor": "#fff", "bgopacity": 0.9, "pretitle": "Vortitel", "title": "h1 Titel", "subtitle": "Untertitel", "htmlDescription": "Text mit HTML-Formatierung", "textAlignment": "left", "justify": "top", "align": "right" },
-                  "button": { "label": "Button", "link": "/", "variant": "primary" }
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 0.9,
+                    "pretitle": "Vortitel",
+                    "title": "h1 Titel",
+                    "subtitle": "Untertitel",
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "right"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
+                }
+              },
+              {
+                "name": "Banner",
+                "type": "content",
+                "meta": { "uuid": "cccccccc-cccc-4ccc-8ccc-cccccccccccc" },
+                "content": {
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "",
+                    "brightness": 0.75
+                  },
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 1,
+                    "pretitle": "Vortitel",
+                    "title": "h1 Titel",
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "left"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -220,23 +418,72 @@
           "en": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "banner-center-en-0000-0000-000000000003" },
-            "configuration": { "controls": { "color": "#000" }, "layout": { "fullWidth": true } },
+            "meta": { "uuid": "dddddddd-dddd-4ddd-8ddd-dddddddddddd" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
+            },
             "content": [
               {
                 "name": "Banner",
                 "type": "content",
-                "meta": { "uuid": "banner-content-center-en-0000-00000003" },
+                "meta": { "uuid": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee" },
                 "content": {
                   "image": {
                     "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "", "brightness": 0.75
+                    "alt": "",
+                    "brightness": 0.5
                   },
-                  "text": { "color": "#000", "bgcolor": "#fff", "bgopacity": 1, "pretitle": "Pretitle", "title": "h1 heading", "htmlDescription": "Text that supports HTML formatting", "textAlignment": "left", "justify": "top", "align": "center" },
-                  "button": { "label": "Button", "link": "/", "variant": "primary" }
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 0.9,
+                    "pretitle": "Pretitle",
+                    "title": "h1 heading",
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "center"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
+                }
+              },
+              {
+                "name": "Banner",
+                "type": "content",
+                "meta": { "uuid": "ffffffff-ffff-4fff-8fff-ffffffffffff" },
+                "content": {
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "",
+                    "brightness": 0.75
+                  },
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 1,
+                    "pretitle": "Pretitle",
+                    "title": "h1 title",
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "center"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -244,23 +491,73 @@
           "de": {
             "name": "Carousel",
             "type": "structure",
-            "meta": { "uuid": "banner-center-de-0000-0000-000000000003" },
-            "configuration": { "controls": { "color": "#000" }, "layout": { "fullWidth": true } },
+            "meta": { "uuid": "01010101-0101-4011-8011-010101010101" },
+            "configuration": {
+              "controls": { "color": "#000" },
+              "layout": { "fullWidth": true }
+            },
             "content": [
               {
                 "name": "Banner",
                 "type": "content",
-                "meta": { "uuid": "banner-content-center-de-0000-00000003" },
+                "meta": { "uuid": "12121212-1212-4121-8121-121212121212" },
                 "content": {
                   "image": {
                     "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "", "brightness": 0.75
+                    "alt": "",
+                    "brightness": 0.5
                   },
-                  "text": { "color": "#000", "bgcolor": "#fff", "bgopacity": 1, "pretitle": "Vortitel", "title": "h1 Titel", "htmlDescription": "Text mit HTML-Formatierung", "textAlignment": "left", "justify": "top", "align": "center" },
-                  "button": { "label": "Button", "link": "/", "variant": "primary" }
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 0.9,
+                    "pretitle": "Vortitel",
+                    "title": "h1 Titel",
+                    "subtitle": "Untertitel",
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "center"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
+                }
+              },
+              {
+                "name": "Banner",
+                "type": "content",
+                "meta": { "uuid": "23232323-2323-4232-8232-232323232323" },
+                "content": {
+                  "image": {
+                    "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
+                    "alt": "",
+                    "brightness": 0.75
+                  },
+                  "text": {
+                    "color": "#000",
+                    "bgcolor": "#fff",
+                    "bgopacity": 1,
+                    "pretitle": "Vortitel",
+                    "title": "h1 Titel",
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "textAlignment": "left",
+                    "justify": "top",
+                    "align": "center"
+                  },
+                  "button": {
+                    "label": "Button",
+                    "link": "/",
+                    "variant": "primary"
+                  }
                 }
               }
             ]
@@ -269,7 +566,7 @@
       }
     ]
   },
-  "image": {
+"image": {
     "category": "image",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Image",
@@ -282,7 +579,7 @@
           "en": {
             "name": "Image",
             "type": "content",
-            "meta": { "uuid": "image-default-en-0000-0000-000000000001" },
+            "meta": { "uuid": "image-standalone-en-v2-001" },
             "content": {
               "image": {
                 "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
@@ -299,7 +596,7 @@
           "de": {
             "name": "Image",
             "type": "content",
-            "meta": { "uuid": "image-default-de-0000-0000-000000000001" },
+            "meta": { "uuid": "image-standalone-de-v2-001" },
             "content": {
               "image": {
                 "wideScreen": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
@@ -322,13 +619,13 @@
           "en": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "image-right-en-0000-0000-000000000002" },
+            "meta": { "uuid": "image-right-struct-en-v2-002" },
             "configuration": { "columnWidths": [6, 6], "layout": { "fullWidth": true } },
             "content": [
               {
                 "name": "Image",
                 "type": "content",
-                "meta": { "uuid": "image-right-content-en-0000-00000001" },
+                "meta": { "uuid": "image-right-img-en-v2-001" },
                 "parent_slot": 0,
                 "content": {
                   "image": {
@@ -345,7 +642,7 @@
               {
                 "name": "TextCard",
                 "type": "content",
-                "meta": { "uuid": "image-right-content-en-0000-00000002" },
+                "meta": { "uuid": "image-right-txt-en-v2-001" },
                 "parent_slot": 1,
                 "content": {
                   "text": { "htmlDescription": "Text that supports HTML formatting", "title": "h2 heading", "subtitle": "subtitle", "textAlignment": "left", "color": "#000" },
@@ -358,13 +655,13 @@
           "de": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "image-right-de-0000-0000-000000000002" },
+            "meta": { "uuid": "image-right-struct-de-v2-002" },
             "configuration": { "columnWidths": [6, 6], "layout": { "fullWidth": true } },
             "content": [
               {
                 "name": "Image",
                 "type": "content",
-                "meta": { "uuid": "image-right-content-de-0000-00000001" },
+                "meta": { "uuid": "image-right-img-de-v2-001" },
                 "parent_slot": 0,
                 "content": {
                   "image": {
@@ -381,7 +678,7 @@
               {
                 "name": "TextCard",
                 "type": "content",
-                "meta": { "uuid": "image-right-content-de-0000-00000002" },
+                "meta": { "uuid": "image-right-txt-de-v2-001" },
                 "parent_slot": 1,
                 "content": {
                   "text": { "htmlDescription": "Text mit HTML-Formatierung", "title": "h2 Titel", "subtitle": "Untertitel", "textAlignment": "left", "color": "#000" },
@@ -399,13 +696,13 @@
           "en": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "image-left-en-0000-0000-000000000003" },
+            "meta": { "uuid": "image-left-struct-en-v2-003" },
             "configuration": { "columnWidths": [6, 6], "layout": { "fullWidth": true } },
             "content": [
               {
                 "name": "TextCard",
                 "type": "content",
-                "meta": { "uuid": "image-left-content-en-0000-00000001" },
+                "meta": { "uuid": "image-left-txt-en-v2-001" },
                 "parent_slot": 0,
                 "content": {
                   "text": { "htmlDescription": "Text that supports HTML formatting", "title": "h2 heading", "subtitle": "Subtitle", "textAlignment": "right", "color": "#000" },
@@ -415,7 +712,7 @@
               {
                 "name": "Image",
                 "type": "content",
-                "meta": { "uuid": "image-left-content-en-0000-00000002" },
+                "meta": { "uuid": "image-left-img-en-v2-001" },
                 "parent_slot": 1,
                 "content": {
                   "image": {
@@ -434,13 +731,13 @@
           "de": {
             "name": "MultiGrid",
             "type": "structure",
-            "meta": { "uuid": "image-left-de-0000-0000-000000000003" },
+            "meta": { "uuid": "image-left-struct-de-v2-003" },
             "configuration": { "columnWidths": [6, 6], "layout": { "fullWidth": true } },
             "content": [
               {
                 "name": "TextCard",
                 "type": "content",
-                "meta": { "uuid": "image-left-content-de-0000-00000001" },
+                "meta": { "uuid": "image-left-txt-de-v2-001" },
                 "parent_slot": 0,
                 "content": {
                   "text": { "htmlDescription": "Text mit HTML-Formatierung", "title": "h2 Titel", "subtitle": "Untertitel", "textAlignment": "left", "color": "#000" },
@@ -450,7 +747,7 @@
               {
                 "name": "Image",
                 "type": "content",
-                "meta": { "uuid": "image-left-content-de-0000-00000002" },
+                "meta": { "uuid": "image-left-img-de-v2-001" },
                 "parent_slot": 1,
                 "content": {
                   "image": {
@@ -470,7 +767,7 @@
       }
     ]
   },
-  "promo-card": {
+"promo-card": {
     "category": "promo-card",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Promo Card",
@@ -483,22 +780,38 @@
           "en": {
             "name": "PromoCard",
             "type": "content",
-            "meta": { "uuid": "promocard-en-0000-0000-000000000001" },
-            "content": { "title": "Produktions- & Industriebedarf", "link": "/", "image": "", "alt": "Promo Image", "height": "400px" }
+            "meta": { "uuid": "promo-card-en-unique-001" },
+            "content": {
+              "title": "Produktions- & Industriebedarf",
+              "link": "/",
+              "image": "",
+              "alt": "Promo Image",
+              "height": "400px"
+            }
           },
           "de": {
             "name": "PromoCard",
             "type": "content",
-            "meta": { "uuid": "promocard-de-0000-0000-000000000001" },
-            "content": { "title": "Produktions- & Industriebedarf", "link": "/", "image": "", "alt": "Promo Image", "height": "400px" }
+            "meta": { "uuid": "promo-card-de-unique-001" },
+            "content": {
+              "title": "Produktions- & Industriebedarf",
+              "link": "/",
+              "image": "",
+              "alt": "Promo Image",
+              "height": "400px"
+            }
           }
         }
       }
     ]
   },
-  "logo-slider": {
+"logo-slider": {
     "category": "layout",
-    "accessControl": ["content", "productCategory", "product"],
+    "accessControl": [
+      "content",
+      "productCategory",
+      "product"
+    ],
     "title": "Logo Slider",
     "blockName": "LogoSlider",
     "variations": [
@@ -509,21 +822,33 @@
           "en": {
             "name": "LogoSlider",
             "type": "content",
-            "meta": { "uuid": "logoslider-en-0000-0000-000000000001" },
+            "meta": { "uuid": "a1b2c3d4-e5f6-4789-9a0b-1c2d3e4f5a60" },
             "content": {
               "title": "Our Brands",
-              "itemsPerPageDesktop": 5, "itemsPerPageTablet": 3, "itemsPerPageMobile": 2,
-              "items": [ { "image": "", "link": "", "alt": "Brand 1" }, { "image": "", "link": "", "alt": "Brand 2" }, { "image": "", "link": "", "alt": "Brand 3" } ]
+              "itemsPerPageDesktop": 5,
+              "itemsPerPageTablet": 3,
+              "itemsPerPageMobile": 2,
+              "items": [
+                { "image": "", "link": "", "alt": "Brand 1" },
+                { "image": "", "link": "", "alt": "Brand 2" },
+                { "image": "", "link": "", "alt": "Brand 3" }
+              ]
             }
           },
           "de": {
             "name": "LogoSlider",
             "type": "content",
-            "meta": { "uuid": "logoslider-de-0000-0000-000000000001" },
+            "meta": { "uuid": "b1b2c3d4-e5f6-4789-9a0b-1c2d3e4f5a61" },
             "content": {
               "title": "Unsere Marken",
-              "itemsPerPageDesktop": 5, "itemsPerPageTablet": 3, "itemsPerPageMobile": 2,
-              "items": [ { "image": "", "link": "", "alt": "Marke 1" }, { "image": "", "link": "", "alt": "Marke 2" }, { "image": "", "link": "", "alt": "Marke 3" } ]
+              "itemsPerPageDesktop": 5,
+              "itemsPerPageTablet": 3,
+              "itemsPerPageMobile": 2,
+              "items": [
+                { "image": "", "link": "", "alt": "Marke 1" },
+                { "image": "", "link": "", "alt": "Marke 2" },
+                { "image": "", "link": "", "alt": "Marke 3" }
+              ]
             }
           }
         }
@@ -543,29 +868,55 @@
           "en": {
             "name": "TextCard",
             "type": "content",
-            "meta": { "uuid": "rich-text-en-0000-0000-000000000001" },
+            "meta": { "uuid": "01020304-0506-4070-8090-0a0b0c0d0e0f" },
             "content": {
-              "text": { "htmlDescription": "Text that supports HTML formatting", "pretitle": "Pretitle", "title": "h2 heading", "subtitle": "Subtitle", "textAlignment": "center", "color": "#000" },
-              "button": { "buttonText": "Button", "link": "/", "variant": "primary" },
-              "layout": { "fullWidth": false }
+              "text": {
+                "htmlDescription": "Text that supports HTML formatting",
+                "pretitle": "Pretitle",
+                "title": "h2 heading",
+                "subtitle": "Subtitle",
+                "textAlignment": "center",
+                "color": "#000"
+              },
+              "button": {
+                "buttonText": "Button",
+                "link": "/",
+                "variant": "primary"
+              },
+              "layout": {
+                "fullWidth": false
+              }
             }
           },
           "de": {
             "name": "TextCard",
             "type": "content",
-            "meta": { "uuid": "rich-text-de-0000-0000-000000000001" },
+            "meta": { "uuid": "1a2b3c4d-5e6f-4111-8abc-1234567890ab" },
             "content": {
-              "text": { "htmlDescription": "Text mit HTML-Formatierung", "pretitle": "Vortitel", "title": "h2 Titel", "subtitle": "Untertitel", "textAlignment": "center", "color": "#000" },
-              "button": { "buttonText": "Buttom", "link": "/", "variant": "primary" },
-              "layout": { "fullWidth": false }
+              "text": {
+                "htmlDescription": "Text mit HTML-Formatierung",
+                "pretitle": "Vortitel",
+                "title": "h2 Titel",
+                "subtitle": "Untertitel",
+                "textAlignment": "center",
+                "color": "#000"
+              },
+              "button": {
+                "buttonText": "Buttom",
+                "link": "/",
+                "variant": "primary"
+              },
+              "layout": {
+                "fullWidth": false
+              }
             }
           }
         }
       }
     ]
   },
-  "icon-text": {
-    "category": "icon-text",
+"icon-text": {
+    "category": "icon-text", 
     "accessControl": ["content", "productCategory", "product"],
     "title": "Icon & Text",
     "blockName": "IconText",
@@ -577,21 +928,41 @@
           "en": {
             "name": "IconText",
             "type": "content",
-            "meta": { "uuid": "icon-text-en-0000-0000-000000000001" },
+            "meta": { "uuid": "9f2b3c4d-5e6f-4789-9a0b-1c2d3e4f5a6b" },
             "content": {
-              "icon": { "url": "", "alt": "Icon" },
-              "text": { "content": "Reliable dealer and supplier...", "color": "#000000", "fontSize": "text-base" },
-              "layout": { "gap": "gap-4", "iconWidth": "w-16" }
+              "icon": {
+                "url": "",
+                "alt": "Icon"
+              },
+              "text": {
+                "content": "Reliable dealer and supplier...",
+                "color": "#000000",
+                "fontSize": "text-base"
+              },
+              "layout": {
+                "gap": "gap-4",
+                "iconWidth": "w-16"
+              }
             }
           },
           "de": {
             "name": "IconText",
             "type": "content",
-            "meta": { "uuid": "icon-text-de-0000-0000-000000000001" },
+            "meta": { "uuid": "8e1d2c3b-4a5f-4678-8b9c-0d1e2f3a4b5c" },
             "content": {
-              "icon": { "url": "", "alt": "Icon" },
-              "text": { "content": "Zuverlässiger Händler und Lieferant...", "color": "#000000", "fontSize": "text-base" },
-              "layout": { "gap": "gap-4", "iconWidth": "w-16" }
+              "icon": {
+                "url": "",
+                "alt": "Icon"
+              },
+              "text": {
+                "content": "Zuverlässiger Händler und Lieferant...",
+                "color": "#000000",
+                "fontSize": "text-base"
+              },
+              "layout": {
+                "gap": "gap-4",
+                "iconWidth": "w-16"
+              }
             }
           }
         }
@@ -611,21 +982,43 @@
           "en": {
             "name": "ProductRecommendedProducts",
             "type": "content",
-            "meta": { "uuid": "product-gal-en-0000-0000-000000000001" },
+            "meta": { "uuid": "2b3c4d5e-6f70-4a1b-8c2d-234567890abc" },
             "content": {
-              "text": { "pretitle": "Pretitle", "title": "h2 heading", "subtitle": "Subtitle.", "htmlDescription": "Text that supports HTML formatting" },
-              "layout": { "fullWidth": false },
-              "source": { "type": "category", "itemId": "", "categoryId": "" }
+              "text": {
+                "pretitle": "Pretitle",
+                "title": "h2 heading",
+                "subtitle": "Subtitle.",
+                "htmlDescription": "Text that supports HTML formatting"
+              },
+              "layout": {
+                "fullWidth": false
+              },
+              "source": {
+                "type": "category",
+                "itemId": "",
+                "categoryId": ""
+              }
             }
           },
           "de": {
             "name": "ProductRecommendedProducts",
             "type": "content",
-            "meta": { "uuid": "product-gal-de-0000-0000-000000000001" },
+            "meta": { "uuid": "3c4d5e6f-7081-4b2c-8d3e-34567890abcd" },
             "content": {
-              "text": { "pretitle": "Vortitel", "title": "h2 Titel", "subtitle": "Untertitel", "htmlDescription": "Text mit HTML-Formatierung" },
-              "layout": { "fullWidth": false },
-              "source": { "type": "category", "itemId": "", "categoryId": "" }
+              "text": {
+                "pretitle": "Vortitel",
+                "title": "h2 Titel",
+                "subtitle": "Untertitel",
+                "htmlDescription": "Text mit HTML-Formatierung"
+              },
+              "layout": {
+                "fullWidth": false
+              },
+              "source": {
+                "type": "category",
+                "itemId": "",
+                "categoryId": ""
+              }
             }
           }
         }
@@ -645,23 +1038,72 @@
           "en": {
             "name": "ItemGrid",
             "type": "content",
-            "meta": { "uuid": "item-grid-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": {
+              "uuid": "99b3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
             "content": {
-              "itemsPerRowDesktop": 4, "itemsPerRowTablet": 3, "itemsPerRowMobile": 1, "showItemCount": true, "itemCountPosition": "left",
-              "fields": { "manufacturer": true, "title": true, "rating": true, "previewText": true, "shippingBadge": true, "price": true, "addToCart": true },
+              "itemsPerRowDesktop": 4,
+              "itemsPerRowTablet": 3,
+              "itemsPerRowMobile": 1,
+              "showItemCount": true,
+              "itemCountPosition": "left",
+              "fields": {
+                "manufacturer": true,
+                "title": true,
+                "rating": true,
+                "previewText": true,
+                "shippingBadge": true,
+                "price": true,
+                "addToCart": true
+              },
               "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
-              "fieldsDisabled": ["title"], "contentAlignment": "left", "cardBorders": true, "showSecondImageOnHover": false, "showWishlistButton": true, "addToCartStyle": "primary", "paginationPosition": "bottom", "layout": { "fullWidth": false }
+              "fieldsDisabled": ["title"],
+              "contentAlignment": "left",
+              "cardBorders": true,
+              "showSecondImageOnHover": false,
+              "showWishlistButton": true,
+              "addToCartStyle": "primary",
+              "paginationPosition": "bottom",
+
+              "layout": {
+                "fullWidth": false
+              }
             }
           },
           "de": {
             "name": "ItemGrid",
             "type": "content",
-            "meta": { "uuid": "item-grid-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
             "content": {
-              "itemsPerRowDesktop": 4, "itemsPerRowTablet": 3, "itemsPerRowMobile": 1, "showItemCount": true, "itemCountPosition": "left",
-              "fields": { "manufacturer": true, "title": true, "rating": true, "previewText": true, "shippingBadge": true, "price": true, "addToCart": true },
+              "itemsPerRowDesktop": 4,
+              "itemsPerRowTablet": 3,
+              "itemsPerRowMobile": 1,
+              "showItemCount": true,
+              "itemCountPosition": "left",
+              "fields": {
+                "manufacturer": true,
+                "title": true,
+                "rating": true,
+                "previewText": true,
+                "shippingBadge": true,
+                "price": true,
+                "addToCart": true
+              },
               "fieldsOrder": ["manufacturer", "title", "rating", "previewText", "shippingBadge", "price", "addToCart"],
-              "fieldsDisabled": ["title"], "contentAlignment": "left", "cardBorders": true, "showSecondImageOnHover": false, "showWishlistButton": true, "addToCartStyle": "primary", "paginationPosition": "bottom", "layout": { "fullWidth": false }
+              "fieldsDisabled": ["title"],
+              "contentAlignment": "left",
+              "cardBorders": true,
+              "showSecondImageOnHover": false,
+              "showWishlistButton": true,
+              "addToCartStyle": "primary",
+              "paginationPosition": "bottom",
+              "layout": {
+                "fullWidth": false
+              }
             }
           }
         }
@@ -673,29 +1115,85 @@
           "en": {
             "name": "CategoryData",
             "type": "content",
-            "meta": { "uuid": "category-data-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": {
+              "uuid": "abc3c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
             "content": {
               "name": "Category name",
-              "fields": { "name": true, "description1": false, "description2": false, "shortDescription": false },
+              "fields": {
+                "name": true,
+                "description1": false,
+                "description2": false,
+                "shortDescription": false
+              },
               "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
-              "fieldsDisabled": [], "displayCategoryImage": "off",
-              "image": { "fillMode": "fill", "alt": "", "brightness": 0.75 },
-              "text": { "color": "#000", "bgColor": "#fff", "bgOpacity": 1, "textAlignment": "left", "justify": "top", "align": "left", "background": true },
-              "layout": { "paddingTop": 40, "paddingBottom": 40, "paddingLeft": 0, "paddingRight": 0, "narrowContainer": true, "fullWidth": false }
+              "fieldsDisabled": [],
+              "displayCategoryImage": "off",
+              "image": {
+                "fillMode": "fill",
+                "alt": "",
+                "brightness": 0.75
+              },
+              "text": {
+                "color": "#000",
+                "bgColor": "#fff",
+                "bgOpacity": 1,
+                "textAlignment": "left",
+                "justify": "top",
+                "align": "left",
+                "background": true
+              },
+              "layout": {
+                "paddingTop": 40,
+                "paddingBottom": 40,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "narrowContainer": true,
+                "fullWidth": false
+              }
             }
           },
           "de": {
             "name": "CategoryData",
             "type": "content",
-            "meta": { "uuid": "category-data-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": {
+              "uuid": "998c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6d",
+              "isGlobalTemplate": false
+            },
             "content": {
               "name": "Category name",
-              "fields": { "name": true, "description1": false, "description2": false, "shortDescription": false },
+              "fields": {
+                "name": true,
+                "description1": false,
+                "description2": false,
+                "shortDescription": false
+              },
               "fieldsOrder": ["name", "description1", "description2", "shortDescription"],
-              "fieldsDisabled": [], "displayCategoryImage": "off",
-              "image": { "fillMode": "fill", "alt": "", "brightness": 0.75 },
-              "text": { "color": "#000", "bgColor": "#fff", "bgOpacity": 1, "textAlignment": "left", "justify": "top", "align": "left", "background": true },
-              "layout": { "paddingTop": 40, "paddingBottom": 40, "paddingLeft": 0, "paddingRight": 0, "narrowContainer": true, "fullWidth": false }
+              "fieldsDisabled": [],
+              "displayCategoryImage": "off",
+              "image": {
+                "fillMode": "fill",
+                "alt": "",
+                "brightness": 0.75
+              },
+              "text": {
+                "color": "#000",
+                "bgColor": "#fff",
+                "bgOpacity": 1,
+                "textAlignment": "left",
+                "justify": "top",
+                "align": "left",
+                "background": true
+              },
+              "layout": {
+                "paddingTop": 40,
+                "paddingBottom": 40,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "narrowContainer": true,
+                "fullWidth": false
+              }
             }
           }
         }
@@ -707,21 +1205,74 @@
           "en": {
             "name": "SortFilter",
             "type": "content",
-            "meta": { "uuid": "sort-filter-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+              "isGlobalTemplate": false
+            },
             "content": {
-              "fields": { "category": true, "sortBy": true, "perPage": true, "itemRating": true, "manufacturer": true, "price": true, "availability": true, "customizedFilters": true },
-              "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
-              "filtersDisabled": [], "showAllFiltersImmediately": true, "numberOfFiltersToShowInitially": 0, "layout": { "isFullWidth": false }
+              "fields": {
+                "category": true,
+                "sortBy": true,
+                "perPage": true,
+                "itemRating": true,
+                "manufacturer": true,
+                "price": true,
+                "availability": true,
+                "customizedFilters": true
+              },
+              "filtersOrder": [
+                "category",
+                "sortBy",
+                "perPage",
+                "itemRating",
+                "manufacturer",
+                "price",
+                "availability",
+                "customizedFilters"
+              ],
+              "filtersDisabled": [],
+              "showAllFiltersImmediately": true,
+              "numberOfFiltersToShowInitially": 0,
+              "layout": {
+                "isFullWidth": false
+              }
             }
           },
           "de": {
             "name": "SortFilter",
             "type": "content",
-            "meta": { "uuid": "sort-filter-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": {
+              "uuid": "1233c1d9-2e6f-4a5b-8c7d-1e2f3b4c5a6z",
+              "isGlobalTemplate": false
+            },
             "content": {
-              "fields": { "category": true, "sortBy": true, "perPage": true, "itemRating": true, "manufacturer": true, "price": true, "availability": true, "customizedFilters": true },
-              "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
-              "filtersDisabled": [], "showAllFiltersImmediately": true, "numberOfFiltersToShowInitially": 0, "layout": { "isFullWidth": false }
+              "fields": {
+                "category": true,
+                "sortBy": true,
+                "perPage": true,
+                "itemRating": true,
+                "manufacturer": true,
+                "price": true,
+                "availability": true,
+                "customizedFilters": true
+              },
+
+              "filtersOrder": [
+                "category",
+                "sortBy",
+                "perPage",
+                "itemRating",
+                "manufacturer",
+                "price",
+                "availability",
+                "customizedFilters"
+              ],
+              "filtersDisabled": [],
+              "showAllFiltersImmediately": true,
+              "numberOfFiltersToShowInitially": 0,
+              "layout": {
+                "isFullWidth": false
+              }
             }
           }
         }
@@ -733,14 +1284,48 @@
           "en": {
             "name": "Sort",
             "type": "content",
-            "meta": { "uuid": "sort-en-0000-0000-000000000001", "isGlobalTemplate": false },
-            "content": { "fields": { "sortBy": true }, "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0, "fullWidth": false }, "settings": { "selectionModeCompact": false } }
+            "meta": {
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb948",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "sortBy": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "fullWidth": false
+              },
+              "settings": {
+                "selectionModeCompact": false
+              }
+            }
           },
           "de": {
             "name": "Sort",
             "type": "content",
-            "meta": { "uuid": "sort-de-0000-0000-000000000001", "isGlobalTemplate": false },
-            "content": { "fields": { "sortBy": true }, "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0, "fullWidth": false }, "settings": { "selectionModeCompact": false } }
+            "meta": {
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb948",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "sortBy": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "fullWidth": false
+              },
+              "settings": {
+                "selectionModeCompact": false
+              }
+            }
           }
         }
       },
@@ -751,14 +1336,48 @@
           "en": {
             "name": "PerPageFilter",
             "type": "content",
-            "meta": { "uuid": "per-page-en-0000-0000-000000000001", "isGlobalTemplate": false },
-            "content": { "fields": { "perPage": true }, "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0, "fullWidth": false }, "settings": { "selectionModeCompact": false } }
+            "meta": {
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb748",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "perPage": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "fullWidth": false
+              },
+              "settings": {
+                "selectionModeCompact": false
+              }
+            }
           },
           "de": {
             "name": "PerPageFilter",
             "type": "content",
-            "meta": { "uuid": "per-page-de-0000-0000-000000000001", "isGlobalTemplate": false },
-            "content": { "fields": { "perPage": true }, "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0, "fullWidth": false }, "settings": { "selectionModeCompact": false } }
+            "meta": {
+              "uuid": "265438f3-48fe-428f-a87b-d9d29dbeb748",
+              "isGlobalTemplate": false
+            },
+            "content": {
+              "fields": {
+                "perPage": true
+              },
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "fullWidth": false
+              },
+              "settings": {
+                "selectionModeCompact": false
+              }
+            }
           }
         }
       }
@@ -777,25 +1396,51 @@
           "en": {
             "name": "NewsletterSubscribe",
             "type": "content",
-            "meta": { "uuid": "newsletter-en-0000-0000-000000000001" },
+            "meta": { "uuid": "4d5e6f70-8192-4c3d-8e4f-4567890abcde" },
             "content": {
-              "text": { "bgColor": "#f5f5f5", "title": "Newsletter", "htmlDescription": "Text that supports HTML formatting" },
-              "input": { "displayNameInput": true, "nameIsRequired": false },
-              "button": { "label": "Subscribe" },
-              "settings": { "emailFolderId": 1 },
-              "layout": { "fullWidth": false }
+              "text": {
+                "bgColor": "#f5f5f5",
+                "title": "Newsletter",
+                "htmlDescription": "Text that supports HTML formatting"
+              },
+              "input": {
+                "displayNameInput": true,
+                "nameIsRequired": false
+              },
+              "button": {
+                "label": "Subscribe"
+              },
+              "settings": {
+                "emailFolderId": 1
+              },
+              "layout": {
+                "fullWidth": false
+              }
             }
           },
           "de": {
             "name": "NewsletterSubscribe",
             "type": "content",
-            "meta": { "uuid": "newsletter-de-0000-0000-000000000001" },
+            "meta": { "uuid": "5e6f7081-92a3-4d4e-8f50-567890abcdef" },
             "content": {
-              "text": { "bgColor": "#f5f5f5", "title": "Abonnieren Sie unseren Newsletter", "htmlDescription": "Text mit HTML-Formatierung" },
-              "input": { "displayNameInput": true, "nameIsRequired": false },
-              "button": { "label": "Newsletter abonnieren" },
-              "settings": { "emailFolderId": 1 },
-              "layout": { "fullWidth": false }
+              "text": {
+                "bgColor": "#f5f5f5",
+                "title": "Abonnieren Sie unseren Newsletter",
+                "htmlDescription": "Text mit HTML-Formatierung"
+              },
+              "input": {
+                "displayNameInput": true,
+                "nameIsRequired": false
+              },
+              "button": {
+                "label": "Newsletter abonnieren"
+              },
+              "settings": {
+                "emailFolderId": 1
+              },
+              "layout": {
+                "fullWidth": false
+              }
             }
           }
         }
@@ -815,23 +1460,109 @@
           "en": {
             "name": "PriceCard",
             "type": "content",
-            "meta": { "uuid": "price-card-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "a1b2c3d4-e5f6-4789-9a0b-1c2d3e4f5a6b", "isGlobalTemplate": false },
             "content": {
-              "fields": { "itemName": true, "price": true, "tags": true, "availability": true, "starRating": true, "orderProperties": true, "variationProperties": true, "previewText": true, "attributes": true, "itemBundle": true, "graduatedPrices": true, "addToWishlist": true, "quantityAndAddToCart": true, "itemText": false, "technicalData": false },
-              "fieldsOrder": ["itemName", "price", "tags", "availability", "starRating", "variationProperties", "orderProperties", "previewText", "attributes", "itemBundle", "graduatedPrices", "addToWishlist", "quantityAndAddToCart", "itemText", "technicalData"],
+              "fields": {
+                "itemName": true,
+                "price": true,
+                "tags": true,
+                "availability": true,
+                "starRating": true,
+                "orderProperties": true,
+                "variationProperties": true,
+                "previewText": true,
+                "attributes": true,
+                "itemBundle": true,
+                "graduatedPrices": true,
+                "addToWishlist": true,
+                "quantityAndAddToCart": true,
+                "itemText": false,
+                "technicalData": false
+              },
+              "fieldsOrder": [
+                "itemName",
+                "price",
+                "tags",
+                "availability",
+                "starRating",
+                "variationProperties",
+                "orderProperties",
+                "previewText",
+                "attributes",
+                "itemBundle",
+                "graduatedPrices",
+                "addToWishlist",
+                "quantityAndAddToCart",
+                "itemText",
+                "technicalData"
+              ],
               "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle", "attributes"],
-              "wishlistSize": "small", "dropShadow": true, "borders": true, "borderColor": "#EFF4F1", "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingRight": 0, "paddingLeft": 0, "fullWidth": false }
+              "wishlistSize": "small",
+
+              "dropShadow": true,
+              "borders": true,
+              "borderColor": "#EFF4F1",
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingRight": 0,
+                "paddingLeft": 0,
+                "fullWidth": false
+              }
             }
           },
           "de": {
             "name": "PriceCard",
             "type": "content",
-            "meta": { "uuid": "price-card-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "b1c2d3e4-f5a6-4890-0b1c-2d3e4f5a6b7c", "isGlobalTemplate": false },
             "content": {
-              "fields": { "itemName": true, "price": true, "tags": true, "availability": true, "starRating": true, "orderProperties": true, "variationProperties": true, "previewText": true, "attributes": true, "itemBundle": true, "graduatedPrices": true, "addToWishlist": true, "quantityAndAddToCart": true, "itemText": false, "technicalData": false },
-              "fieldsOrder": ["itemName", "price", "tags", "availability", "starRating", "variationProperties", "orderProperties", "previewText", "attributes", "itemBundle", "graduatedPrices", "addToWishlist", "quantityAndAddToCart", "itemText", "technicalData"],
+              "fields": {
+                "itemName": true,
+                "price": true,
+                "tags": true,
+                "availability": true,
+                "starRating": true,
+                "orderProperties": true,
+                "variationProperties": true,
+                "previewText": true,
+                "attributes": true,
+                "itemBundle": true,
+                "graduatedPrices": true,
+                "addToWishlist": true,
+                "quantityAndAddToCart": true,
+                "itemText": false,
+                "technicalData": false
+              },
+              "fieldsOrder": [
+                "itemName",
+                "price",
+                "tags",
+                "availability",
+                "starRating",
+                "variationProperties",
+                "orderProperties",
+                "previewText",
+                "attributes",
+                "itemBundle",
+                "graduatedPrices",
+                "addToWishlist",
+                "quantityAndAddToCart",
+                "itemText",
+                "technicalData"
+              ],
               "fieldsDisabled": ["quantityAndAddToCart", "price", "itemBundle", "attributes"],
-              "wishlistSize": "small", "dropShadow": true, "borders": true, "borderColor": "#EFF4F1", "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingRight": 0, "paddingLeft": 0, "fullWidth": false }
+              "wishlistSize": "small",
+
+              "dropShadow": true,
+              "borders": true,
+              "borderColor": "#EFF4F1",
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingRight": 0,
+                "paddingLeft": 0,
+                "fullWidth": false
+              }
             }
           }
         }
@@ -843,16 +1574,42 @@
           "en": {
             "name": "ItemText",
             "type": "content",
-            "meta": { "uuid": "item-text-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "c7f1e2d3-4b5a-6c7d-8e9f-0a1b2c3d4e5f", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Item details" }, "layout": { "displayAsCollapsable": true, "initiallyCollapsed": true, "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Item details"
+              },
+              "layout": {
+                "displayAsCollapsable": true,
+                "initiallyCollapsed": true,
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           },
           "de": {
             "name": "ItemText",
             "type": "content",
-            "meta": { "uuid": "item-text-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "d8e2f3a4-5b6c-7d8e-9f0a-1b2c3d4e5f6a", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Artikeldetails" }, "layout": { "displayAsCollapsable": true, "initiallyCollapsed": true, "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Artikeldetails"
+              },
+              "layout": {
+                "displayAsCollapsable": true,
+                "initiallyCollapsed": true,
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           }
         }
       },
@@ -863,16 +1620,42 @@
           "en": {
             "name": "TechnicalData",
             "type": "content",
-            "meta": { "uuid": "tech-data-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "c7f1e2d3-4b5a-6c7d-8e9f-0a1b2c3d4e5f", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Technical Data" }, "layout": { "displayAsCollapsable": true, "initiallyCollapsed": true, "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Technical Data"
+              },
+              "layout": {
+                "displayAsCollapsable": true,
+                "initiallyCollapsed": true,
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           },
           "de": {
             "name": "TechnicalData",
             "type": "content",
-            "meta": { "uuid": "tech-data-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "d8e2f3a4-5b6c-7d8e-9f0a-1b2c3d4e5f6a", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Technische Daten" }, "layout": { "displayAsCollapsable": true, "initiallyCollapsed": true, "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Technische Daten"
+              },
+              "layout": {
+                "displayAsCollapsable": true,
+                "initiallyCollapsed": true,
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           }
         }
       },
@@ -883,16 +1666,43 @@
           "en": {
             "name": "CustomerReview",
             "type": "content",
-            "meta": { "uuid": "review-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "b7e8f9a1-2c3d-4e5f-9a8b-7c6d5e4f3a2b", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Customer Reviews" }, "layout": { "collapsible": true, "initiallyCollapsed": false, "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Customer Reviews"
+              },
+              "layout": {
+                "collapsible": true,
+                "initiallyCollapsed": false,
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           },
+
           "de": {
             "name": "CustomerReview",
             "type": "content",
-            "meta": { "uuid": "review-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "f4e3d2c1-b0a9-48f7-8e6d-5c4b3a2f1e0d", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Kundenrezensionen" }, "layout": { "collapsible": true, "initiallyCollapsed": false, "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Kundenrezensionen"
+              },
+              "layout": {
+                "collapsible": true,
+                "initiallyCollapsed": false,
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           }
         }
       },
@@ -903,16 +1713,40 @@
           "en": {
             "name": "ProductLegalInformation",
             "type": "content",
-            "meta": { "uuid": "legal-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "e1b7c9d2-3f4a-4e6b-9c8d-7a5f2e1b3c4d", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Item legal details", "linkText": "EU Responsible Person - click for details" }, "layout": { "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Item legal details",
+                "linkText": "EU Responsible Person - click for details"
+              },
+              "layout": {
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           },
           "de": {
             "name": "ProductLegalInformation",
             "type": "content",
-            "meta": { "uuid": "legal-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "a9c2e3f4-5b6d-4c7e-8f9a-0b1c2d3e4f5a", "isGlobalTemplate": false },
             "parent_slot": 0,
-            "content": { "text": { "title": "Rechtliche Angaben zum Artikel", "linkText": "EU-Verantwortlicher – hier klicken für Details" }, "layout": { "fullWidth": false, "paddingTop": 0, "paddingBottom": 0, "paddingLeft": 0, "paddingRight": 0 } }
+            "content": {
+              "text": {
+                "title": "Rechtliche Angaben zum Artikel",
+                "linkText": "EU-Verantwortlicher – hier klicken für Details"
+              },
+              "layout": {
+                "fullWidth": false,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingLeft": 0,
+                "paddingRight": 0
+              }
+            }
           }
         }
       },
@@ -923,25 +1757,99 @@
           "en": {
             "name": "ItemData",
             "type": "content",
-            "meta": { "uuid": "more-details-en-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "e1b7c9d2-3f4a-4e6b-9c8d-7a5f2e1b3cfd", "isGlobalTemplate": false },
             "parent_slot": 0,
             "content": {
-              "text": { "title": "More details" },
-              "fields": { "itemId": true, "condition": true, "ageRating": true, "externalVariationId": true, "model": true, "manufacturer": true, "manufacturingCountry": true, "content": true, "grossWeight": true, "netWeight": true, "dimensions": true, "customTariffNumber": true, "properties": true },
-              "fieldsOrder": ["itemId", "condition", "ageRating", "externalVariationId", "model", "manufacturer", "manufacturingCountry", "content", "grossWeight", "netWeight", "dimensions", "customTariffNumber", "properties"],
-              "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingRight": 0, "paddingLeft": 0, "displayAsCollapsable": false, "initiallyCollapsed": false }
+              "text": {
+                "title": "More details"
+              },
+              "fields": {
+                "itemId": true,
+                "condition": true,
+                "ageRating": true,
+                "externalVariationId": true,
+                "model": true,
+                "manufacturer": true,
+                "manufacturingCountry": true,
+                "content": true,
+                "grossWeight": true,
+                "netWeight": true,
+                "dimensions": true,
+                "customTariffNumber": true,
+                "properties": true
+              },
+              "fieldsOrder": [
+                "itemId",
+                "condition",
+                "ageRating",
+                "externalVariationId",
+                "model",
+                "manufacturer",
+                "manufacturingCountry",
+                "content",
+                "grossWeight",
+                "netWeight",
+                "dimensions",
+                "customTariffNumber",
+                "properties"
+              ],
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingRight": 0,
+                "paddingLeft": 0,
+                "displayAsCollapsable": false,
+                "initiallyCollapsed": false
+              }
             }
           },
           "de": {
             "name": "ItemData",
             "type": "content",
-            "meta": { "uuid": "more-details-de-0000-0000-000000000001", "isGlobalTemplate": false },
+            "meta": { "uuid": "a9c2e3f4-5b6d-4c7e-8f9a-0b1c2d3e4t5a", "isGlobalTemplate": false },
             "parent_slot": 0,
             "content": {
-              "text": { "title": "Weitere Details" },
-              "fields": { "itemId": true, "condition": true, "ageRating": true, "externalVariationId": true, "model": true, "manufacturer": true, "manufacturingCountry": true, "content": true, "grossWeight": true, "netWeight": true, "dimensions": true, "customTariffNumber": true, "properties": true },
-              "fieldsOrder": ["itemId", "condition", "ageRating", "externalVariationId", "model", "manufacturer", "manufacturingCountry", "content", "grossWeight", "netWeight", "dimensions", "customTariffNumber", "properties"],
-              "layout": { "paddingTop": 0, "paddingBottom": 0, "paddingRight": 0, "paddingLeft": 0, "displayAsCollapsable": false, "initiallyCollapsed": false }
+              "text": {
+                "title": "Weitere Details"
+              },
+              "fields": {
+                "itemId": true,
+                "condition": true,
+                "ageRating": true,
+                "externalVariationId": true,
+                "model": true,
+                "manufacturer": true,
+                "manufacturingCountry": true,
+                "content": true,
+                "grossWeight": true,
+                "netWeight": true,
+                "dimensions": true,
+                "customTariffNumber": true,
+                "properties": true
+              },
+              "fieldsOrder": [
+                "itemId",
+                "condition",
+                "ageRating",
+                "externalVariationId",
+                "model",
+                "manufacturer",
+                "manufacturingCountry",
+                "content",
+                "grossWeight",
+                "netWeight",
+                "dimensions",
+                "customTariffNumber",
+                "properties"
+              ],
+              "layout": {
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "paddingRight": 0,
+                "paddingLeft": 0,
+                "displayAsCollapsable": false,
+                "initiallyCollapsed": false
+              }
             }
           }
         }
