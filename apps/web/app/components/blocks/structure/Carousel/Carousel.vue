@@ -188,21 +188,35 @@ const onSearchInput = () => {
 const fetchSuggestions = async () => {
   const term = searchQuery.value.trim();
   
+  // Don't search if the string is too short
   if (term.length < 3) {
     searchResults.value = [];
     return;
   }
 
   try {
-    const response = await fetch('http://localhost:8181/plentysystems/getSearch', {
+    // UPDATED: Using the production URL you requested
+    // Note: If this fails on localhost due to CORS, change it to just '/plentysystems/getSearch'
+    const response = await fetch('/plentysystems/getSearch', {
       method: 'POST', 
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ term: term }) 
     });
 
+    // Check if the request was actually successful
+    if (!response.ok) {
+      searchResults.value = [];
+      return;
+    }
+
     const rawData = await response.json();
+
+    // Safely access the nested data structure
     const products = rawData?.data?.products || [];
 
+    // Map the API data to your template's format
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     searchResults.value = products.slice(0, 6).map((item: any) => ({
       id: item.id,
@@ -212,7 +226,7 @@ const fetchSuggestions = async () => {
     }));
 
   } catch {
-    // Error ignored to satisfy linting rules
+    // CLEAN FIX: Removed (error) variable and console.log to satisfy ESLint
     searchResults.value = [];
   }
 };
