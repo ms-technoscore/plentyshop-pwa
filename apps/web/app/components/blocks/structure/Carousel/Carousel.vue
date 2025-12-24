@@ -65,13 +65,6 @@
               </ul>
             </div>
           </div>
-
-          <div class="mt-4" v-if="overlayConfig.showBottomBtn">
-             <a :href="overlayConfig.bottomBtnLink" class="inline-block bg-[#f3d03e] text-black font-bold py-2 px-6 rounded uppercase text-sm hover:bg-[#eac426]">
-               {{ overlayConfig.bottomBtnText }}
-             </a>
-          </div>
-
         </div>
       </div>
 
