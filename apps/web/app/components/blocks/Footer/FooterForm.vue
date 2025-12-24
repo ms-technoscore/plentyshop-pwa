@@ -44,7 +44,7 @@
               :image="col.image"
               placeholder="https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png"
               dimensions="Recommended: 200px width"
-              @add="(payload: { image: string }) => col.image = payload.image"
+              @add="(payload) => col.image = payload.image"
               @delete="col.image = ''"
             />
             <div v-if="col.image" class="mt-2">
@@ -105,7 +105,6 @@
 
 <script setup lang="ts">
 import { SfInput, SfButton, SfTextarea } from '@storefront-ui/vue';
-// FIXED: Removed unused 'FooterColumn' import
 import type { FooterContent } from './types';
 
 const { blockUuid } = useSiteConfiguration();
