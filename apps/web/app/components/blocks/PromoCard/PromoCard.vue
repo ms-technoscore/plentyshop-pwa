@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="localePath(content.link)"
-    class="relative block w-full overflow-hidden group cursor-pointer rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300"
+    class="relative block w-full overflow-hidden group cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-300"
     :style="{ height: content.height || '400px' }"
   >
     <NuxtImg

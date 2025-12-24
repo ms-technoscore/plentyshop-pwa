@@ -5,32 +5,33 @@
     </div>
 
     <SfScrollable
+      ref="sliderRef"
       class="items-center w-full"
       :wrapper-class="'gap-4'"
       buttons-placement="floating"
       drag
     >
-      <template #previousButton="{ disabled, onClick }">
+      <template #previousButton="{ disabled }">
         <SfButton
           variant="secondary"
           size="lg"
           square
           class="!rounded-full bg-white border-neutral-200 shadow-md absolute left-4 z-10 hidden md:flex"
           :disabled="disabled"
-          @click="onClick"
+          @click.stop="scrollPrev"
         >
           <SfIconChevronLeft />
         </SfButton>
       </template>
 
-      <template #nextButton="{ disabled, onClick }">
+      <template #nextButton="{ disabled }">
         <SfButton
           variant="secondary"
           size="lg"
           square
           class="!rounded-full bg-white border-neutral-200 shadow-md absolute right-4 z-10 hidden md:flex"
           :disabled="disabled"
-          @click="onClick"
+          @click.stop="scrollNext"
         >
           <SfIconChevronRight />
         </SfButton>
@@ -60,28 +61,76 @@
 </template>
 
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import type { LogoSliderProps } from './types';
+
+interface SfScrollableInstance extends ComponentPublicInstance {
+  containerRef?: HTMLElement;
+}
 
 const props = defineProps<LogoSliderProps>();
 const localePath = useLocalePath();
 const viewport = useViewport();
 
-// Calculate width dynamically based on viewport and settings
-const itemStyle = computed(() => {
-  let count = 2; // Default fallback
+const sliderRef = ref<SfScrollableInstance | null>(null);
 
+// Determine how many items are visible per row
+const itemsCount = computed(() => {
   if (viewport.isGreaterOrEquals('lg')) {
-    count = props.content.itemsPerPageDesktop || 5;
+    return props.content.itemsPerPageDesktop || 5;
   } else if (viewport.isGreaterOrEquals('md')) {
-    count = props.content.itemsPerPageTablet || 3;
+    return props.content.itemsPerPageTablet || 3;
   } else {
-    count = props.content.itemsPerPageMobile || 2;
+    return props.content.itemsPerPageMobile || 2;
   }
+});
 
-  // Calculate percentage width minus the gap approximation
+const itemStyle = computed(() => {
   return {
-    flex: `0 0 calc(100% / ${count} - 16px)`, // 16px roughly accounts for gap
+    flex: `0 0 calc(100% / ${itemsCount.value} - 16px)`, 
   };
 });
+
+const getContainer = (): HTMLElement | null => {
+  const component = sliderRef.value;
+  if (!component || !component.$el) {
+    return null;
+  }
+
+  if (component.containerRef) return component.containerRef;
+
+  const root = component.$el as HTMLElement;
+
+  const byClass = root.querySelector('.sf-scrollable__container');
+  if (byClass) return byClass as HTMLElement;
+
+  const children = Array.from(root.children) as HTMLElement[];
+  const scrollableChild = children.find((child) => {
+    const style = window.getComputedStyle(child);
+    return style.overflowX === 'auto' || style.overflowX === 'scroll';
+  });
+
+  if (scrollableChild) return scrollableChild;
+
+  return root;
+};
+
+// Scroll Backward
+const scrollPrev = () => {
+  const container = getContainer();
+  if (container) {
+    const itemWidth = container.offsetWidth / itemsCount.value;
+    container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+  }
+};
+
+// Scroll Forward
+const scrollNext = () => {
+  const container = getContainer();
+  if (container) {
+    const itemWidth = container.offsetWidth / itemsCount.value;
+    container.scrollBy({ left: itemWidth, behavior: 'smooth' });
+  }
+};
 </script>
