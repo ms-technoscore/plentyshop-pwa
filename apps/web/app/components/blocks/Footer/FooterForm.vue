@@ -107,12 +107,15 @@
 import { SfInput, SfButton, SfTextarea } from '@storefront-ui/vue';
 import type { FooterContent } from './types';
 
+// FIXED: Define props so we know WHICH block to edit (Critical for saving)
+const props = defineProps<{ uuid?: string }>();
+
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-// Helper to get the actual block from the CMS data
-const getBlock = () => findOrDeleteBlockByUuid(data.value, blockUuid.value);
+// FIXED: Use props.uuid if available, falling back to global blockUuid
+const getBlock = () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
 
 // --- 1. Initialize Local State ---
 const footerContent = ref<FooterContent>({
