@@ -107,17 +107,27 @@
 import { SfInput, SfButton, SfTextarea } from '@storefront-ui/vue';
 import type { FooterContent } from './types';
 
-// FIXED: Define props so we know WHICH block to edit (Critical for saving)
+// Used to identify the exact block instance
 const props = defineProps<{ uuid?: string }>();
 
+// 1. Retrieve Context
+const route = useRoute();
+const { $i18n } = useNuxtApp();
 const { blockUuid } = useSiteConfiguration();
-const { data } = useCategoryTemplate();
+
+// 2. Load Data Linked to Page
+const { data } = useCategoryTemplate(
+  route?.meta?.identifier as string,
+  route?.meta?.type as string,
+  $i18n.locale.value
+);
+
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-// FIXED: Use props.uuid if available, falling back to global blockUuid
+// Helper to get the actual block from the CMS data
 const getBlock = () => findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value);
 
-// --- 1. Initialize Local State ---
+// --- 3. Initialize Local State ---
 const footerContent = ref<FooterContent>({
   columns: [],
   backgroundColor: '#333333',
@@ -125,7 +135,7 @@ const footerContent = ref<FooterContent>({
   footnote: ''
 });
 
-// --- 2. Load Existing Data ---
+// --- 4. Load Existing Data ---
 const block = getBlock();
 if (block && block.content) {
   const loaded = block.content as unknown as FooterContent;
@@ -137,13 +147,14 @@ if (block && block.content) {
   };
 }
 
-// --- 3. Watch for Changes & Save Back ---
+// --- 5. Watch for Changes & Save Back ---
 watch(footerContent, (newVal) => {
   const currentBlock = getBlock();
   if (currentBlock) {
     // Save the local state back to the CMS block
     currentBlock.content = JSON.parse(JSON.stringify(newVal));
   }
+  // FIXED: Removed console.error to satisfy linter
 }, { deep: true });
 
 // --- Actions ---
