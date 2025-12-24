@@ -1,119 +1,98 @@
 <template>
   <footer
-    v-if="resolvedContent"
-    class="pt-10"
-    :style="{
-      backgroundColor: resolvedContent.colors?.background,
-      color: resolvedContent.colors?.text,
-    }"
+    class="w-full py-10 transition-colors duration-300"
+    :style="{ backgroundColor: footerData.backgroundColor || '#333333', color: footerData.textColor || '#ffffff' }"
     data-testid="footer"
   >
-    <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
-          <div class="ml-4 text-lg font-medium leading-7">
-            {{ resolvedContent.column1?.title }}
-          </div>
-          <ul>
-            <SfListItem
-              v-for="switchConfig in getColumnSwitches(resolvedContent.column1)"
-              :key="switchConfig.id"
-              class="py-2 !bg-transparent typography-text-sm"
-            >
-              <SfLink
-                :tag="NuxtLink"
-                :style="{ color: resolvedContent.colors?.text || undefined }"
-                class="no-underline text-neutral-600 hover:underline active:underline"
-                variant="secondary"
-                :to="localePath(switchConfig.link)"
-              >
-                {{ switchConfig.translationKey }}
-              </SfLink>
-            </SfListItem>
-          </ul>
-        </div>
-
-        <div
-          v-for="(column, i) in [resolvedContent.column2, resolvedContent.column3, resolvedContent.column4]"
-          :key="i"
-          class="max-w-[280px] break-words"
+    <div class="max-w-screen-3xl mx-auto px-4 md:px-8">
+      
+      <div 
+        class="grid grid-cols-1 md:grid-cols-3 gap-8"
+        :class="{'lg:grid-cols-4': footerData.columns?.length > 3}" 
+      >
+        <div 
+          v-for="col in footerData.columns" 
+          :key="col.id" 
+          class="flex flex-col gap-4"
         >
-          <div class="ml-4 text-lg font-medium leading-7">
-            {{ column?.title }}
+          <div v-if="col.image">
+            <NuxtImg
+              :src="col.image"
+              :alt="col.title || 'Footer Image'"
+              :style="{ width: col.imageWidth || 'auto', maxWidth: '100%' }"
+              class="object-contain"
+              loading="lazy"
+            />
           </div>
-          <div v-if="getColumnSwitches(column).length" class="text-sm">
-            <ul>
-              <SfListItem
-                v-for="switchConfig in getColumnSwitches(column)"
-                :key="switchConfig.id"
-                class="inline-flex items-center gap-2 w-full hover:bg-neutral-100 active:bg-neutral-200 cursor-pointer focus-visible:outline focus-visible:outline-offset focus-visible:relative focus-visible:z-10 px-4 py-2 !bg-transparent typography-text-sm"
+
+          <h3 v-if="col.title" class="text-lg font-bold uppercase tracking-wide">
+            {{ col.title }}
+          </h3>
+
+          <ul v-if="col.links && col.links.length > 0" class="flex flex-col gap-2">
+            <li v-for="(link, i) in col.links" :key="i">
+              <NuxtLink 
+                :to="localePath(link.url)" 
+                class="hover:underline opacity-90 hover:opacity-100 flex items-center gap-2"
               >
-                <SfLink
-                  :tag="NuxtLink"
-                  variant="secondary"
-                  class="no-underline text-neutral-900 hover:cursor-pointer hover:underline active:underline"
-                  :style="{ color: resolvedContent.colors?.text }"
-                  :to="localePath(switchConfig.link)"
-                >
-                  {{ switchConfig.translationKey }}
-                </SfLink>
-              </SfListItem>
-            </ul>
+                <span v-if="i > -1" class="text-xs opacity-50">▶</span>
+                {{ link.text }}
+              </NuxtLink>
+            </li>
+          </ul>
+
+          <div v-if="col.socials && col.socials.length > 0" class="flex gap-4 mt-2 flex-wrap">
+            <a 
+              v-for="(social, s) in col.socials" 
+              :key="s" 
+              :href="social.url" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="hover:opacity-80 transition-opacity p-1 bg-white/10 rounded"
+              :aria-label="social.icon"
+            >
+              <SfIconFacebook v-if="social.icon === 'facebook'" class="w-6 h-6" />
+              <SfIconInstagram v-else-if="social.icon === 'instagram'" class="w-6 h-6" />
+              <SfIconTwitter v-else-if="social.icon === 'twitter'" class="w-6 h-6" />
+              <SfIconYoutube v-else-if="social.icon === 'youtube'" class="w-6 h-6" />
+              <SfIconPinterest v-else-if="social.icon === 'pinterest'" class="w-6 h-6" />
+              <span v-else class="capitalize text-xs">{{ social.icon }}</span>
+            </a>
           </div>
-          <div
-            v-if="column?.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer"
-            v-html="column.description"
+
+          <div 
+            v-if="col.content" 
+            class="text-sm opacity-90"
+            v-html="col.content"
           />
         </div>
       </div>
-    </div>
-    <div>
-      <div
-        v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
-        class="text-sm py-10 md:py-6 px-10"
-        :class="{
-          'text-left': resolvedContent.footnoteAlign === 'left',
-          'text-center': resolvedContent.footnoteAlign === 'center',
-          'text-right': resolvedContent.footnoteAlign === 'right',
-        }"
-        :style="{
-          color: resolvedContent.colors?.footnoteText,
-          backgroundColor: resolvedContent.colors?.footnoteBackground,
-        }"
-        v-html="resolvedContent.footnote"
+
+      <div 
+        v-if="footerData.footnote" 
+        class="mt-12 pt-6 border-t border-white/20 text-center text-sm opacity-60"
+        v-html="footerData.footnote"
       />
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfListItem } from '@storefront-ui/vue';
-import type { FooterProps, FooterSettingsColumn } from './types';
+import { 
+  SfIconFacebook, 
+  SfIconInstagram, 
+  SfIconTwitter, 
+  SfIconYoutube, 
+  SfIconPinterest 
+} from '@storefront-ui/vue';
+import type { FooterProps, FooterContent } from './types';
 
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
-const NuxtLink = resolveComponent('NuxtLink');
 
-const { getFooterSettings } = useFooter();
-const resolvedContent = computed(() => mapFooterData(props.content ?? getFooterSettings()));
-
-const getColumnSwitches = (column: FooterSettingsColumn) => {
-  return FOOTER_SWITCH_DEFINITIONS.filter((switchConfig) => column[switchConfig.key] === true).map((switchConfig) => ({
-    id: `${switchConfig.key}-switch`,
-    translationKey: t(switchConfig.shopTranslationKey),
-    link: switchConfig.link,
-    state: true,
-  }));
-};
+// Safely computed data with defaults
+const footerData = computed((): FooterContent => {
+  const content = (props.content as unknown) as FooterContent;
+  return content || { columns: [] };
+});
 </script>
-
-<style scoped>
-::v-deep(.custom-html li) {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-::v-deep(.custom-html li:hover) {
-  text-decoration: underline;
-}
-</style>
