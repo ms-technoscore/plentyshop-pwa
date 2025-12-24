@@ -19,7 +19,6 @@
         <template #summary>
           <div class="flex justify-between w-full items-center">
             <span>Column {{ index + 1 }} {{ col.title ? `- ${col.title}` : '' }}</span>
-            
             <SfButton 
               class="text-red-500"
               variant="tertiary" 
@@ -45,7 +44,7 @@
               :image="col.image"
               placeholder="https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png"
               dimensions="Recommended: 200px width"
-              @add="(payload: any) => col.image = payload.image"
+              @add="(payload: { image: string }) => col.image = payload.image"
               @delete="col.image = ''"
             />
             <div v-if="col.image" class="mt-2">
@@ -81,6 +80,11 @@
             <SfButton size="sm" variant="secondary" @click="addSocial(index)">+ Add Icon</SfButton>
           </div>
 
+          <div class="border p-3 rounded bg-white">
+             <UiFormLabel class="font-bold mb-2">Description / HTML</UiFormLabel>
+             <SfTextarea v-model="col.content" placeholder="Enter text or HTML..." class="w-full h-24" />
+          </div>
+
         </div>
       </UiAccordionItem>
     </div>
@@ -101,34 +105,60 @@
 
 <script setup lang="ts">
 import { SfInput, SfButton, SfTextarea } from '@storefront-ui/vue';
+// FIXED: Removed unused 'FooterColumn' import
 import type { FooterContent } from './types';
 
 const { blockUuid } = useSiteConfiguration();
 const { data } = useCategoryTemplate();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
-const footerContent = computed(() => {
-  const block = findOrDeleteBlockByUuid(data.value, blockUuid.value);
-  if (!block) return {} as FooterContent;
-  
-  // Initialize defaults if missing
-  if (!block.content) block.content = { columns: [], backgroundColor: '#333333', textColor: '#ffffff' };
-  
-  // Force type cast safely
-  const content = block.content as unknown as FooterContent;
-  if (!content.columns) content.columns = [];
-  
-  return content;
+// Helper to get the actual block from the CMS data
+const getBlock = () => findOrDeleteBlockByUuid(data.value, blockUuid.value);
+
+// --- 1. Initialize Local State ---
+const footerContent = ref<FooterContent>({
+  columns: [],
+  backgroundColor: '#333333',
+  textColor: '#ffffff',
+  footnote: ''
 });
+
+// --- 2. Load Existing Data ---
+const block = getBlock();
+if (block && block.content) {
+  const loaded = block.content as unknown as FooterContent;
+  footerContent.value = {
+    columns: loaded.columns || [],
+    backgroundColor: loaded.backgroundColor || '#333333',
+    textColor: loaded.textColor || '#ffffff',
+    footnote: loaded.footnote || ''
+  };
+}
+
+// --- 3. Watch for Changes & Save Back ---
+watch(footerContent, (newVal) => {
+  const currentBlock = getBlock();
+  if (currentBlock) {
+    // Save the local state back to the CMS block
+    currentBlock.content = JSON.parse(JSON.stringify(newVal));
+  }
+}, { deep: true });
 
 // --- Actions ---
 
+const generateId = () => {
+  return typeof crypto !== 'undefined' && crypto.randomUUID 
+    ? crypto.randomUUID() 
+    : 'id-' + Math.random().toString(36).substr(2, 9);
+};
+
 const addColumn = () => {
   footerContent.value.columns.push({
-    id: crypto.randomUUID(),
+    id: generateId(),
     title: 'New Column',
     links: [],
-    socials: []
+    socials: [],
+    content: ''
   });
 };
 
