@@ -33,17 +33,17 @@
               </button>
             </form>
 
-            <div 
-              v-if="searchResults.length > 0 && searchQuery.length > 2" 
-              class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-xl z-[50] overflow-hidden text-left"
-            >
+<div 
+  v-if="showResults && searchResults.length > 0" 
+  class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-xl z-[50] overflow-hidden text-left"
+>
               <ul>
-                <li 
-                  v-for="product in searchResults" 
-                  :key="product.id"
-                  class="flex items-center p-3 border-b border-gray-100 hover:bg-gray-100 cursor-pointer transition-colors"
-                  @click="goToProduct(product)"
-                >
+<li 
+      v-for="product in searchResults" 
+      :key="product.id"
+      class="flex items-center p-3 border-b border-gray-100 hover:bg-gray-100 cursor-pointer transition-colors"
+      @click="goToProduct(product)"
+    >
                   <div class="w-12 h-12 flex-shrink-0 mr-4 border border-gray-200 rounded overflow-hidden bg-white">
                     <img 
                       :src="product.image || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png'" 
@@ -171,52 +171,40 @@ const overlayConfig = computed(() => {
 const router = useRouter();
 const localePath = useLocalePath();
 const searchQuery = ref('');
+// We use 'searchResults' to match your Template
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const searchResults = ref<any[]>([]); 
+const showResults = ref(false);
 let debounceTimeout: NodeJS.Timeout | null = null;
 
-// 1. Input Handler with Debounce
 const onSearchInput = () => {
   if (debounceTimeout) clearTimeout(debounceTimeout);
-  // Wait 300ms before hitting the API to save resources
+  
+  if (searchQuery.value.trim().length < 3) {
+    showResults.value = false;
+    searchResults.value = [];
+    return;
+  }
+
   debounceTimeout = setTimeout(() => {
     fetchSuggestions();
   }, 300);
 };
 
-// 2. The Real API Call
 const fetchSuggestions = async () => {
-  const term = searchQuery.value.trim();
-  
-  // Don't search if the string is too short
-  if (term.length < 3) {
-    searchResults.value = [];
-    return;
-  }
-
   try {
-    // UPDATED: Using the production URL you requested
-    // Note: If this fails on localhost due to CORS, change it to just '/plentysystems/getSearch'
+    // Using relative path to avoid CORS and mixed content issues
     const response = await fetch('/plentysystems/getSearch', {
       method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ term: term }) 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ term: searchQuery.value }) 
     });
 
-    // Check if the request was actually successful
-    if (!response.ok) {
-      searchResults.value = [];
-      return;
-    }
+    if (!response.ok) throw new Error('API Failed');
 
     const rawData = await response.json();
-
-    // Safely access the nested data structure
     const products = rawData?.data?.products || [];
 
-    // Map the API data to your template's format
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     searchResults.value = products.slice(0, 6).map((item: any) => ({
       id: item.id,
@@ -224,31 +212,32 @@ const fetchSuggestions = async () => {
       image: item.images?.all?.[0]?.url || '',
       url: item.urlPath || `/product/${item.id}` 
     }));
+    
+    showResults.value = true;
 
   } catch {
-    // CLEAN FIX: Removed (error) variable and console.log to satisfy ESLint
+    // Error ignored to satisfy linting rules
     searchResults.value = [];
   }
 };
 
-// 3. Navigate on Click
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const goToProduct = (product: any) => {
-  searchResults.value = []; // Close dropdown
-  // Check if it's a full URL or relative path
+  showResults.value = false;
+  // Handle both absolute and relative URLs
+  const url = product.url.startsWith('http') ? product.url : localePath(product.url);
+  
   if (product.url.startsWith('http')) {
-    window.location.href = product.url;
+     window.location.href = url;
   } else {
-    router.push(localePath(product.url));
+     router.push(url);
   }
 };
 
-// 4. Handle "Enter" Key (Full Search Page)
 const handleSearch = () => {
   if (searchQuery.value.trim().length > 0) {
-    searchResults.value = [];
-    // Redirect to the search page you showed in the first screenshot
-    window.location.href = `http://localhost:3000/search?term=${searchQuery.value}`;
+    showResults.value = false;
+    window.location.href = `/search?term=${searchQuery.value}`;
   }
 };
 // ------------------------------------
