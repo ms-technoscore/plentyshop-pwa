@@ -205,13 +205,23 @@ const onSearchInput = () => {
   }
 
   debounceTimeout = setTimeout(async () => {
+    // 1. Debug: Log the composable to see what is inside it
+    // eslint-disable-next-line no-console
+    console.log("Debug useSearch:", searchComposable);
+
     try {
-      // Use the composable's search function
-      // This AUTOMATICALLY attaches the 'configId' and cookies you were missing
-      await search({ term: searchQuery.value, itemsPerPage: 6 });
-      showResults.value = true;
-    } catch {
-      // Ignore errors
+      // 2. Try to call the search function
+      if (typeof search === 'function') {
+        await search({ term: searchQuery.value, itemsPerPage: 6 });
+        showResults.value = true;
+      } else {
+        // eslint-disable-next-line no-console
+        console.error("CRITICAL: 'search' function is MISSING from useSearch()");
+      }
+    } catch (err) {
+      // 3. Force the error to appear in Console
+      // eslint-disable-next-line no-console
+      console.error("Search Logic Crashed:", err);
     }
   }, 300);
 };
