@@ -138,8 +138,7 @@ import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import { ref, computed, watch, nextTick } from 'vue';
 
-// --- KEY CHANGE: Import useSearch manually just to be safe ---
-// If this gives an error "Cannot find module", remove this import line (it might be auto-imported)
+// --- 1. Import useSearch (if not auto-imported) ---
 // import { useSearch } from '~/composables/useSearch';
 
 const { activeSlideIndex, setIndex } = useCarousel();
@@ -171,27 +170,23 @@ const searchQuery = ref('');
 const showResults = ref(false);
 let debounceTimeout: NodeJS.Timeout | null = null;
 
-// FIX: Cast useSearch to 'any' to bypass the TypeScript definition error.
-// This allows us to use .search() and .products even if the types say they don't exist.
+// FIX: Destructure the CORRECT names found in your useSearch.ts file
+// - getSearch: The function to call the API
+// - data: The reactive object containing results
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const searchComposable = useSearch() as any;
+const { getSearch, data } = useSearch() as any;
 
-// Safely access the properties. 
-// If your composable uses different names, this is where we'd change them.
-const { search, products } = searchComposable;
-
-// We map the composable's 'products' to your template's 'searchResults'
+// Create a Computed Property that automatically updates when 'data' changes
 const searchResults = computed(() => {
-  if (!products || !products.value) return [];
+  // Access the products array inside the data object
+  const products = data.value?.products || [];
   
+  // Map to your template structure
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return products.value.slice(0, 6).map((item: any) => ({
+  return products.slice(0, 6).map((item: any) => ({
     id: item.id,
-    // Handle various naming conventions (texts.name1 vs name)
     name: item.texts?.name1 || item.name || 'Product',
-    // Handle image structure
-    image: item.images?.all?.[0]?.url || item.images?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-    // Handle URL structure
+    image: item.images?.all?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
     url: item.urlPath || `/product/${item.id}` 
   }));
 });
@@ -205,23 +200,17 @@ const onSearchInput = () => {
   }
 
   debounceTimeout = setTimeout(async () => {
-    // 1. Debug: Log the composable to see what is inside it
-    // eslint-disable-next-line no-console
-    console.log("Debug useSearch:", searchComposable);
-
     try {
-      // 2. Try to call the search function
-      if (typeof search === 'function') {
-        await search({ term: searchQuery.value, itemsPerPage: 6 });
+      // FIX: Call 'getSearch' instead of 'search'
+      await getSearch({ term: searchQuery.value, itemsPerPage: 6 });
+      
+      // Only show if we actually got results
+      if (searchResults.value.length > 0) {
         showResults.value = true;
-      } else {
-        // eslint-disable-next-line no-console
-        console.error("CRITICAL: 'search' function is MISSING from useSearch()");
       }
-    } catch (err) {
-      // 3. Force the error to appear in Console
+    } catch (e) {
       // eslint-disable-next-line no-console
-      console.error("Search Logic Crashed:", err);
+      console.error("Search Failed:", e);
     }
   }, 300);
 };
@@ -230,6 +219,7 @@ const onSearchInput = () => {
 const goToProduct = (product: any) => {
   showResults.value = false;
   const url = product.url.startsWith('http') ? product.url : localePath(product.url);
+  
   if (product.url.startsWith('http')) {
      window.location.href = url;
   } else {
