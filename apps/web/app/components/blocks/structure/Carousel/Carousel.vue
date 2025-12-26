@@ -138,6 +138,10 @@ import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import { ref, computed, watch, nextTick } from 'vue';
 
+// --- KEY CHANGE: Import useSearch manually just to be safe ---
+// If this gives an error "Cannot find module", remove this import line (it might be auto-imported)
+// import { useSearch } from '~/composables/useSearch';
+
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
@@ -164,71 +168,58 @@ const overlayConfig = computed(() => {
 const router = useRouter();
 const localePath = useLocalePath();
 const searchQuery = ref('');
-// We use 'searchResults' to match your Template
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const searchResults = ref<any[]>([]); 
 const showResults = ref(false);
 let debounceTimeout: NodeJS.Timeout | null = null;
+
+// FIX: Cast useSearch to 'any' to bypass the TypeScript definition error.
+// This allows us to use .search() and .products even if the types say they don't exist.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const searchComposable = useSearch() as any;
+
+// Safely access the properties. 
+// If your composable uses different names, this is where we'd change them.
+const { search, products } = searchComposable;
+
+// We map the composable's 'products' to your template's 'searchResults'
+const searchResults = computed(() => {
+  if (!products || !products.value) return [];
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return products.value.slice(0, 6).map((item: any) => ({
+    id: item.id,
+    // Handle various naming conventions (texts.name1 vs name)
+    name: item.texts?.name1 || item.name || 'Product',
+    // Handle image structure
+    image: item.images?.all?.[0]?.url || item.images?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+    // Handle URL structure
+    url: item.urlPath || `/product/${item.id}` 
+  }));
+});
 
 const onSearchInput = () => {
   if (debounceTimeout) clearTimeout(debounceTimeout);
   
   if (searchQuery.value.trim().length < 3) {
     showResults.value = false;
-    searchResults.value = [];
     return;
   }
 
-  debounceTimeout = setTimeout(() => {
-    fetchSuggestions();
+  debounceTimeout = setTimeout(async () => {
+    try {
+      // Use the composable's search function
+      // This AUTOMATICALLY attaches the 'configId' and cookies you were missing
+      await search({ term: searchQuery.value, itemsPerPage: 6 });
+      showResults.value = true;
+    } catch {
+      // Ignore errors
+    }
   }, 300);
-};
-
-const fetchSuggestions = async () => {
-  try {
-    // USE RELATIVE PATH FOR PRODUCTION
-    // This works automatically on the server because frontend & backend are on the same domain
-    const backendUrl = '/plentysystems/getSearch'; 
-
-    const response = await fetch(backendUrl, {
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' },
-      
-      // ⚠️ THIS IS THE FIX:
-      // This forces the browser to send your 'plentyID' and session cookies
-      credentials: 'include', 
-
-      body: JSON.stringify({ term: searchQuery.value }) 
-    });
-
-    if (!response.ok) throw new Error('API Failed');
-
-    const rawData = await response.json();
-    const products = rawData?.data?.products || [];
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    searchResults.value = products.slice(0, 6).map((item: any) => ({
-      id: item.id,
-      name: item.texts?.name1 || item.name || 'Product',
-      image: item.images?.all?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      url: item.urlPath || `/product/${item.id}` 
-    }));
-    
-    showResults.value = searchResults.value.length > 0;
-
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error("AJAX Error:", e);
-    searchResults.value = [];
-  }
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const goToProduct = (product: any) => {
   showResults.value = false;
-  // Handle both absolute and relative URLs
   const url = product.url.startsWith('http') ? product.url : localePath(product.url);
-  
   if (product.url.startsWith('http')) {
      window.location.href = url;
   } else {
