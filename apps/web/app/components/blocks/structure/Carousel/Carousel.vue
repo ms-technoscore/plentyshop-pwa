@@ -186,38 +186,37 @@ const onSearchInput = () => {
 
 const fetchSuggestions = async () => {
   try {
-    // FIX 1: Use the Full Backend URL
-    // If you are running the backend locally, use 'http://localhost:8181/plentysystems/getSearch'
-    // If you are using the live site backend, use the https link below:
-    const backendUrl = 'https://www.komplett-konzept.de/plentysystems/getSearch';
+    // USE RELATIVE PATH FOR PRODUCTION
+    // This works automatically on the server because frontend & backend are on the same domain
+    const backendUrl = '/plentysystems/getSearch'; 
 
     const response = await fetch(backendUrl, {
       method: 'POST', 
       headers: { 'Content-Type': 'application/json' },
+      
+      // ⚠️ THIS IS THE FIX:
+      // This forces the browser to send your 'plentyID' and session cookies
+      credentials: 'include', 
+
       body: JSON.stringify({ term: searchQuery.value }) 
     });
 
     if (!response.ok) throw new Error('API Failed');
 
     const rawData = await response.json();
-    
-    // Check the structure (based on your screenshot it is data.data.products)
     const products = rawData?.data?.products || [];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     searchResults.value = products.slice(0, 6).map((item: any) => ({
       id: item.id,
       name: item.texts?.name1 || item.name || 'Product',
-      // FIX 2: Better image fallback
       image: item.images?.all?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
       url: item.urlPath || `/product/${item.id}` 
     }));
     
-    // Only show results if we actually found something
     showResults.value = searchResults.value.length > 0;
 
   } catch (e) {
-    // FIX 3: Temporary Log to debug (eslint-disable ensures no lint error)
     // eslint-disable-next-line no-console
     console.error("AJAX Error:", e);
     searchResults.value = [];
