@@ -186,8 +186,12 @@ const onSearchInput = () => {
 
 const fetchSuggestions = async () => {
   try {
-    // Using relative path to avoid CORS and mixed content issues
-    const response = await fetch('/plentysystems/getSearch', {
+    // FIX 1: Use the Full Backend URL
+    // If you are running the backend locally, use 'http://localhost:8181/plentysystems/getSearch'
+    // If you are using the live site backend, use the https link below:
+    const backendUrl = 'https://www.komplett-konzept.de/plentysystems/getSearch';
+
+    const response = await fetch(backendUrl, {
       method: 'POST', 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ term: searchQuery.value }) 
@@ -196,20 +200,26 @@ const fetchSuggestions = async () => {
     if (!response.ok) throw new Error('API Failed');
 
     const rawData = await response.json();
+    
+    // Check the structure (based on your screenshot it is data.data.products)
     const products = rawData?.data?.products || [];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     searchResults.value = products.slice(0, 6).map((item: any) => ({
       id: item.id,
       name: item.texts?.name1 || item.name || 'Product',
-      image: item.images?.all?.[0]?.url || '',
+      // FIX 2: Better image fallback
+      image: item.images?.all?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
       url: item.urlPath || `/product/${item.id}` 
     }));
     
-    showResults.value = true;
+    // Only show results if we actually found something
+    showResults.value = searchResults.value.length > 0;
 
-  } catch {
-    // Error ignored to satisfy linting rules
+  } catch (e) {
+    // FIX 3: Temporary Log to debug (eslint-disable ensures no lint error)
+    // eslint-disable-next-line no-console
+    console.error("AJAX Error:", e);
     searchResults.value = [];
   }
 };
