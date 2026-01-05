@@ -1,5 +1,5 @@
 <template>
-  <MegaMenu :categories="categoryTree">
+  <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <!-- <UiSearch class="hidden md:block flex-1" /> -->
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
@@ -242,6 +242,15 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
+const allowedCategoryIds = [895, 490, 1505 ];
+const filteredCategoryTree = computed(() => {
+  if (!categoryTree.value) return [];
+  
+  // Filter the main top-level categories
+return categoryTree.value.filter((category: { id: number }) => {
+  return allowedCategoryIds.includes(category.id);
+});
+});
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -299,4 +308,8 @@ const navigateToLogin = () => {
     openAuthentication();
   }
 };
+watch(categoryTree, (tree) => {
+  // eslint-disable-next-line no-console
+  console.log("Category List:", tree);
+}, { immediate: true });
 </script>
