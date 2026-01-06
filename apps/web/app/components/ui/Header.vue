@@ -2,6 +2,14 @@
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <!-- <UiSearch class="hidden md:block flex-1" /> -->
+      <div class="hidden md:flex flex-col items-end justify-center flex-1 mr-6">
+        <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm font-medium text-white mb-0.5 transition-colors">
+          www.komplett-konzept.de
+        </a>
+        <a href="tel:+492862587950" class="text-sm font-bold text-white transition-colors">
+          +49 2862 58795 0
+        </a>
+      </div>
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
         <template v-if="localeCodes.length > 1">
           <UiButton
