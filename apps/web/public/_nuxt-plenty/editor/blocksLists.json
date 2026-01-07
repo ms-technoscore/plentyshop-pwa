@@ -1855,5 +1855,83 @@
         }
       }
     ]
+  },
+  "custom-form": {
+    "category": "forms",
+    "accessControl": ["content", "productCategory", "product"],
+    "title": "Custom Form",
+    "blockName": "CustomForm",
+    "variations": [
+      {
+        "title": "Custom Contact Form",
+        "image": "https://placehold.co/100x100/000000/ffffff?text=Form",
+        "template": {
+          "en": {
+            "name": "CustomForm",
+            "type": "content",
+            "meta": { "uuid": "custom-form-en-default-001" },
+            "content": {
+              "text": {
+                "title": "Contact Us",
+                "description": "Please fill out the form below.",
+                "bgColor": "#ffffff"
+              },
+              "fields": [
+                {
+                  "id": "field_name_en",
+                  "label": "Name",
+                  "name": "name",
+                  "type": "text",
+                  "required": true,
+                  "width": "100%"
+                },
+                {
+                  "id": "field_email_en",
+                  "label": "Email",
+                  "name": "email",
+                  "type": "email",
+                  "required": true,
+                  "width": "100%"
+                }
+              ],
+              "button": { "label": "Submit" },
+              "settings": { "successMessage": "Thank you for your message!" }
+            }
+          },
+          "de": {
+            "name": "CustomForm",
+            "type": "content",
+            "meta": { "uuid": "custom-form-de-default-001" },
+            "content": {
+              "text": {
+                "title": "Kontaktieren Sie uns",
+                "description": "Bitte füllen Sie das Formular aus.",
+                "bgColor": "#ffffff"
+              },
+              "fields": [
+                {
+                  "id": "field_name_de",
+                  "label": "Name",
+                  "name": "name",
+                  "type": "text",
+                  "required": true,
+                  "width": "100%"
+                },
+                {
+                  "id": "field_email_de",
+                  "label": "E-Mail",
+                  "name": "email",
+                  "type": "email",
+                  "required": true,
+                  "width": "100%"
+                }
+              ],
+              "button": { "label": "Absenden" },
+              "settings": { "successMessage": "Vielen Dank für Ihre Nachricht!" }
+            }
+          }
+        }
+      }
+    ]
   }
 }
