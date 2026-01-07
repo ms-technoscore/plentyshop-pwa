@@ -1,30 +1,32 @@
 export interface FormField {
-  id: string; // Unique ID for v-for loops
+  id: string;
   type: 'text' | 'email' | 'textarea' | 'number' | 'checkbox';
   label: string;
-  name: string; // The key used in the data payload (e.g., 'firstName')
+  name: string;
   placeholder?: string;
   required: boolean;
-  width: '100%' | '50%'; // Layout option
+  width: '100%' | '50%';
 }
 
+// Remove "?" from these properties to make them required by default
 export interface CustomFormContent {
-  text?: {
-    title?: string;
-    description?: string;
-    bgColor?: string;
+  text: {
+    title: string;
+    description: string;
+    bgColor: string;
   };
   fields: FormField[];
-  button?: {
-    label?: string;
+  button: {
+    label: string;
   };
-  settings?: {
-    successMessage?: string;
-    recipientEmail?: string; // Optional: if you have logic to handle this backend side
+  settings: {
+    successMessage: string;
+    recipientEmail?: string;
   };
 }
 
 export interface CustomFormProps {
-  content: CustomFormContent;
+  // Use Partial here because incoming data might be incomplete
+  content: Partial<CustomFormContent>;
   index?: number;
 }

@@ -102,7 +102,9 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { CustomFormContent, FormField } from './types';
+import type { FormField } from './types';
+// Import the new utility function
+import { initializeCustomFormContent } from './utils'; 
 import { reactive, computed } from 'vue';
 
 // Manage Accordion State
@@ -123,20 +125,10 @@ const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
 // Initialize or Get Content
-const formContent = computed<Required<CustomFormContent>>(() => {
+const formContent = computed(() => {
   const uuid = blockUuid.value;
-  // FIX 1: Cast to 'any' to allow initializing properties on an empty object
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rawContent: any = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
-  
-  // Default structure if empty
-  if (!rawContent.fields) rawContent.fields = [];
-  if (!rawContent.text) rawContent.text = { bgColor: '#ffffff' };
-  if (!rawContent.button) rawContent.button = { label: 'Submit' };
-  if (!rawContent.settings) rawContent.settings = {};
-
-  // FIX 2: Return as 'Required' so the template knows 'text', 'button', etc. are not undefined
-  return rawContent as Required<CustomFormContent>;
+  const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
+  return initializeCustomFormContent(rawContent);
 });
 
 // --- HELPER FUNCTIONS ---
