@@ -49,6 +49,7 @@ const getComponent = (name: string) => {
 const blockTypeNames: Record<string, string> = {
   Carousel: 'Image Banner',
   NewsletterSubscribe: 'Newsletter',
+  CustomForm: 'Custom Form',
   ProductRecommendedProducts: 'Product Gallery',
   TextCard: 'Rich Text',
   CustomerReview: 'Customer reviews',
