@@ -31,5 +31,11 @@ export const appConfiguration = {
       { property: 'og:title', content: openGraph.title },
       { property: 'og:url', content: process.env.API_ENDPOINT },
     ],
+    script: [
+      {
+        src: 'https://komplett-konzept.leasingo.cloud/integration/rateIndicator',
+        async: true,
+      },
+    ],
   },
 };

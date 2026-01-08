@@ -1,6 +1,14 @@
 <template>
   <div class="mb-3">
     <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+    
+    <div 
+      v-if="priceWithProperties >= 500"
+      class="leasingo-rate-indicator mt-2"
+      :data-object-price-netto="priceWithProperties"
+      data-finance-product="1"
+      data-maturity="36"
+    />
     <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
       <UiTag :size="'sm'" :variant="'secondary'">{{
         t('product.bundleSavings', { percent: productBundleGetters.getBundleDiscount(product) })
