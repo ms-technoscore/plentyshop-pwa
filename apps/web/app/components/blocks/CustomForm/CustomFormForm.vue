@@ -1,151 +1,115 @@
 <template>
-  <UiAccordionItem
-    v-model="groups.general"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary><h2>General Settings</h2></template>
-    
-    <div class="mb-4">
-      <UiFormLabel>Form Title</UiFormLabel>
-      <SfInput v-model="formContent.text.title" placeholder="Contact Us" />
-    </div>
-    
-    <div class="mb-4">
-      <UiFormLabel>Description</UiFormLabel>
-      <SfTextarea v-model="formContent.text.description" class="min-h-[100px]" />
+  <div class="p-4 bg-white">
+    <div class="mb-6 border-b pb-4">
+      <h3 class="font-bold text-lg mb-2">General Settings</h3>
+      
+      <label class="block mb-2 text-sm font-medium">Form Title</label>
+      <input 
+        v-model="mappedContent.title" 
+        type="text" 
+        class="w-full p-2 border rounded mb-2"
+      />
+
+      <label class="block mb-2 text-sm font-medium">Button Label</label>
+      <input 
+        v-model="mappedContent.submitButtonLabel" 
+        type="text" 
+        class="w-full p-2 border rounded"
+      />
     </div>
 
     <div class="mb-4">
-      <UiFormLabel>Background Color</UiFormLabel>
-      <SfInput type="color" v-model="formContent.text.bgColor" class="h-[50px] w-full cursor-pointer" />
-    </div>
-  </UiAccordionItem>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-lg">Form Fields</h3>
+        <button 
+          @click="addNewField"
+          class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+        >
+          + Add Field
+        </button>
+      </div>
 
-  <UiAccordionItem
-    v-model="groups.fields"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary><h2>Form Fields ({{ formContent.fields.length }})</h2></template>
+      <div v-if="mappedContent.fields.length === 0" class="text-gray-500 italic text-center py-4">
+        No fields added yet. Click above to add one.
+      </div>
 
-    <div class="flex flex-col gap-4">
       <div 
-        v-for="(field, idx) in formContent.fields" 
-        :key="field.id" 
-        class="border border-neutral-200 rounded p-3 bg-white"
+        v-for="(field, index) in mappedContent.fields" 
+        :key="field.id"
+        class="border rounded p-3 mb-3 bg-gray-50 relative group"
       >
-        <div class="flex justify-between items-center mb-2">
-          <span class="font-bold text-sm">Field {{ idx + 1 }}</span>
-          <button @click="removeField(idx)" class="text-negative-700 text-xs font-bold uppercase hover:underline">Remove</button>
-        </div>
+        <button 
+          @click="removeField(index)"
+          class="absolute top-2 right-2 text-red-500 hover:text-red-700 font-bold"
+          title="Remove Field"
+        >
+          ✕
+        </button>
 
-        <div class="grid grid-cols-2 gap-2 mb-2">
+        <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="text-xs text-neutral-500">Label</label>
-            <SfInput v-model="field.label" size="sm" />
+            <label class="text-xs text-gray-600">Label</label>
+            <input v-model="field.label" class="w-full p-1 border rounded text-sm" placeholder="e.g. Your Name" />
           </div>
-          <div>
-            <label class="text-xs text-neutral-500">Internal Name</label>
-            <SfInput v-model="field.name" size="sm" placeholder="e.g. email" />
-          </div>
-        </div>
 
-        <div class="grid grid-cols-2 gap-2 mb-2">
           <div>
-            <label class="text-xs text-neutral-500">Type</label>
-            <select v-model="field.type" class="w-full border rounded px-2 py-1.5 text-sm">
-              <option value="text">Text</option>
+            <label class="text-xs text-gray-600">Type</label>
+            <select v-model="field.type" class="w-full p-1 border rounded text-sm">
+              <option value="text">Text Input</option>
               <option value="email">Email</option>
-              <option value="textarea">Text Area</option>
+              <option value="textarea">Text Area (Long)</option>
               <option value="number">Number</option>
               <option value="checkbox">Checkbox</option>
             </select>
           </div>
-          <div>
-            <label class="text-xs text-neutral-500">Width</label>
-            <select v-model="field.width" class="w-full border rounded px-2 py-1.5 text-sm">
-              <option value="100%">Full Width</option>
-              <option value="50%">Half Width</option>
-            </select>
+
+          <div class="flex items-center mt-2">
+            <input type="checkbox" v-model="field.required" :id="`req-${field.id}`" class="mr-2" />
+            <label :for="`req-${field.id}`" class="text-sm">Is Required?</label>
+          </div>
+          
+          <div class="mt-2">
+             <label class="text-xs text-gray-600">Width</label>
+             <select v-model="field.width" class="w-full p-1 border rounded text-sm">
+               <option value="100%">Full Row</option>
+               <option value="50%">Half Row</option>
+             </select>
           </div>
         </div>
-
-        <div class="flex items-center gap-4 mt-2">
-          <label class="flex items-center text-sm cursor-pointer">
-            <SfSwitch v-model="field.required" class="mr-2" /> Required
-          </label>
-        </div>
       </div>
-
-      <UiButton @click="addField" variant="secondary" class="w-full dashed-border">
-        + Add New Field
-      </UiButton>
     </div>
-  </UiAccordionItem>
-
-  <UiAccordionItem
-    v-model="groups.actions"
-    summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-  >
-    <template #summary><h2>Button & Actions</h2></template>
-    
-    <div class="mb-4">
-      <UiFormLabel>Button Label</UiFormLabel>
-      <SfInput v-model="formContent.button.label" placeholder="Send Message" />
-    </div>
-
-    <div class="mb-4">
-      <UiFormLabel>Success Message</UiFormLabel>
-      <SfInput v-model="formContent.settings.successMessage" placeholder="Thanks for contacting us!" />
-    </div>
-  </UiAccordionItem>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { FormField } from './types';
-// Import the new utility function
-import { initializeCustomFormContent } from './utils'; 
-import { reactive, computed } from 'vue';
+import { computed } from 'vue';
+import type { CustomFormProps, FormField } from './types';
+import { cleanFormContent } from './utils';
 
-// Manage Accordion State
-const groups = reactive({
-  general: true,
-  fields: true,
-  actions: true
+const props = defineProps<{ content: any }>();
+const emit = defineEmits(['update:content']);
+
+// Ensure content is valid
+const mappedContent = computed({
+  get: () => cleanFormContent(props.content || {}),
+  set: (newVal) => emit('update:content', newVal)
 });
 
-// Access Builder Data
-const route = useRoute();
-const { data } = useCategoryTemplate(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
-const { blockUuid } = useSiteConfiguration();
-const { findOrDeleteBlockByUuid } = useBlockManager();
-
-// Initialize or Get Content
-const formContent = computed(() => {
-  const uuid = blockUuid.value;
-  const rawContent = findOrDeleteBlockByUuid(data.value, uuid)?.content ?? {};
-  return initializeCustomFormContent(rawContent);
-});
-
-// --- HELPER FUNCTIONS ---
-
-const addField = () => {
+const addNewField = () => {
   const newField: FormField = {
-    id: `field_${Date.now()}`,
-    label: 'New Field',
-    name: `field_${formContent.value.fields.length + 1}`,
+    id: `f_${Date.now()}`,
+    label: 'New Question',
+    name: `field_${Date.now()}`,
     type: 'text',
     required: false,
     width: '100%'
   };
-  formContent.value.fields.push(newField);
+  
+  // Push to the array
+  mappedContent.value.fields.push(newField);
 };
 
 const removeField = (index: number) => {
-  formContent.value.fields.splice(index, 1);
+  mappedContent.value.fields.splice(index, 1);
 };
 </script>

@@ -1,192 +1,81 @@
 <template>
-  <div
-    class="relative mt-5 p-4 sm:p-10 text-center"
-    :style="{ backgroundColor: normalizedContent.text.bgColor }"
-    data-testid="custom-form-block"
-  >
-    <h2
-      v-if="normalizedContent.text.title"
-      class="typography-headline-3 font-bold mb-4"
-      v-html="normalizedContent.text.title"
-    />
-    
-    <p
-      v-if="normalizedContent.text.description"
-      class="typography-text-base mb-6"
-      v-html="normalizedContent.text.description"
-    />
+  <div class="custom-form-block py-10 px-4 max-w-4xl mx-auto">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold mb-2">{{ mappedContent.title }}</h2>
+      <p v-if="mappedContent.description" class="text-gray-600">{{ mappedContent.description }}</p>
+    </div>
 
-    <form class="mx-auto max-w-[600px] pt-2 text-left" novalidate @submit.prevent="onSubmit">
+    <form @submit.prevent="handleSubmit" class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
       <div class="flex flex-wrap -mx-2">
         
-        <div
-          v-for="field in fields"
+        <div 
+          v-for="field in mappedContent.fields" 
           :key="field.id"
           class="px-2 mb-4"
-          :class="field.width === '50%' ? 'w-full sm:w-1/2' : 'w-full'"
+          :class="field.width === '50%' ? 'w-full md:w-1/2' : 'w-full'"
         >
-          <label :for="field.id">
-            <UiFormLabel>
-              {{ field.label }} 
-              <span v-if="field.required" class="text-negative-700">*</span>
-            </UiFormLabel>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            {{ field.label }} <span v-if="field.required" class="text-red-500">*</span>
           </label>
 
-          <SfInput
-            v-if="['text', 'email', 'number'].includes(field.type)"
-            :id="field.id"
-            v-model="formData[field.name]"
-            :type="field.type"
+          <textarea
+            v-if="field.type === 'textarea'"
             :name="field.name"
-            :placeholder="field.placeholder"
-            :invalid="Boolean(errors[field.name])"
-            class="w-full"
-          />
-
-          <SfTextarea
-            v-else-if="field.type === 'textarea'"
-            :id="field.id"
-            v-model="formData[field.name]"
-            :name="field.name"
-            :placeholder="field.placeholder"
-            :invalid="Boolean(errors[field.name])"
-            class="w-full min-h-[100px]"
-          />
+            :required="field.required"
+            class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            rows="4"
+          ></textarea>
 
           <div v-else-if="field.type === 'checkbox'" class="flex items-center mt-2">
-            <SfCheckbox
-              :id="field.id"
-              v-model="formData[field.name]"
-              :name="field.name"
-              :invalid="Boolean(errors[field.name])"
-              class="mr-2"
+            <input 
+              type="checkbox" 
+              :name="field.name" 
+              :required="field.required"
+              class="h-4 w-4 text-blue-600 border-gray-300 rounded"
             />
-            <label :for="field.id" class="cursor-pointer select-none">
-              {{ field.label }} <span v-if="field.required" class="text-negative-700">*</span>
-            </label>
+            <span class="ml-2 text-sm text-gray-600">Yes, I agree</span>
           </div>
 
-          <ErrorMessage as="div" :name="field.name" class="text-negative-700 text-sm mt-1" />
+          <input
+            v-else
+            :type="field.type"
+            :name="field.name"
+            :required="field.required"
+            class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
         </div>
+
       </div>
 
-      <div class="flex justify-center mt-4">
-        <UiButton type="submit" size="lg" :disabled="isSubmitting">
-          <SfLoaderCircular v-if="isSubmitting" size="base" />
-          <template v-else>{{ normalizedContent.button.label }}</template>
-        </UiButton>
+      <div class="mt-6 text-center">
+        <button 
+          type="submit" 
+          class="bg-black text-white px-8 py-3 rounded hover:bg-gray-800 transition font-medium"
+        >
+          {{ mappedContent.submitButtonLabel }}
+        </button>
       </div>
-
-      <div v-if="successMsg" class="mt-4 text-positive-700 font-bold text-center">
-        {{ successMsg }}
+      
+      <div v-if="isSuccess" class="mt-4 p-4 bg-green-50 text-green-700 rounded text-center">
+        {{ mappedContent.successMessage }}
       </div>
     </form>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { SfInput, SfTextarea, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
-import { useForm, ErrorMessage } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
-import { object, string, boolean } from 'yup';
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 import type { CustomFormProps } from './types';
+import { cleanFormContent } from './utils';
 
-const props = defineProps<CustomFormProps>();
-const { send } = useNotification();
+const props = defineProps<{ content: any }>();
+const mappedContent = computed(() => cleanFormContent(props.content || {}));
+const isSuccess = ref(false);
 
-// --- Normalize Content ---
-const normalizedContent = computed(() => {
-  const c = props.content || {};
-  return {
-    text: {
-      title: c.text?.title ?? '',
-      description: c.text?.description ?? '',
-      bgColor: c.text?.bgColor ?? '#f5f5f5'
-    },
-    fields: c.fields ?? [],
-    button: {
-      label: c.button?.label ?? 'Submit'
-    },
-    settings: {
-      successMessage: c.settings?.successMessage ?? 'Form submitted successfully!'
-    }
-  };
-});
-
-// Initialize fields
-const fields = computed(() => normalizedContent.value.fields);
-const isSubmitting = ref(false);
-const successMsg = ref('');
-
-// --- DYNAMIC SCHEMA GENERATION ---
-const validationSchema = computed(() => {
-  // FIX 1: Allow 'any' here because yup schemas are dynamic objects
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const schemaShape: Record<string, any> = {};
-
-  // FIX 2: Added parentheses (field) to fix 'arrow-parens' error
-  fields.value.forEach((field) => {
-    let rule;
-
-    if (field.type === 'email') {
-      rule = string().email('Invalid email format');
-    } else if (field.type === 'number') {
-      rule = string().matches(/^[0-9]+$/, 'Must be a number');
-    } else if (field.type === 'checkbox') {
-      rule = boolean();
-      if (field.required) rule = rule.isTrue('This field is required');
-    } else {
-      rule = string();
-    }
-
-    if (field.required && field.type !== 'checkbox') {
-      rule = rule.required('This field is required');
-    }
-
-    schemaShape[field.name] = rule;
-  });
-
-  return toTypedSchema(object(schemaShape));
-});
-
-// Setup Form
-const { errors, handleSubmit, resetForm } = useForm({
-  validationSchema: validationSchema,
-});
-
-// --- Explicit Typing for formData ---
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const formData: Record<string, any> = reactive({});
-
-// Watch fields to initialize formData keys
-watchEffect(() => {
-  // FIX 3: Added parentheses (f) here as well
-  fields.value.forEach((f) => {
-    if (!(f.name in formData)) {
-      formData[f.name] = f.type === 'checkbox' ? false : '';
-    }
-  });
-});
-
-// FIX 4: Added parentheses (values)
-const onSubmit = handleSubmit(async (values) => {
-  isSubmitting.value = true;
-  
-  try {
-    // Simulating API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    // eslint-disable-next-line no-console
-    console.log('Form Data Submitted:', values);
-    
-    send({ type: 'positive', message: normalizedContent.value.settings.successMessage });
-    successMsg.value = normalizedContent.value.settings.successMessage;
-    resetForm();
-    
-  } catch {
-    send({ type: 'negative', message: 'Something went wrong.' });
-  } finally {
-    isSubmitting.value = false;
-  }
-});
+const handleSubmit = () => {
+  // Logic to send data to backend would go here
+  console.log("Form Submitted");
+  isSuccess.value = true;
+  setTimeout(() => { isSuccess.value = false }, 5000);
+};
 </script>

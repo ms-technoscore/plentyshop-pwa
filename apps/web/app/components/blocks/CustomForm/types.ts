@@ -1,32 +1,19 @@
+export type FieldType = 'text' | 'email' | 'number' | 'textarea' | 'checkbox';
+
 export interface FormField {
-  id: string;
-  type: 'text' | 'email' | 'textarea' | 'number' | 'checkbox';
+  id: string; // Unique ID for loop keys
   label: string;
-  name: string;
+  name: string; // The HTML name attribute
+  type: FieldType;
   placeholder?: string;
   required: boolean;
-  width: '100%' | '50%';
-}
-
-// Remove "?" from these properties to make them required by default
-export interface CustomFormContent {
-  text: {
-    title: string;
-    description: string;
-    bgColor: string;
-  };
-  fields: FormField[];
-  button: {
-    label: string;
-  };
-  settings: {
-    successMessage: string;
-    recipientEmail?: string;
-  };
+  width: '50%' | '100%';
 }
 
 export interface CustomFormProps {
-  // Use Partial here because incoming data might be incomplete
-  content: Partial<CustomFormContent>;
-  index?: number;
+  title: string;
+  description?: string;
+  submitButtonLabel: string;
+  successMessage: string;
+  fields: FormField[];
 }
