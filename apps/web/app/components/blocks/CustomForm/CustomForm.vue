@@ -24,7 +24,7 @@
             :required="field.required"
             class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
             rows="4"
-          ></textarea>
+          />
 
           <div v-else-if="field.type === 'checkbox'" class="flex items-center mt-2">
             <input 
@@ -65,15 +65,15 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { CustomFormProps } from './types';
 import { cleanFormContent } from './utils';
 
-const props = defineProps<{ content: any }>();
+const props = defineProps<{ content: unknown }>();
 const mappedContent = computed(() => cleanFormContent(props.content || {}));
 const isSuccess = ref(false);
 
 const handleSubmit = () => {
   // Logic to send data to backend would go here
+  // eslint-disable-next-line no-console
   console.log("Form Submitted");
   isSuccess.value = true;
   setTimeout(() => { isSuccess.value = false }, 5000);

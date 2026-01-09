@@ -3,10 +3,10 @@
     <template v-if="viewport.isGreaterOrEquals('md')">
       <!-- <UiSearch class="hidden md:block flex-1" /> -->
       <div class="hidden md:flex flex-col items-end justify-center flex-1 mr-6">
-        <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm font-medium text-white mb-0.5 transition-colors">
+        <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm font-medium mb-0.5 transition-colors" style="color: #062633;">
           www.komplett-konzept.de
         </a>
-        <a href="tel:+492862587950" class="text-sm font-bold text-white transition-colors">
+        <a href="tel:+492862587950" class="text-sm font-bold transition-colors" style="color: #062633;">
           +49 2862 58795 0
         </a>
       </div>

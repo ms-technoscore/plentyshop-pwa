@@ -83,10 +83,10 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { CustomFormProps, FormField } from './types';
+import type { FormField } from './types';
 import { cleanFormContent } from './utils';
 
-const props = defineProps<{ content: any }>();
+const props = defineProps<{ content: unknown }>();
 const emit = defineEmits(['update:content']);
 
 // Ensure content is valid
