@@ -1857,37 +1857,49 @@
     ]
   },
   "custom-dynamic-form": {
-    "category": "custom-forms",
-    "accessControl": ["content", "productCategory", "product"],
-    "title": "Dynamic Form Builder",
-    "blockName": "CustomForm", 
-    "variations": [
-      {
-        "title": "Blank Form",
-        "image": "https://placehold.co/100x100/3b82f6/ffffff?text=Form",
-        "template": {
-          "en": {
-            "name": "CustomForm",
-            "type": "content",
-            "meta": { "uuid": "dynamic-form-en-001" },
-            "content": {
-              "title": "Contact Us",
-              "submitButtonLabel": "Send",
-              "fields": [] 
-            }
-          },
-          "de": {
-            "name": "CustomForm",
-            "type": "content",
-            "meta": { "uuid": "dynamic-form-de-001" },
-            "content": {
-              "title": "Kontaktieren Sie uns",
-              "submitButtonLabel": "Absenden",
-              "fields": []
-            }
+  "category": "forms",
+  "accessControl": ["content", "productCategory", "product"],
+  "title": "Dynamic Form Builder",
+  "blockName": "CustomForm",
+  "variations": [
+    {
+      "title": "Blank Form",
+      "image": "https://placehold.co/100x100/3b82f6/ffffff?text=Form",
+      "template": {
+        "en": {
+          "name": "CustomForm",
+          "type": "content",
+          "meta": { "uuid": "dynamic-form-en-001" },
+          "content": {
+            "title": "Contact Us",
+            "submitButtonLabel": "Send",
+            "fields": [
+              {
+                "type": "text",
+                "label": "Email",
+                "required": true
+              }
+            ]
+          }
+        },
+        "de": {
+          "name": "CustomForm",
+          "type": "content",
+          "meta": { "uuid": "dynamic-form-de-001" },
+          "content": {
+            "title": "Kontaktieren Sie uns",
+            "submitButtonLabel": "Absenden",
+            "fields": [
+              {
+                "type": "text",
+                "label": "E-Mail",
+                "required": true
+              }
+            ]
           }
         }
       }
-    ]
-  }
+    }
+  ]
+}
 }
