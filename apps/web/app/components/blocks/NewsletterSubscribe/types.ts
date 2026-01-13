@@ -5,6 +5,7 @@ export type NewsletterSubscribeProps = {
   configuration?: object;
   index?: number;
 };
+
 export type FormField = {
   key: string;
   type: 'text' | 'textarea';
@@ -39,3 +40,4 @@ export type NewsletterSubscribeContent = {
     fullWidth?: boolean;
   };
 };
+

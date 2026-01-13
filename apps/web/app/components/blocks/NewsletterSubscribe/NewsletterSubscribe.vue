@@ -119,7 +119,6 @@ const { send } = useNotification();
 const localePath = useLocalePath();
 const props = defineProps<NewsletterSubscribeProps>();
 const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
-const turnstileSiteKey = getSetting() ?? '';
 
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
@@ -168,16 +167,18 @@ const subscribeNewsletter = async () => {
   if (!meta.value.valid || !turnstile.value) return;
 
   const response = await subscribe({
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value,
-    emailFolder: props.content.settings.emailFolderId,
-    extraFields: {
-      ...dynamicFields,
-      options: Object.keys(selectedOptions).filter(k => selectedOptions[k]),
-    },
-    'cf-turnstile-response': turnstile.value,
-  });
+  firstName: firstName.value ?? '',
+  lastName: lastName.value ?? '',
+  email: email.value ?? '',
+  emailFolder: props.content.settings.emailFolderId,
+  extraFields: {
+    ...dynamicFields,
+    options: Object.keys(selectedOptions)
+  .filter(k => selectedOptions[k])
+  .join(','),
+  },
+});
+
 
   if (response) {
     send({ type: 'positive', message: t('newsletter.success') });
