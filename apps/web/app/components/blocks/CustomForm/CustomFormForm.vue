@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { computed } from 'vue';
+import type { FormField } from './types';
+import { cleanFormContent } from './utils';
+
+const props = defineProps<{ content: unknown }>();
+const emit = defineEmits(['update:content']);
+
+// Ensure content is valid
+const mappedContent = computed({
+  get: () => cleanFormContent(props.content || {}),
+  set: (newVal) => emit('update:content', newVal)
+});
+
+const addNewField = () => {
+  const newField: FormField = {
+    id: `f_${Date.now()}`,
+    label: 'New Question',
+    name: `field_${Date.now()}`,
+    type: 'text',
+    required: false,
+    width: '100%'
+  };
+  
+  // Push to the array
+  mappedContent.value.fields.push(newField);
+};
+
+const removeField = (index: number) => {
+  mappedContent.value.fields.splice(index, 1);
+};
+</script>
+
 <template>
   <div class="p-4 bg-white">
     <div class="mb-6 border-b pb-4">
@@ -81,35 +114,9 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed } from 'vue';
-import type { FormField } from './types';
-import { cleanFormContent } from './utils';
-
-const props = defineProps<{ content: unknown }>();
-const emit = defineEmits(['update:content']);
-
-// Ensure content is valid
-const mappedContent = computed({
-  get: () => cleanFormContent(props.content || {}),
-  set: (newVal) => emit('update:content', newVal)
-});
-
-const addNewField = () => {
-  const newField: FormField = {
-    id: `f_${Date.now()}`,
-    label: 'New Question',
-    name: `field_${Date.now()}`,
-    type: 'text',
-    required: false,
-    width: '100%'
-  };
-  
-  // Push to the array
-  mappedContent.value.fields.push(newField);
-};
-
-const removeField = (index: number) => {
-  mappedContent.value.fields.splice(index, 1);
+<script lang="ts">
+export default {
+  name: "CustomFormForm" 
 };
 </script>
+

@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue';
+import { cleanFormContent } from './utils';
+
+const props = defineProps<{ content: unknown }>();
+const mappedContent = computed(() => cleanFormContent(props.content || {}));
+const isSuccess = ref(false);
+
+const handleSubmit = () => {
+  // Logic to send data to backend would go here
+  // eslint-disable-next-line no-console
+  console.log("Form Submitted");
+  isSuccess.value = true;
+  setTimeout(() => { isSuccess.value = false }, 5000);
+};
+</script>
+
 <template>
   <div class="custom-form-block py-10 px-4 max-w-4xl mx-auto">
     <div class="text-center mb-8">
@@ -63,19 +80,9 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { computed, ref } from 'vue';
-import { cleanFormContent } from './utils';
-
-const props = defineProps<{ content: unknown }>();
-const mappedContent = computed(() => cleanFormContent(props.content || {}));
-const isSuccess = ref(false);
-
-const handleSubmit = () => {
-  // Logic to send data to backend would go here
-  // eslint-disable-next-line no-console
-  console.log("Form Submitted");
-  isSuccess.value = true;
-  setTimeout(() => { isSuccess.value = false }, 5000);
+<script lang="ts">
+export default {
+  name: "CustomForm" 
 };
 </script>
+
