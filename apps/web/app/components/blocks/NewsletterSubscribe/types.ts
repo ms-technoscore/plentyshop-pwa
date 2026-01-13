@@ -5,8 +5,13 @@ export type NewsletterSubscribeProps = {
   configuration?: object;
   index?: number;
 };
+export type CustomField = {
+  key: string;
+  type: 'text' | 'textarea';
+  label: string;
+};
+
 export type NewsletterSubscribeContent = {
-  index?: number;
   text: {
     bgColor?: string;
     title?: string;
@@ -19,11 +24,12 @@ export type NewsletterSubscribeContent = {
   button: {
     label?: string;
   };
-
   settings: {
     emailFolderId: number;
   };
+  customFields?: CustomField[];
   layout?: {
     fullWidth?: boolean;
   };
 };
+

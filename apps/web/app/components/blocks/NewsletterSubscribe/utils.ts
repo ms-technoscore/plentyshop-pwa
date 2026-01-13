@@ -27,6 +27,11 @@ export function initializeNewsletterContent(content: Partial<NewsletterSubscribe
   } else {
     if (content.settings.emailFolderId === undefined) content.settings.emailFolderId = 1;
   }
+  
+if (!content.customFields) {
+  content.customFields = [];
+}
 
-  return content as NewsletterSubscribeContent;
+return content as NewsletterSubscribeContent;
+
 }

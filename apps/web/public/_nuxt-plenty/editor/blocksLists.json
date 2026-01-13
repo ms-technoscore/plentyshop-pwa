@@ -1,5 +1,5 @@
 {
-"layout": {
+  "layout": {
     "category": "layout",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Layout",
@@ -15,8 +15,20 @@
             "meta": { "uuid": "layout-2col-en-001" },
             "configuration": { "columnWidths": [6, 6], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-en-slot1" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-en-slot2" }, "parent_slot": 1, "content": [] }
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-2col-en-slot1" },
+                "parent_slot": 0,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-2col-en-slot2" },
+                "parent_slot": 1,
+                "content": []
+              }
             ]
           },
           "de": {
@@ -25,8 +37,20 @@
             "meta": { "uuid": "layout-2col-de-001" },
             "configuration": { "columnWidths": [6, 6], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-de-slot1" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-2col-de-slot2" }, "parent_slot": 1, "content": [] }
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-2col-de-slot1" },
+                "parent_slot": 0,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-2col-de-slot2" },
+                "parent_slot": 1,
+                "content": []
+              }
             ]
           }
         }
@@ -41,9 +65,27 @@
             "meta": { "uuid": "layout-3col-en-001" },
             "configuration": { "columnWidths": [4, 4, 4], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-en-slot1" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-en-slot2" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-en-slot3" }, "parent_slot": 2, "content": [] }
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-3col-en-slot1" },
+                "parent_slot": 0,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-3col-en-slot2" },
+                "parent_slot": 1,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-3col-en-slot3" },
+                "parent_slot": 2,
+                "content": []
+              }
             ]
           },
           "de": {
@@ -52,9 +94,27 @@
             "meta": { "uuid": "layout-3col-de-001" },
             "configuration": { "columnWidths": [4, 4, 4], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-de-slot1" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-de-slot2" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-3col-de-slot3" }, "parent_slot": 2, "content": [] }
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-3col-de-slot1" },
+                "parent_slot": 0,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-3col-de-slot2" },
+                "parent_slot": 1,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-3col-de-slot3" },
+                "parent_slot": 2,
+                "content": []
+              }
             ]
           }
         }
@@ -69,12 +129,48 @@
             "meta": { "uuid": "layout-6col-en-001" },
             "configuration": { "columnWidths": [2, 2, 2, 2, 2, 2], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-01" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-02" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-03" }, "parent_slot": 2, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-04" }, "parent_slot": 3, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-05" }, "parent_slot": 4, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-en-06" }, "parent_slot": 5, "content": [] }
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-en-01" },
+                "parent_slot": 0,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-en-02" },
+                "parent_slot": 1,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-en-03" },
+                "parent_slot": 2,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-en-04" },
+                "parent_slot": 3,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-en-05" },
+                "parent_slot": 4,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-en-06" },
+                "parent_slot": 5,
+                "content": []
+              }
             ]
           },
           "de": {
@@ -83,12 +179,48 @@
             "meta": { "uuid": "layout-6col-de-001" },
             "configuration": { "columnWidths": [2, 2, 2, 2, 2, 2], "fullWidth": false },
             "content": [
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-01" }, "parent_slot": 0, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-02" }, "parent_slot": 1, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-03" }, "parent_slot": 2, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-04" }, "parent_slot": 3, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-05" }, "parent_slot": 4, "content": [] },
-              { "name": "EmptyGridBlock", "type": "content", "meta": { "uuid": "empty-6col-de-06" }, "parent_slot": 5, "content": [] }
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-de-01" },
+                "parent_slot": 0,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-de-02" },
+                "parent_slot": 1,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-de-03" },
+                "parent_slot": 2,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-de-04" },
+                "parent_slot": 3,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-de-05" },
+                "parent_slot": 4,
+                "content": []
+              },
+              {
+                "name": "EmptyGridBlock",
+                "type": "content",
+                "meta": { "uuid": "empty-6col-de-06" },
+                "parent_slot": 5,
+                "content": []
+              }
             ]
           }
         }
@@ -566,7 +698,7 @@
       }
     ]
   },
-"image": {
+  "image": {
     "category": "image",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Image",
@@ -586,9 +718,17 @@
                 "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "alt": "alt text", "imageAlignment": "right", "fillMode": "fill", "aspectRatio": "16 / 9"
+                "alt": "alt text",
+                "imageAlignment": "right",
+                "fillMode": "fill",
+                "aspectRatio": "16 / 9"
               },
-              "text": { "textOverlay": "", "textOverlayColor": "#333333", "textOverlayAlignY": "center", "textOverlayAlignX": "center" },
+              "text": {
+                "textOverlay": "",
+                "textOverlayColor": "#333333",
+                "textOverlayAlignY": "center",
+                "textOverlayAlignX": "center"
+              },
               "button": { "label": "", "link": "", "variant": "primary" },
               "layout": { "fullWidth": false }
             }
@@ -603,9 +743,17 @@
                 "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                 "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                "alt": "alt text", "imageAlignment": "right", "fillMode": "fill", "aspectRatio": "16 / 9"
+                "alt": "alt text",
+                "imageAlignment": "right",
+                "fillMode": "fill",
+                "aspectRatio": "16 / 9"
               },
-              "text": { "textOverlay": "", "textOverlayColor": "#333333", "textOverlayAlignY": "center", "textOverlayAlignX": "center" },
+              "text": {
+                "textOverlay": "",
+                "textOverlayColor": "#333333",
+                "textOverlayAlignY": "center",
+                "textOverlayAlignX": "center"
+              },
               "button": { "label": "", "link": "", "variant": "primary" },
               "layout": { "fullWidth": false }
             }
@@ -633,9 +781,17 @@
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "alt text", "imageAlignment": "right", "fillMode": "fill", "aspectRatio": "16 / 9"
+                    "alt": "alt text",
+                    "imageAlignment": "right",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
                   },
-                  "text": { "textOverlay": "", "textOverlayColor": "#333333", "textOverlayAlignY": "center", "textOverlayAlignX": "center" },
+                  "text": {
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
                   "button": { "label": "", "link": "", "variant": "primary" }
                 }
               },
@@ -645,9 +801,22 @@
                 "meta": { "uuid": "image-right-txt-en-v2-001" },
                 "parent_slot": 1,
                 "content": {
-                  "text": { "htmlDescription": "Text that supports HTML formatting", "title": "h2 heading", "subtitle": "subtitle", "textAlignment": "left", "color": "#000" },
+                  "text": {
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "title": "h2 heading",
+                    "subtitle": "subtitle",
+                    "textAlignment": "left",
+                    "color": "#000"
+                  },
                   "button": { "label": "Button", "link": "/", "variant": "primary" },
-                  "layout": { "backgroundColor": "#ffffff", "paddingTop": "0", "paddingBottom": "0", "paddingLeft": "0", "paddingRight": "0", "keepTransparent": "true" }
+                  "layout": {
+                    "backgroundColor": "#ffffff",
+                    "paddingTop": "0",
+                    "paddingBottom": "0",
+                    "paddingLeft": "0",
+                    "paddingRight": "0",
+                    "keepTransparent": "true"
+                  }
                 }
               }
             ]
@@ -669,9 +838,17 @@
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "Alt-Text", "imageAlignment": "right", "fillMode": "fill", "aspectRatio": "16 / 9"
+                    "alt": "Alt-Text",
+                    "imageAlignment": "right",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
                   },
-                  "text": { "textOverlay": "", "textOverlayColor": "#333333", "textOverlayAlignY": "center", "textOverlayAlignX": "center" },
+                  "text": {
+                    "textOverlay": "",
+                    "textOverlayColor": "#333333",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
                   "button": { "label": "", "link": "", "variant": "primary" }
                 }
               },
@@ -681,7 +858,13 @@
                 "meta": { "uuid": "image-right-txt-de-v2-001" },
                 "parent_slot": 1,
                 "content": {
-                  "text": { "htmlDescription": "Text mit HTML-Formatierung", "title": "h2 Titel", "subtitle": "Untertitel", "textAlignment": "left", "color": "#000" },
+                  "text": {
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "title": "h2 Titel",
+                    "subtitle": "Untertitel",
+                    "textAlignment": "left",
+                    "color": "#000"
+                  },
                   "button": { "label": "Button", "link": "/", "variant": "primary" }
                 }
               }
@@ -705,7 +888,13 @@
                 "meta": { "uuid": "image-left-txt-en-v2-001" },
                 "parent_slot": 0,
                 "content": {
-                  "text": { "htmlDescription": "Text that supports HTML formatting", "title": "h2 heading", "subtitle": "Subtitle", "textAlignment": "right", "color": "#000" },
+                  "text": {
+                    "htmlDescription": "Text that supports HTML formatting",
+                    "title": "h2 heading",
+                    "subtitle": "Subtitle",
+                    "textAlignment": "right",
+                    "color": "#000"
+                  },
                   "button": { "label": "Button", "link": "/", "variant": "primary" }
                 }
               },
@@ -720,9 +909,17 @@
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "Headphones", "imageAlignment": "left", "fillMode": "fill", "aspectRatio": "16 / 9"
+                    "alt": "Headphones",
+                    "imageAlignment": "left",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
                   },
-                  "text": { "textOverlay": "Overlay Text", "textOverlayColor": "#00ff00", "textOverlayAlignY": "center", "textOverlayAlignX": "center" },
+                  "text": {
+                    "textOverlay": "Overlay Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
                   "button": { "label": "", "link": "", "variant": "primary" }
                 }
               }
@@ -740,7 +937,13 @@
                 "meta": { "uuid": "image-left-txt-de-v2-001" },
                 "parent_slot": 0,
                 "content": {
-                  "text": { "htmlDescription": "Text mit HTML-Formatierung", "title": "h2 Titel", "subtitle": "Untertitel", "textAlignment": "left", "color": "#000" },
+                  "text": {
+                    "htmlDescription": "Text mit HTML-Formatierung",
+                    "title": "h2 Titel",
+                    "subtitle": "Untertitel",
+                    "textAlignment": "left",
+                    "color": "#000"
+                  },
                   "button": { "label": "Button", "link": "/", "variant": "primary" }
                 }
               },
@@ -755,9 +958,17 @@
                     "desktop": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "tablet": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
                     "mobile": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png",
-                    "alt": "Headphones", "imageAlignment": "left", "fillMode": "fill", "aspectRatio": "16 / 9"
+                    "alt": "Headphones",
+                    "imageAlignment": "left",
+                    "fillMode": "fill",
+                    "aspectRatio": "16 / 9"
                   },
-                  "text": { "textOverlay": "Overlay-Text", "textOverlayColor": "#00ff00", "textOverlayAlignY": "center", "textOverlayAlignX": "center" },
+                  "text": {
+                    "textOverlay": "Overlay-Text",
+                    "textOverlayColor": "#00ff00",
+                    "textOverlayAlignY": "center",
+                    "textOverlayAlignX": "center"
+                  },
                   "button": { "label": "", "link": "", "variant": "primary" }
                 }
               }
@@ -767,7 +978,7 @@
       }
     ]
   },
-"promo-card": {
+  "promo-card": {
     "category": "promo-card",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Promo Card",
@@ -805,13 +1016,9 @@
       }
     ]
   },
-"logo-slider": {
+  "logo-slider": {
     "category": "layout",
-    "accessControl": [
-      "content",
-      "productCategory",
-      "product"
-    ],
+    "accessControl": ["content", "productCategory", "product"],
     "title": "Logo Slider",
     "blockName": "LogoSlider",
     "variations": [
@@ -915,8 +1122,8 @@
       }
     ]
   },
-"icon-text": {
-    "category": "icon-text", 
+  "icon-text": {
+    "category": "icon-text",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Icon & Text",
     "blockName": "IconText",
@@ -1444,6 +1651,79 @@
             }
           }
         }
+      },
+      {
+        "title": "Dynamic Newsletter Form",
+        "image": "https://placehold.co/100x100/3b82f6/ffffff?text=Form",
+        "template": {
+          "en": {
+            "name": "NewsletterSubscribe",
+            "type": "content",
+            "meta": { "uuid": "newsletter-dynamic-en" },
+            "content": {
+              "text": {
+                "title": "Contact Us",
+                "htmlDescription": "Dynamic form powered by newsletter"
+              },
+              "input": {
+                "displayNameInput": true,
+                "nameIsRequired": false
+              },
+              "button": {
+                "label": "Send"
+              },
+              "settings": {
+                "emailFolderId": 1
+              },
+
+              "customFields": [
+                {
+                  "key": "company",
+                  "type": "text",
+                  "label": "Company"
+                },
+                {
+                  "key": "message",
+                  "type": "textarea",
+                  "label": "Message"
+                }
+              ]
+            }
+          },
+          "de": {
+            "name": "NewsletterSubscribe",
+            "type": "content",
+            "meta": { "uuid": "newsletter-dynamic-de" },
+            "content": {
+              "text": {
+                "title": "Kontaktformular",
+                "htmlDescription": "Dynamisches Formular"
+              },
+              "input": {
+                "displayNameInput": true,
+                "nameIsRequired": false
+              },
+              "button": {
+                "label": "Senden"
+              },
+              "settings": {
+                "emailFolderId": 1
+              },
+              "customFields": [
+                {
+                  "key": "company",
+                  "type": "text",
+                  "label": "Firma"
+                },
+                {
+                  "key": "message",
+                  "type": "textarea",
+                  "label": "Nachricht"
+                }
+              ]
+            }
+          }
+        }
       }
     ]
   },
@@ -1855,51 +2135,5 @@
         }
       }
     ]
-  },
-  "custom-dynamic-form": {
-  "category": "forms",
-  "accessControl": ["content", "productCategory", "product"],
-  "title": "Dynamic Form Builder",
-  "blockName": "CustomForm",
-  "variations": [
-    {
-      "title": "Blank Form",
-      "image": "https://placehold.co/100x100/3b82f6/ffffff?text=Form",
-      "template": {
-        "en": {
-          "name": "CustomForm",
-          "type": "content",
-          "meta": { "uuid": "dynamic-form-en-001" },
-          "content": {
-            "title": "Contact Us",
-            "submitButtonLabel": "Send",
-            "fields": [
-              {
-                "type": "text",
-                "label": "Email",
-                "required": true
-              }
-            ]
-          }
-        },
-        "de": {
-          "name": "CustomForm",
-          "type": "content",
-          "meta": { "uuid": "dynamic-form-de-001" },
-          "content": {
-            "title": "Kontaktieren Sie uns",
-            "submitButtonLabel": "Absenden",
-            "fields": [
-              {
-                "type": "text",
-                "label": "E-Mail",
-                "required": true
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
-}
+  }
 }

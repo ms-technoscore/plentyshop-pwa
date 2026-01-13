@@ -87,6 +87,26 @@
         </div>
       </div>
 
+      <div
+  v-for="field in props.content.customFields"
+  :key="field.key"
+  class="grid grid-cols-1 mt-4"
+>
+  <UiFormLabel class="text-start">{{ field.label }}</UiFormLabel>
+
+  <SfInput
+    v-if="field.type === 'text'"
+    v-model="dynamicFields[field.key]"
+    type="text"
+  />
+
+  <SfTextarea
+    v-else-if="field.type === 'textarea'"
+    v-model="dynamicFields[field.key]"
+  />
+</div>
+
+
       <div class="text-base text-neutral-900">
         <div class="flex justify-center items-center">
           <SfCheckbox
@@ -135,6 +155,25 @@
 
         <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </div>
+      <div
+  v-for="field in props.content.customFields"
+  :key="field.key"
+  class="grid grid-cols-1"
+>
+  <UiFormLabel class="text-start">{{ field.label }}</UiFormLabel>
+
+  <SfInput
+    v-if="field.type === 'text'"
+    v-model="dynamicFields[field.key]"
+    type="text"
+  />
+
+  <SfTextarea
+    v-if="field.type === 'textarea'"
+    v-model="dynamicFields[field.key]"
+  />
+</div>
+
     </form>
 
     <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
@@ -159,6 +198,8 @@ const turnstileSiteKey = getSetting() ?? '';
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
+
+const dynamicFields = reactive<Record<string, string>>({});
 
 const validationSchema = toTypedSchema(
   object({
@@ -201,13 +242,15 @@ const subscribeNewsletter = async () => {
     return;
   }
 
-  const response = await subscribe({
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value || '',
-    emailFolder: props.content.settings?.emailFolderId ?? 1,
-    'cf-turnstile-response': turnstile.value,
-  });
+const response = await subscribe({
+  firstName: firstName.value,
+  lastName: lastName.value,
+  email: email.value || '',
+  emailFolder: props.content.settings?.emailFolderId ?? 1,
+  extraFields: { ...dynamicFields },
+  'cf-turnstile-response': turnstile.value,
+});
+
 
   if (response) {
     send({
