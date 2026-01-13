@@ -1857,7 +1857,7 @@
     ]
   },
   "custom-dynamic-form": {
-    "category": "forms",
+    "category": "custom-forms",
     "accessControl": ["content", "productCategory", "product"],
     "title": "Dynamic Form Builder",
     "blockName": "CustomForm", 
