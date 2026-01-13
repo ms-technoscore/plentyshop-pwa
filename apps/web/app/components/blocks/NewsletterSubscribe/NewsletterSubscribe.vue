@@ -118,7 +118,7 @@ const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const props = defineProps<NewsletterSubscribeProps>();
-const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
+// const { getSetting } = useSiteSettings('cloudflareTurnstileApiSiteKey');
 
 const turnstileElement = ref();
 const turnstileLoad = ref(false);
@@ -137,10 +137,10 @@ const validationSchema = toTypedSchema(
       : string().optional().default(''),
     email: string().email(t('error.email.valid')).required(t('error.email.required')).default(''),
     privacyPolicy: boolean().oneOf([true], t('error.newsletter.termsRequired')).default(false),
-    turnstile:
-      turnstileSiteKey.length > 0
-        ? string().required(t('error.newsletter.turnstileRequired')).default('')
-        : string().optional().default(''),
+  //   turnstile:
+  //     turnstileSiteKey.length > 0
+  //       ? string().required(t('error.newsletter.turnstileRequired')).default('')
+  //       : string().optional().default(''),
   }),
 );
 
@@ -151,7 +151,7 @@ const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
 const [email, emailAttributes] = defineField('email');
-const [turnstile, turnstileAttributes] = defineField('turnstile');
+// const [turnstile, turnstileAttributes] = defineField('turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 
 const lastNameLabel = useFormLabel(
@@ -188,12 +188,12 @@ const subscribeNewsletter = async () => {
 
 const onSubmit = handleSubmit(() => subscribeNewsletter());
 
-if (turnstileSiteKey.length > 0) {
-  const turnstileWatcher = watch([firstName, lastName, email], (data) => {
-    if (data.some((field) => field && field.length > 0)) {
-      turnstileLoad.value = true;
-      turnstileWatcher();
-    }
-  });
-}
+// if (turnstileSiteKey.length > 0) {
+//   const turnstileWatcher = watch([firstName, lastName, email], (data) => {
+//     if (data.some((field) => field && field.length > 0)) {
+//       turnstileLoad.value = true;
+//       turnstileWatcher();
+//     }
+//   });
+// }
 </script>
