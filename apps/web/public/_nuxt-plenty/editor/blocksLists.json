@@ -1656,6 +1656,42 @@
         "title": "Dynamic Newsletter Form",
         "image": "https://placehold.co/100x100/3b82f6/ffffff?text=Form",
         "template": {
+          "en": {
+            "name": "NewsletterSubscribe",
+            "type": "content",
+            "meta": { "uuid": "newsletter-dynamic-en" },
+            "content": {
+              "text": {
+                "title": "Contact Form",
+                "htmlDescription": "Dynamic contact form"
+              },
+              "input": {
+                "displayNameInput": true,
+                "nameIsRequired": false
+              },
+              "button": {
+                "label": "Send"
+              },
+              "settings": {
+                "emailFolderId": 1
+              },
+              "fields": [
+                { "key": "company", "type": "text", "label": "Company", "required": false },
+                { "key": "street", "type": "text", "label": "Street, House number", "required": true },
+                { "key": "city", "type": "text", "label": "Postal code – City", "required": true },
+                { "key": "country", "type": "text", "label": "Country", "required": true },
+                { "key": "subject", "type": "text", "label": "Subject", "required": false },
+                { "key": "message", "type": "textarea", "label": "Message", "required": true }
+              ],
+              "checkboxOptions": [
+                { "key": "quote", "label": "I need a quote" },
+                { "key": "product", "label": "I have a product question" },
+                { "key": "transport", "label": "Transport request" },
+                { "key": "other", "label": "Other" }
+              ]
+            }
+          },
+
           "de": {
             "name": "NewsletterSubscribe",
             "type": "content",
@@ -1675,7 +1711,6 @@
               "settings": {
                 "emailFolderId": 1
               },
-
               "fields": [
                 { "key": "company", "type": "text", "label": "Firma", "required": false },
                 { "key": "street", "type": "text", "label": "Straße, Hausnummer", "required": true },
@@ -1684,7 +1719,6 @@
                 { "key": "subject", "type": "text", "label": "Betreff", "required": false },
                 { "key": "message", "type": "textarea", "label": "Nachricht", "required": true }
               ],
-
               "checkboxOptions": [
                 { "key": "quote", "label": "Ich benötige ein Angebot" },
                 { "key": "product", "label": "Ich habe eine Frage zu einem Produkt" },
