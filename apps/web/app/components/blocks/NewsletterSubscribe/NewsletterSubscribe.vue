@@ -164,21 +164,21 @@ const firstNameLabel = useFormLabel(
 );
 
 const subscribeNewsletter = async () => {
-  if (!meta.value.valid || !turnstile.value) return;
+  // FIX: Remove the turnstile check
+  if (!meta.value.valid) return;
 
   const response = await subscribe({
-  firstName: firstName.value ?? '',
-  lastName: lastName.value ?? '',
-  email: email.value ?? '',
-  emailFolder: props.content.settings.emailFolderId,
-  extraFields: {
-    ...dynamicFields,
-    options: Object.keys(selectedOptions)
-  .filter(k => selectedOptions[k])
-  .join(','),
-  },
-});
-
+    firstName: firstName.value ?? '',
+    lastName: lastName.value ?? '',
+    email: email.value ?? '',
+    emailFolder: props.content.settings.emailFolderId,
+    extraFields: {
+      ...dynamicFields,
+      options: Object.keys(selectedOptions)
+        .filter(k => selectedOptions[k])
+        .join(','),
+    },
+  });
 
   if (response) {
     send({ type: 'positive', message: t('newsletter.success') });
