@@ -1656,40 +1656,6 @@
         "title": "Dynamic Newsletter Form",
         "image": "https://placehold.co/100x100/3b82f6/ffffff?text=Form",
         "template": {
-          "en": {
-            "name": "NewsletterSubscribe",
-            "type": "content",
-            "meta": { "uuid": "newsletter-dynamic-en" },
-            "content": {
-              "text": {
-                "title": "Contact Us",
-                "htmlDescription": "Dynamic form powered by newsletter"
-              },
-              "input": {
-                "displayNameInput": true,
-                "nameIsRequired": false
-              },
-              "button": {
-                "label": "Send"
-              },
-              "settings": {
-                "emailFolderId": 1
-              },
-
-              "customFields": [
-                {
-                  "key": "company",
-                  "type": "text",
-                  "label": "Company"
-                },
-                {
-                  "key": "message",
-                  "type": "textarea",
-                  "label": "Message"
-                }
-              ]
-            }
-          },
           "de": {
             "name": "NewsletterSubscribe",
             "type": "content",
@@ -1709,17 +1675,21 @@
               "settings": {
                 "emailFolderId": 1
               },
-              "customFields": [
-                {
-                  "key": "company",
-                  "type": "text",
-                  "label": "Firma"
-                },
-                {
-                  "key": "message",
-                  "type": "textarea",
-                  "label": "Nachricht"
-                }
+
+              "fields": [
+                { "key": "company", "type": "text", "label": "Firma", "required": false },
+                { "key": "street", "type": "text", "label": "Straße, Hausnummer", "required": true },
+                { "key": "city", "type": "text", "label": "Postleitzahl – Stadt", "required": true },
+                { "key": "country", "type": "text", "label": "Land", "required": true },
+                { "key": "subject", "type": "text", "label": "Betreff", "required": false },
+                { "key": "message", "type": "textarea", "label": "Nachricht", "required": true }
+              ],
+
+              "checkboxOptions": [
+                { "key": "quote", "label": "Ich benötige ein Angebot" },
+                { "key": "product", "label": "Ich habe eine Frage zu einem Produkt" },
+                { "key": "transport", "label": "Transportanfrage" },
+                { "key": "other", "label": "Sonstiges" }
               ]
             }
           }

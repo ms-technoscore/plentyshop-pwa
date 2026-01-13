@@ -22,166 +22,92 @@
       v-html="props.content.text?.htmlDescription ?? t('newsletter.info')"
     />
 
-    <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
-      <div
-        v-if="props.content.input?.displayNameInput"
-        class="grid grid-cols-1 sm:grid-cols-2"
-        data-testid="newsletter-display-name"
-      >
-        <div class="sm:mr-[1rem]">
-          <label for="newsletter-first-name">
-            <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
-            <SfInput
-              v-bind="firstNameAttributes"
-              id="newsletter-first-name"
-              v-model="firstName"
-              :invalid="Boolean(errors['firstName'])"
-              :placeholder="firstNameLabel.getPlaceholder('**').value"
-              :wrapper-class="wrapperClass"
-              type="text"
-              name="firstName"
-            />
-          </label>
-          <div class="h-[2rem]">
-            <ErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
-        </div>
+<form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
 
-        <div class="sm:ml-[1rem]">
-          <label for="newsletter-last-name">
-            <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
-            <SfInput
-              v-bind="lastNameAttributes"
-              id="newsletter-last-name"
-              v-model="lastName"
-              :invalid="Boolean(errors['lastName'])"
-              :placeholder="lastNameLabel.getPlaceholder('**').value"
-              :wrapper-class="wrapperClass"
-              type="text"
-              name="lastName"
-            />
-          </label>
-          <div class="h-[2rem]">
-            <ErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
-        </div>
-      </div>
+  <!-- First + Last name -->
+  <div
+    v-if="props.content.input?.displayNameInput"
+    class="grid grid-cols-1 sm:grid-cols-2"
+  >
+    <!-- first name -->
+    <div class="sm:mr-4">
+      <UiFormLabel>{{ t('newsletter.firstName') }}</UiFormLabel>
+      <SfInput v-bind="firstNameAttributes" v-model="firstName" />
+      <ErrorMessage name="firstName" class="text-negative-700 text-sm" />
+    </div>
 
-      <div class="grid grid-cols-1">
-        <label for="newsletter-email">
-          <UiFormLabel class="text-start">{{ t('newsletter.email') }}</UiFormLabel>
-          <SfInput
-            v-bind="emailAttributes"
-            id="newsletter-email"
-            v-model="email"
-            :invalid="Boolean(errors['email'])"
-            :placeholder="`${t('newsletter.email')} **`"
-            :wrapper-class="wrapperClass"
-            type="email"
-            name="email"
-            autocomplete="email"
-          />
-        </label>
-        <div class="h-[2rem]">
-          <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-        </div>
-      </div>
+    <!-- last name -->
+    <div class="sm:ml-4">
+      <UiFormLabel>{{ t('newsletter.lastName') }}</UiFormLabel>
+      <SfInput v-bind="lastNameAttributes" v-model="lastName" />
+      <ErrorMessage name="lastName" class="text-negative-700 text-sm" />
+    </div>
+  </div>
 
-      <div
-  v-for="field in props.content.customFields"
-  :key="field.key"
-  class="grid grid-cols-1 mt-4"
->
-  <UiFormLabel class="text-start">{{ field.label }}</UiFormLabel>
+  <!-- Email -->
+  <div class="mt-4">
+    <UiFormLabel>{{ t('newsletter.email') }}</UiFormLabel>
+    <SfInput v-bind="emailAttributes" v-model="email" type="email" />
+    <ErrorMessage name="email" class="text-negative-700 text-sm" />
+  </div>
 
-  <SfInput
-    v-if="field.type === 'text'"
-    v-model="dynamicFields[field.key]"
-    type="text"
-  />
+  <!-- Dynamic Fields -->
+  <div
+    v-for="field in props.content.fields"
+    :key="field.key"
+    class="mt-4"
+  >
+    <UiFormLabel>
+      {{ field.label }} <span v-if="field.required">*</span>
+    </UiFormLabel>
 
-  <SfTextarea
-    v-else-if="field.type === 'textarea'"
-    v-model="dynamicFields[field.key]"
-  />
-</div>
+    <SfInput
+      v-if="field.type === 'text'"
+      v-model="dynamicFields[field.key]"
+      type="text"
+    />
 
+    <SfTextarea
+      v-else-if="field.type === 'textarea'"
+      v-model="dynamicFields[field.key]"
+    />
+  </div>
 
-      <div class="text-base text-neutral-900">
-        <div class="flex justify-center items-center">
-          <SfCheckbox
-            v-bind="privacyPolicyAttributes"
-            id="terms-checkbox"
-            v-model="privacyPolicy"
-            :invalid="Boolean(errors['privacyPolicy'])"
-            class="inline-block mr-2"
-            data-testid="checkout-terms-checkbox"
-          />
-          <label for="terms-checkbox" class="text-left leading-5 select-none">
-            <i18n-t keypath="newsletter.policy" scope="global">
-              <template #privacyPolicy>
-                <SfLink
-                  :href="localePath(paths.privacyPolicy)"
-                  target="_blank"
-                  class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                >
-                  {{ t('legal.privacyPolicy') }}
-                </SfLink>
-              </template>
-            </i18n-t>
-            **
-          </label>
-        </div>
-        <div class="h-[2rem]">
-          <ErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-        </div>
-      </div>
+  <!-- Checkbox options -->
+  <div v-if="props.content.checkboxOptions?.length" class="mt-6 space-y-2">
+    <div
+      v-for="option in props.content.checkboxOptions"
+      :key="option.key"
+      class="flex items-center"
+    >
+      <SfCheckbox v-model="selectedOptions[option.key]" class="mr-2" />
+      <span>{{ option.label }}</span>
+    </div>
+  </div>
 
-      <div class="flex flex-col items-center">
-        <UiButton type="submit" size="lg" :disabled="loading" data-testid="newsletter-button">
-          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-          <template v-else>{{ props.content.button?.label ?? t('newsletter.subscribe') }}</template>
-        </UiButton>
+  <!-- Privacy -->
+  <div class="mt-6">
+    <SfCheckbox v-bind="privacyPolicyAttributes" v-model="privacyPolicy" />
+    <span class="ml-2">{{ t('newsletter.policy') }}</span>
+    <ErrorMessage name="privacyPolicy" class="text-negative-700 text-sm" />
+  </div>
 
-        <NuxtTurnstile
-          v-if="turnstileSiteKey.length > 0 && turnstileLoad"
-          v-bind="turnstileAttributes"
-          ref="turnstileElement"
-          v-model="turnstile"
-          :site-key="turnstileSiteKey"
-          :options="{ theme: 'light' }"
-          class="mt-4"
-        />
+  <!-- Submit -->
+  <div class="mt-6 text-center">
+    <UiButton type="submit" :disabled="loading">
+      {{ props.content.button?.label ?? t('newsletter.subscribe') }}
+    </UiButton>
+  </div>
 
-        <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-      </div>
-      <div
-  v-for="field in props.content.customFields"
-  :key="field.key"
-  class="grid grid-cols-1"
->
-  <UiFormLabel class="text-start">{{ field.label }}</UiFormLabel>
+</form>
 
-  <SfInput
-    v-if="field.type === 'text'"
-    v-model="dynamicFields[field.key]"
-    type="text"
-  />
-
-  <SfTextarea
-    v-if="field.type === 'textarea'"
-    v-model="dynamicFields[field.key]"
-  />
-</div>
-
-    </form>
 
     <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
@@ -200,6 +126,7 @@ const turnstileLoad = ref(false);
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const dynamicFields = reactive<Record<string, string>>({});
+const selectedOptions = reactive<Record<string, boolean>>({});
 
 const validationSchema = toTypedSchema(
   object({
@@ -238,30 +165,24 @@ const firstNameLabel = useFormLabel(
 );
 
 const subscribeNewsletter = async () => {
-  if (!meta.value.valid || !turnstile.value) {
-    return;
-  }
+  if (!meta.value.valid || !turnstile.value) return;
 
-const response = await subscribe({
-  firstName: firstName.value,
-  lastName: lastName.value,
-  email: email.value || '',
-  emailFolder: props.content.settings?.emailFolderId ?? 1,
-  extraFields: { ...dynamicFields },
-  'cf-turnstile-response': turnstile.value,
-});
-
+  const response = await subscribe({
+    firstName: firstName.value,
+    lastName: lastName.value,
+    email: email.value,
+    emailFolder: props.content.settings.emailFolderId,
+    extraFields: {
+      ...dynamicFields,
+      options: Object.keys(selectedOptions).filter(k => selectedOptions[k]),
+    },
+    'cf-turnstile-response': turnstile.value,
+  });
 
   if (response) {
-    send({
-      type: 'positive',
-      message: t('newsletter.success'),
-    });
+    send({ type: 'positive', message: t('newsletter.success') });
     resetForm();
   }
-
-  turnstile.value = '';
-  turnstileElement.value?.reset();
 };
 
 const onSubmit = handleSubmit(() => subscribeNewsletter());

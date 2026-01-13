@@ -5,9 +5,15 @@ export type NewsletterSubscribeProps = {
   configuration?: object;
   index?: number;
 };
-export type CustomField = {
+export type FormField = {
   key: string;
   type: 'text' | 'textarea';
+  label: string;
+  required?: boolean;
+};
+
+export type CheckboxOption = {
+  key: string;
   label: string;
 };
 
@@ -27,9 +33,9 @@ export type NewsletterSubscribeContent = {
   settings: {
     emailFolderId: number;
   };
-  customFields?: CustomField[];
+  fields?: FormField[];
+  checkboxOptions?: CheckboxOption[];
   layout?: {
     fullWidth?: boolean;
   };
 };
-
