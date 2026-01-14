@@ -36,6 +36,10 @@ export const appConfiguration = {
         src: 'https://komplett-konzept.leasingo.cloud/integration/rateIndicator',
         async: true,
       },
+      {
+        src: 'https://komplett-konzept.leasingo.cloud/integration/calculator',
+        async: true,
+      },
     ],
   },
 };
