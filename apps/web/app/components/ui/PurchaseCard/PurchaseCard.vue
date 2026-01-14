@@ -15,7 +15,7 @@
                 {{ productGetters.getName(product) }}
               </h1>
             </template>
-            <template v-if="key === 'price' && configuration?.fields.price">
+              <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
                 <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
                 <div
@@ -34,6 +34,17 @@
                 :unit-content="productGetters.getUnitContent(product)"
                 :unit-name="productGetters.getUnitName(product)"
               />
+
+              <div
+  v-if="Number(netPrice) > 500"
+  :key="productGetters.getId(product)"
+  class="leasingo-calculator mt-4"
+  :data-object-price-netto="netPrice"
+  data-maturity="48"
+  data-finance-product="1"
+  data-object-condition="1"
+/>
+
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
               <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
@@ -215,6 +226,7 @@ import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, S
 import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
+import { nextTick } from 'vue';
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
@@ -417,4 +429,58 @@ const scrollToReviews = () => {
     reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   }
 };
+// --- LEASINGO INTEGRATION START --- 
+interface LeasingoWindow extends Window {
+  lgoCalculatorCallbacks?: Array<() => void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  purchaseCardCalculator?: any;
+}
+
+const netPrice = computed(() => {
+  const grossPrice = priceWithProperties.value;
+  const vatRate = props.product?.prices?.default?.vat?.value || 19;
+  return (grossPrice / (1 + vatRate / 100)).toFixed(2);
+});
+
+// Watch for product OR price changes
+watch(
+  () => [productGetters.getId(props.product), netPrice.value],
+  async () => {
+    // 1. SSR Guard
+    if (typeof window === 'undefined') return;
+
+    // 2. CLEANUP: Remove ANY existing Leasingo scripts/styles to force a fresh start
+    document.querySelectorAll('script[src*="leasingo"]').forEach((el) => el.remove());
+    const win = window as LeasingoWindow;
+    delete win.purchaseCardCalculator;
+    delete win.lgoCalculatorCallbacks;
+
+    // 3. THRESHOLD CHECK
+    if (Number(netPrice.value) <= 500) return;
+
+    // 4. WAIT & RE-INJECT
+    // We wait for nextTick (Vue DOM update) AND a small timeout (Browser Paint)
+    await nextTick();
+    
+    setTimeout(() => {
+      // Initialize callback queue
+      win.lgoCalculatorCallbacks = win.lgoCalculatorCallbacks || [];
+      
+      win.lgoCalculatorCallbacks.push(() => {
+        if (win.purchaseCardCalculator) {
+          win.purchaseCardCalculator.setPriceNetto(parseFloat(netPrice.value));
+          win.purchaseCardCalculator.calculate();
+        }
+      });
+
+      // Inject Script Freshly
+      const script = document.createElement('script');
+      script.src = 'https://komplett-konzept.leasingo.cloud/integration/calculator';
+      script.async = true;
+      document.body.appendChild(script);
+    }, 200); // 200ms delay to ensure the <div> is definitely on screen
+  },
+  { immediate: true }
+);
+// --- LEASINGO INTEGRATION END ---
 </script>
