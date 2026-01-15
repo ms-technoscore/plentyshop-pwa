@@ -36,13 +36,15 @@
               />
 
               <div
-  v-if="Number(netPrice) > 500"
+  v-if="isWidgetReady"
   :key="productGetters.getId(product)"
   class="leasingo-calculator mt-4"
   :data-object-price-netto="netPrice"
   data-maturity="48"
   data-finance-product="1"
   data-object-condition="1"
+  :data-category="widgetMainCategory"
+  :data-subcategory="widgetSubCategory"
 />
 
             </template>
@@ -429,6 +431,7 @@ const scrollToReviews = () => {
     reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   }
 };
+
 // --- LEASINGO INTEGRATION START --- 
 interface LeasingoWindow extends Window {
   lgoCalculatorCallbacks?: Array<() => void>;
@@ -436,49 +439,83 @@ interface LeasingoWindow extends Window {
   purchaseCardCalculator?: any;
 }
 
+// 1. Reactive Variables for the Widget
+const widgetMainCategory = ref('');
+const widgetSubCategory = ref('');
+const isWidgetReady = ref(false);
+
 const netPrice = computed(() => {
   const grossPrice = priceWithProperties.value;
   const vatRate = props.product?.prices?.default?.vat?.value || 19;
   return (grossPrice / (1 + vatRate / 100)).toFixed(2);
 });
 
-// Watch for product OR price changes
+// Helper: Scrape breadcrumbs
+function getBreadcrumbCategories(): { main: string, sub: string } {
+  if (typeof document === 'undefined') return { main: '', sub: '' };
+
+  const containers = document.querySelectorAll('nav, ol, ul, .breadcrumbs');
+  let bestLinks: Element[] = [];
+
+  for (const container of Array.from(containers)) {
+    const links = Array.from(container.querySelectorAll('a'));
+    const firstText = links[0]?.textContent?.trim().toLowerCase() || '';
+    if (links.length >= 2 && (firstText === 'home' || firstText === 'startseite' || firstText === 'home page')) {
+      bestLinks = links;
+      break; 
+    }
+  }
+
+  if (bestLinks.length === 0) {
+     const specificLinks = document.querySelectorAll('.breadcrumbs a, nav[aria-label="breadcrumbs"] a');
+     if (specificLinks.length > 0) bestLinks = Array.from(specificLinks);
+  }
+
+  const main = bestLinks[1]?.textContent?.trim() || '';
+  const sub = bestLinks[2]?.textContent?.trim() || '';
+  
+  // eslint-disable-next-line no-console
+  console.log('Leasingo Debug - Final Data for Widget:', main, sub);
+  return { main, sub };
+}
+
 watch(
   () => [productGetters.getId(props.product), netPrice.value],
   async () => {
-    // 1. SSR Guard
+    // 1. RESET EVERYTHING
     if (typeof window === 'undefined') return;
-
-    // 2. CLEANUP: Remove ANY existing Leasingo scripts/styles to force a fresh start
+    
+    isWidgetReady.value = false; // Hides the div immediately
     document.querySelectorAll('script[src*="leasingo"]').forEach((el) => el.remove());
     const win = window as LeasingoWindow;
     delete win.purchaseCardCalculator;
     delete win.lgoCalculatorCallbacks;
 
-    // 3. THRESHOLD CHECK
     if (Number(netPrice.value) <= 500) return;
 
-    // 4. WAIT & RE-INJECT
-    // We wait for nextTick (Vue DOM update) AND a small timeout (Browser Paint)
     await nextTick();
-    
+
+    // 2. WAIT FOR BREADCRUMBS TO EXIST
     setTimeout(() => {
-      // Initialize callback queue
-      win.lgoCalculatorCallbacks = win.lgoCalculatorCallbacks || [];
+      // Scrape data FIRST
+      const { main, sub } = getBreadcrumbCategories();
       
-      win.lgoCalculatorCallbacks.push(() => {
-        if (win.purchaseCardCalculator) {
-          win.purchaseCardCalculator.setPriceNetto(parseFloat(netPrice.value));
-          win.purchaseCardCalculator.calculate();
-        }
+      // Store in reactive variables
+      widgetMainCategory.value = main;
+      widgetSubCategory.value = sub;
+      
+      // 3. RENDER THE DIV (Now it has the correct attributes)
+      isWidgetReady.value = true; 
+
+      // 4. LOAD THE SCRIPT (Only after the DIV is on screen)
+      nextTick(() => {
+        const script = document.createElement('script');
+        script.src = 'https://komplett-konzept.leasingo.cloud/integration/calculator';
+        script.async = true;
+        document.body.appendChild(script);
       });
 
-      // Inject Script Freshly
-      const script = document.createElement('script');
-      script.src = 'https://komplett-konzept.leasingo.cloud/integration/calculator';
-      script.async = true;
-      document.body.appendChild(script);
-    }, 200); // 200ms delay to ensure the <div> is definitely on screen
+    }, 1000); 
   },
   { immediate: true }
 );
