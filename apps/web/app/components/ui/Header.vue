@@ -11,6 +11,8 @@
         </a>
       </div>
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
+        <div class="mr-3"> <GoogleTranslate />
+  </div>
         <template v-if="localeCodes.length > 1">
           <UiButton
             v-if="!isLanguageSelectOpen"
@@ -230,6 +232,7 @@ import {
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
 import { handleLogout } from '~/utils/logout';
+import GoogleTranslate from '~/components/GoogleTranslate.vue';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();
