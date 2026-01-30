@@ -46,6 +46,29 @@
   :data-category="widgetMainCategory"
   :data-subcategory="widgetSubCategory"
 />
+<div class="mt-6 pt-4 border-t border-neutral-200 text-sm">
+  
+  <div class="flex justify-between items-center py-1">
+    <span class="text-neutral-500 font-medium">Artikelnummer</span>
+    <span class="text-neutral-900 font-bold">{{ productGetters.getItemId(product) }}</span>
+  </div>
+
+  <div class="flex justify-between items-center py-1">
+    <span class="text-neutral-500 font-medium">Varianten ID</span>
+    <span class="text-neutral-900 font-bold">{{ productGetters.getId(product) }}</span>
+  </div>
+
+  <div class="flex justify-between items-center py-1">
+    <span class="text-neutral-500 font-medium">Zustand</span>
+    <span class="text-neutral-900 font-bold">{{ (product as any)?.item?.condition?.names?.name || 'Neu' }}</span>
+  </div>
+
+  <div class="flex justify-between items-center py-1">
+    <span class="text-neutral-500 font-medium">Inhalt</span>
+    <span class="text-neutral-900 font-bold">{{ productGetters.getUnitContent(product) }}</span>
+  </div>
+
+</div>
 
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
