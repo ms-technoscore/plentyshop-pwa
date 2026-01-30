@@ -1,8 +1,13 @@
 <template>
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      <!-- <UiSearch class="hidden md:block flex-1" /> -->
-      <div class="hidden md:flex flex-col items-end justify-center flex-1 mr-6">
+      <div class="hidden md:flex flex-1 items-center justify-center px-4">
+        <span class="text-sm font-bold text-red-600 whitespace-nowrap">
+          Wir bieten auch Leasing- und Finanzierungsmodelle an!
+        </span>
+      </div>
+
+      <div class="hidden md:flex flex-col items-end justify-center mr-6">
         <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm font-medium mb-0.5 transition-colors" style="color: #062633;">
           www.komplett-konzept.de
         </a>
@@ -10,6 +15,7 @@
           +49 2862 58795 0
         </a>
       </div>
+
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
         <div class="mr-3"> <GoogleTranslate />
   </div>
