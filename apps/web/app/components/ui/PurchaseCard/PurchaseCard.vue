@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <template>
   <form
     class="md:rounded-md"
@@ -68,8 +69,11 @@
     <span class="text-neutral-900 font-bold">{{ productGetters.getUnitContent(product) }}</span>
   </div>
 
+  <div class="flex justify-between items-center py-1">
+    <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
+    <span class="text-neutral-900 font-bold">{{ (product as any)?.variation?.stock?.net }}</span>
+  </div>
 </div>
-
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
               <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
@@ -543,4 +547,28 @@ watch(
   { immediate: true }
 );
 // --- LEASINGO INTEGRATION END ---
+// --- DEBUGGING STOCK ---
+watch(
+  () => props.product,
+  (p) => {
+    // eslint-disable-next-line no-console
+    console.log('🔍 STOCK CHECK 🔍');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rawStock = (p as any)?.variation?.stock;
+    // eslint-disable-next-line no-console
+    console.log('Raw Stock Object:', rawStock);
+    
+    if (!rawStock) {
+        // eslint-disable-next-line no-console
+        console.warn('⚠️ API is NOT sending stock data. Backend setting is OFF.');
+    } else if (rawStock.net === undefined) {
+              // eslint-disable-next-line no-console
+      console.warn('⚠️ API sent stock object, but "net" is missing/hidden.');
+    } else {
+              // eslint-disable-next-line no-console  
+      console.log('✅ SUCCESS! Net Stock is:', rawStock.net);
+    }
+  },
+  { immediate: true, deep: true }
+);
 </script>
