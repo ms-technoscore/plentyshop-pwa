@@ -35,18 +35,6 @@
                 :unit-content="productGetters.getUnitContent(product)"
                 :unit-name="productGetters.getUnitName(product)"
               />
-
-              <div
-  v-if="isWidgetReady"
-  :key="productGetters.getId(product)"
-  class="leasingo-calculator mt-4"
-  :data-object-price-netto="netPrice"
-  data-maturity="48"
-  data-finance-product="1"
-  data-object-condition="1"
-  :data-category="widgetMainCategory"
-  :data-subcategory="widgetSubCategory"
-/>
 <div class="mt-6 pt-4 border-t border-neutral-200 text-sm">
   
   <div class="flex justify-between items-center py-1">
@@ -224,6 +212,17 @@
                   />
                 </template>
               </div>
+               <div
+  v-if="isWidgetReady"
+  :key="productGetters.getId(product)"
+  class="leasingo-calculator mt-4"
+  :data-object-price-netto="netPrice"
+  data-maturity="48"
+  data-finance-product="1"
+  data-object-condition="1"
+  :data-category="widgetMainCategory"
+  :data-subcategory="widgetSubCategory"
+/>
             </template>
 
             <template v-if="key === 'itemText' && configuration?.fields.itemText">
