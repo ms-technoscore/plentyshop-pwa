@@ -63,17 +63,32 @@
                 </div>
 
                 <div class="flex justify-between items-center py-1">
-                  <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
-                  <span class="text-neutral-900 font-bold">{{ (product as any)?.variation?.stock?.net }}</span>
-                </div>
+  <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
+
+  <span
+    v-if="(product as any)?.variation?.availability?.names?.name"
+    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
+           bg-green-100 text-green-700"
+  >
+    {{ (product as any).variation.availability.names.name }}
+  </span>
+
+  <span
+    v-else
+    class="text-neutral-400 font-medium"
+  >
+    —
+  </span>
+</div>
+
               </div>
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
               <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
             </template>
-            <template v-if="key === 'availability' && configuration?.fields.availability">
+            <!-- <template v-if="key === 'availability' && configuration?.fields.availability">
               <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
-            </template>
+            </template> -->
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
               <div class="mb-2 variation-properties">
                 <VariationProperties :product="product" />
