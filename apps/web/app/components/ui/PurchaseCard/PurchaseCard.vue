@@ -16,7 +16,7 @@
                 {{ productGetters.getName(product) }}
               </h1>
             </template>
-              <template v-if="key === 'price' && configuration?.fields.price">
+            <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
                 <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
                 <div
@@ -35,33 +35,38 @@
                 :unit-content="productGetters.getUnitContent(product)"
                 :unit-name="productGetters.getUnitName(product)"
               />
-<div class="mt-6 pt-4 border-t border-neutral-200 text-sm">
-  
-  <div class="flex justify-between items-center py-1">
-    <span class="text-neutral-500 font-medium">Artikelnummer</span>
-    <span class="text-neutral-900 font-bold">{{ productGetters.getItemId(product) }}</span>
-  </div>
+              <div class="mt-6 pt-4 border-t border-neutral-200 text-sm">
+                <div class="flex justify-between items-center py-1">
+                  <span class="text-neutral-500 font-medium">Artikelnummer</span>
+                  <span class="text-neutral-900 font-bold">{{ productGetters.getItemId(product) }}</span>
+                </div>
 
-  <div class="flex justify-between items-center py-1">
-    <span class="text-neutral-500 font-medium">Varianten ID</span>
-    <span class="text-neutral-900 font-bold">{{ productGetters.getId(product) }}</span>
-  </div>
+                <div class="flex justify-between items-center py-1">
+                  <span class="text-neutral-500 font-medium">Varianten ID</span>
+                  <span class="text-neutral-900 font-bold">{{ productGetters.getId(product) }}</span>
+                </div>
 
-  <div class="flex justify-between items-center py-1">
-    <span class="text-neutral-500 font-medium">Zustand</span>
-    <span class="text-neutral-900 font-bold">{{ (product as any)?.item?.condition?.names?.name || 'Neu' }}</span>
-  </div>
+                <div class="flex justify-between items-center py-1">
+                  <span class="text-neutral-500 font-medium">Zustand</span>
+                  <span class="text-neutral-900 font-bold">
+  {{
+    (product as any)?.item?.conditionApi?.names?.name
+    ?? (product as any)?.item?.condition?.names?.name
+    ?? 'Neu'
+  }}
+</span>
+                </div>
 
-  <div class="flex justify-between items-center py-1">
-    <span class="text-neutral-500 font-medium">Inhalt</span>
-    <span class="text-neutral-900 font-bold">{{ productGetters.getUnitContent(product) }}</span>
-  </div>
+                <div class="flex justify-between items-center py-1">
+                  <span class="text-neutral-500 font-medium">Inhalt</span>
+                  <span class="text-neutral-900 font-bold">{{ productGetters.getUnitContent(product) }}</span>
+                </div>
 
-  <div class="flex justify-between items-center py-1">
-    <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
-    <span class="text-neutral-900 font-bold">{{ (product as any)?.variation?.stock?.net }}</span>
-  </div>
-</div>
+                <div class="flex justify-between items-center py-1">
+                  <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
+                  <span class="text-neutral-900 font-bold">{{ (product as any)?.variation?.stock?.net }}</span>
+                </div>
+              </div>
             </template>
             <template v-if="key === 'tags' && configuration?.fields.tags">
               <UiBadges class="mb-2" :product="product" :use-availability="false" :use-tags="true" />
@@ -212,17 +217,17 @@
                   />
                 </template>
               </div>
-               <div
-  v-if="isWidgetReady"
-  :key="productGetters.getId(product)"
-  class="leasingo-calculator mt-4"
-  :data-object-price-netto="netPrice"
-  data-maturity="48"
-  data-finance-product="1"
-  data-object-condition="1"
-  :data-category="widgetMainCategory"
-  :data-subcategory="widgetSubCategory"
-/>
+              <div
+                v-if="isWidgetReady"
+                :key="productGetters.getId(product)"
+                class="leasingo-calculator mt-4"
+                :data-object-price-netto="netPrice"
+                data-maturity="48"
+                data-finance-product="1"
+                data-object-condition="1"
+                :data-category="widgetMainCategory"
+                :data-subcategory="widgetSubCategory"
+              />
             </template>
 
             <template v-if="key === 'itemText' && configuration?.fields.itemText">
@@ -458,7 +463,7 @@ const scrollToReviews = () => {
   }
 };
 
-// --- LEASINGO INTEGRATION START --- 
+// --- LEASINGO INTEGRATION START ---
 interface LeasingoWindow extends Window {
   lgoCalculatorCallbacks?: Array<() => void>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -477,7 +482,7 @@ const netPrice = computed(() => {
 });
 
 // Helper: Scrape breadcrumbs
-function getBreadcrumbCategories(): { main: string, sub: string } {
+function getBreadcrumbCategories(): { main: string; sub: string } {
   if (typeof document === 'undefined') return { main: '', sub: '' };
 
   const containers = document.querySelectorAll('nav, ol, ul, .breadcrumbs');
@@ -488,18 +493,18 @@ function getBreadcrumbCategories(): { main: string, sub: string } {
     const firstText = links[0]?.textContent?.trim().toLowerCase() || '';
     if (links.length >= 2 && (firstText === 'home' || firstText === 'startseite' || firstText === 'home page')) {
       bestLinks = links;
-      break; 
+      break;
     }
   }
 
   if (bestLinks.length === 0) {
-     const specificLinks = document.querySelectorAll('.breadcrumbs a, nav[aria-label="breadcrumbs"] a');
-     if (specificLinks.length > 0) bestLinks = Array.from(specificLinks);
+    const specificLinks = document.querySelectorAll('.breadcrumbs a, nav[aria-label="breadcrumbs"] a');
+    if (specificLinks.length > 0) bestLinks = Array.from(specificLinks);
   }
 
   const main = bestLinks[1]?.textContent?.trim() || '';
   const sub = bestLinks[2]?.textContent?.trim() || '';
-  
+
   // eslint-disable-next-line no-console
   console.log('Leasingo Debug - Final Data for Widget:', main, sub);
   return { main, sub };
@@ -510,7 +515,7 @@ watch(
   async () => {
     // 1. RESET EVERYTHING
     if (typeof window === 'undefined') return;
-    
+
     isWidgetReady.value = false; // Hides the div immediately
     document.querySelectorAll('script[src*="leasingo"]').forEach((el) => el.remove());
     const win = window as LeasingoWindow;
@@ -525,13 +530,13 @@ watch(
     setTimeout(() => {
       // Scrape data FIRST
       const { main, sub } = getBreadcrumbCategories();
-      
+
       // Store in reactive variables
       widgetMainCategory.value = main;
       widgetSubCategory.value = sub;
-      
+
       // 3. RENDER THE DIV (Now it has the correct attributes)
-      isWidgetReady.value = true; 
+      isWidgetReady.value = true;
 
       // 4. LOAD THE SCRIPT (Only after the DIV is on screen)
       nextTick(() => {
@@ -540,10 +545,9 @@ watch(
         script.async = true;
         document.body.appendChild(script);
       });
-
-    }, 1000); 
+    }, 1000);
   },
-  { immediate: true }
+  { immediate: true },
 );
 // --- LEASINGO INTEGRATION END ---
 // --- DEBUGGING STOCK ---
@@ -556,18 +560,18 @@ watch(
     const rawStock = (p as any)?.variation?.stock;
     // eslint-disable-next-line no-console
     console.log('Raw Stock Object:', rawStock);
-    
+
     if (!rawStock) {
-        // eslint-disable-next-line no-console
-        console.warn('⚠️ API is NOT sending stock data. Backend setting is OFF.');
+      // eslint-disable-next-line no-console
+      console.warn('⚠️ API is NOT sending stock data. Backend setting is OFF.');
     } else if (rawStock.net === undefined) {
-              // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
       console.warn('⚠️ API sent stock object, but "net" is missing/hidden.');
     } else {
-              // eslint-disable-next-line no-console  
+      // eslint-disable-next-line no-console
       console.log('✅ SUCCESS! Net Stock is:', rawStock.net);
     }
   },
-  { immediate: true, deep: true }
+  { immediate: true, deep: true },
 );
 </script>
