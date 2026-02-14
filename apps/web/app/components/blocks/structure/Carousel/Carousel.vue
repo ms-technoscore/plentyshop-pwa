@@ -137,6 +137,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import { ref, computed, watch, nextTick } from 'vue';
+import { productGetters } from '@plentymarkets/shop-api';
 
 // --- 1. Import useSearch (if not auto-imported) ---
 // import { useSearch } from '~/composables/useSearch';
@@ -176,19 +177,33 @@ let debounceTimeout: NodeJS.Timeout | null = null;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const { getSearch, data } = useSearch() as any;
 
-// Create a Computed Property that automatically updates when 'data' changes
 const searchResults = computed(() => {
-  // Access the products array inside the data object
   const products = data.value?.products || [];
   
-  // Map to your template structure
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return products.slice(0, 6).map((item: any) => ({
-    id: item.id,
-    name: item.texts?.name1 || item.name || 'Product',
-    image: item.images?.all?.[0]?.url || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-    url: item.urlPath || `/product/${item.id}` 
-  }));
+  return products.slice(0, 6).map((p: any) => {
+    // 1. Extract BOTH IDs (Item ID and Variation ID)
+    const itemId = p.item?.id || p.variation?.itemId;
+    const variationId = p.variation?.id || productGetters.getId(p);
+    
+    // 2. Grab Name and Image
+    const productName = productGetters.getName(p) || 'Unknown Product';
+    const productImage = productGetters.getCoverImage(p) || 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png';
+    
+    // 3. Extract the base URL path
+    const rawUrlPath = p.texts?.urlPath || `product/${itemId}`;
+    const formattedUrl = rawUrlPath.startsWith('/') ? rawUrlPath : `/${rawUrlPath}`;
+    
+    // 4. Construct the perfect URL! (_ItemId_VariationId)
+    const finalUrl = `${formattedUrl}_${itemId}_${variationId}`;
+
+    return {
+      id: variationId || itemId, // Keep variationId here for the Vue :key loop
+      name: productName,
+      image: productImage,
+      url: finalUrl
+    };
+  });
 });
 
 const onSearchInput = () => {
