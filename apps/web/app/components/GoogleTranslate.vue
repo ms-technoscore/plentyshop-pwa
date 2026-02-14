@@ -1,38 +1,69 @@
 <template>
   <div class="google-translate-wrapper">
-    <div id="google_translate_element"/>
+    <div id="google_translate_element" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch, nextTick } from 'vue';
+import { useRoute } from '#imports';
 
-onMounted(() => {
+const route = useRoute();
+
+const loadGoogleTranslate = async () => {
+  // 1. Wait for Vue to finish its page-transition DOM updates
+  await nextTick();
+
+  // 2. Empty our target container so Vue stops fighting it
+  const container = document.getElementById('google_translate_element');
+  if (container) {
+    container.innerHTML = '';
+  }
+
+  // 3. NUKE: Remove the old script and hidden iframes Google leaves behind
+  const oldScript = document.getElementById('google-translate-script');
+  if (oldScript) oldScript.remove();
+  
+  document.querySelectorAll('.goog-te-menu-frame').forEach(el => el.remove());
+
+  // 4. NUKE: Delete the global translate object so Google is forced to start fresh
+  if (window.google && window.google.translate) {
+    delete window.google.translate;
+  }
+
+  // 5. Define the initialization callback
   window.googleTranslateElementInit = () => {
-    if (window.google && window.google.translate && window.google.translate.TranslateElement) {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: 'de', // Your site's default language
-          // LIMIT LANGUAGES HERE: Comma separated codes
-          includedLanguages: 'ar,zh-CN,zh-TW,hr,nl,en,fr,de,hi,it,pl,pt,ru,es,sv,tr', 
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false,
-        },
-        'google_translate_element'
-      );
-    }
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: 'de', 
+        includedLanguages: 'ar,zh-CN,zh-TW,hr,nl,en,fr,de,hi,it,pl,pt,ru,es,sv,tr', 
+        layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false,
+      },
+      'google_translate_element'
+    );
   };
 
-  const scriptId = 'google-translate-script';
-  if (!document.getElementById(scriptId)) {
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    document.body.appendChild(script);
-  } else if (window.google && window.google.translate) {
-    window.googleTranslateElementInit();
-  }
+  // 6. Inject the brand new script
+  const script = document.createElement('script');
+  script.id = 'google-translate-script';
+  script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  script.async = true;
+  document.body.appendChild(script);
+};
+
+onMounted(() => {
+  // Initial load
+  setTimeout(() => {
+    loadGoogleTranslate();
+  }, 100);
+});
+
+// The SPA Fix: Run the nuke and rebuild process on every single page change!
+watch(() => route.path, () => {
+  setTimeout(() => {
+    loadGoogleTranslate();
+  }, 200); // A 200ms delay ensures Vue's virtual DOM is completely done moving things around
 });
 </script>
 
