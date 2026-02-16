@@ -8,6 +8,7 @@
     </div>
 
     <div class="px-4 pb-4 mt-3 md:px-6 md:pb-6 md:mt-0">
+      
       <div v-if="orderPropertiesWithVatAdditionalCosts.length > 0" class="mb-4">
         <div
           v-for="property in orderPropertiesWithVatAdditionalCosts"
@@ -19,53 +20,49 @@
             {{ format(cartGetters.getBasketItemOrderParamPrice(property)) }}
           </p>
         </div>
-
         <UiDivider class="mt-4 w-auto" />
       </div>
 
-      <div class="flex justify-between typography-text-base mb-4">
-        <div class="flex flex-col gap-1 grow pr-2">
-          <p data-testid="subtotal-label">
-            {{ t('common.labels.itemsSubtotal') }} <span v-if="showNetPrices">({{ t('common.labels.netPrice') }})</span>
-          </p>
-          <p data-testid="shipping-label">
-            {{ t('common.labels.delivery') }} <span v-if="showNetPrices">({{ t('common.labels.netPrice') }})</span>
-          </p>
-          <p v-if="cartGetters.getCouponDiscount(props.cart)" data-testid="coupon-label">{{ t('coupon.name') }}</p>
-          <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat-label">
-            {{ showNetPrices ? t('common.labels.excludedTax') : t('common.labels.includedTax') }} ({{
-              cartGetters.getTotalVatValue(vat)
-            }}%)
-          </p>
+      <div class="flex flex-col w-full">
+        
+        <div class="flex justify-between typography-text-base mb-1">
+          <p>Warenwert ({{ t('common.labels.netPrice') }})</p>
+          <p>{{ format(cartGetters.getItemSumNet(props.cart)) }}</p>
         </div>
-        <div v-if="showNetPrices" class="flex flex-col gap-1 text-right">
-          <p data-testid="subtotal" class="font-medium">{{ format(cartGetters.getItemSumNet(props.cart)) }}</p>
-          <p data-testid="shipping" class="font-medium">
-            {{ getShippingAmount(cartGetters.getShippingAmountNet(props.cart)) }}
-          </p>
-          <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium" data-testid="coupon-value">
-            {{ format(cartGetters.getCouponDiscount(props.cart)) }}
-          </p>
-          <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat">
-            {{ format(cartGetters.getTotalVatAmount(vat)) }}
-          </p>
+        <div class="flex justify-between typography-text-base mb-1">
+          <p>Warenwert ({{ t('common.labels.grossPrice') }})</p>
+          <p>{{ format(totals.subTotal) }}</p>
         </div>
-        <div v-else class="flex flex-col gap-1 text-right">
-          <p data-testid="subtotal" class="font-medium">{{ format(totals.subTotal) }}</p>
-          <p data-testid="shipping" class="font-medium">
-            {{ getShippingAmount(cartGetters.getShippingPrice(props.cart)) }}
-          </p>
-          <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium" data-testid="coupon-value">
-            {{ format(cartGetters.getCouponDiscount(props.cart)) }}
-          </p>
-          <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat">
-            {{ format(cartGetters.getTotalVatAmount(vat)) }}
-          </p>
-        </div>
-      </div>
 
+        <div class="flex justify-between typography-text-base mb-1 mt-3">
+          <p>{{ t('common.labels.delivery') }} ({{ t('common.labels.netPrice') }})</p>
+          <p>{{ getShippingAmount(cartGetters.getShippingAmountNet(props.cart)) }}</p>
+        </div>
+        <div class="flex justify-between typography-text-base mb-4">
+          <p>{{ t('common.labels.delivery') }} ({{ t('common.labels.grossPrice') }})</p>
+          <p>{{ getShippingAmount(cartGetters.getShippingPrice(props.cart)) }}</p>
+        </div>
+
+        <div v-if="cartGetters.getCouponDiscount(props.cart)" class="flex justify-between typography-text-base mb-4 font-medium text-green-600">
+          <p>{{ t('coupon.name') }}</p>
+          <p>{{ format(cartGetters.getCouponDiscount(props.cart)) }}</p>
+        </div>
+
+        <UiDivider class="w-auto mb-4" />
+
+        <div class="flex justify-between typography-text-base mb-1">
+          <p>{{ t('common.labels.itemsSubtotal') }} ({{ t('common.labels.netPrice') }})</p>
+          <p>{{ format(cartGetters.getBasketAmountNet(props.cart)) }}</p>
+        </div>
+
+        <div v-for="(vat, index) in totals.vats" :key="index" class="flex justify-between typography-text-base mb-4">
+          <p>{{ t('common.labels.includedTax') }} ({{ cartGetters.getTotalVatValue(vat) }}%)</p>
+          <p>{{ format(cartGetters.getTotalVatAmount(vat)) }}</p>
+        </div>
+
+        <UiDivider class="w-auto mb-4" />
+      </div>
       <div v-if="orderPropertiesWithoutVat.length > 0" class="mb-4">
-        <UiDivider class="mb-4" />
         <div
           v-for="property in orderPropertiesWithoutVat"
           :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
@@ -79,17 +76,15 @@
         <UiDivider class="mt-4 w-auto" />
       </div>
 
-      <div v-if="showNetPrices" class="flex justify-between typography-text-base mb-1">
-        <h2 data-testid="total-net-label">{{ t('common.labels.total') }} ({{ t('common.labels.netPrice') }})</h2>
-        <h2 data-testid="total-net">{{ format(cartGetters.getBasketAmountNet(cart)) }}</h2>
+      <div class="flex justify-between typography-text-base mb-1">
+        <p>{{ t('common.labels.total') }} ({{ t('common.labels.netPrice') }})</p>
+        <p>{{ format(cartGetters.getBasketAmountNet(props.cart)) }}</p>
       </div>
       <div class="flex justify-between typography-text-base font-bold pb-4 mb-4">
-        <h2 data-testid="total-label">
-          {{ t('common.labels.total') }} <span v-if="showNetPrices">({{ t('common.labels.grossPrice') }})</span>
-        </h2>
-        <h2 data-testid="total">{{ format(totals.total) }}</h2>
+        <p>{{ t('common.labels.total') }} ({{ t('common.labels.grossPrice') }})</p>
+        <p class="text-lg">{{ format(totals.total) }}</p>
       </div>
-      <UiDivider class="w-auto mb-4" />
+      
       <slot />
     </div>
   </div>
@@ -100,8 +95,9 @@ import { cartGetters } from '@plentymarkets/shop-api';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
-const { showNetPrices } = useCart();
 const { format } = usePriceFormatter();
+
+// We removed 'showNetPrices' from useCart() here since we are hardcoding the view to show both!
 
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(props.cart);
