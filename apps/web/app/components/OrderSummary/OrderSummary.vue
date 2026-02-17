@@ -85,6 +85,19 @@
         <p class="text-lg">{{ format(totals.total) }}</p>
       </div>
       
+      <div 
+  v-if="isRatepaySelected" 
+  id="paypal_payuponinvoice_legal_notice" 
+  class="text-xs text-neutral-600 mb-4 pb-4 border-b border-neutral-200 leading-relaxed"
+>
+  Mit Klick auf den Button akzeptieren Sie die 
+  <a href="https://www.ratepay.com/legal-payment-terms" target="_blank" class="underline hover:text-black font-medium">Ratepay Zahlungsbedingungen</a> 
+  und erklären sich mit der Durchführung einer 
+  <a href="https://www.ratepay.com/legal-payment-dataprivacy" target="_blank" class="underline hover:text-black font-medium">Risikoprüfung durch Ratepay</a>, 
+  unseren Partner, einverstanden. Sie akzeptieren auch PayPals 
+  <a href="https://www.paypal.com/de/webapps/mpp/ua/rechnungskauf-mit-ratepay?locale.x=de_DE&_ga=1.51347872.826497444.1637075579" target="_blank" class="underline hover:text-black font-medium">Datenschutzerklärung</a>. 
+  Falls Ihre Transaktion erfolgreich per Kauf auf Rechnung abgewickelt werden kann, wird der Kaufpreis an Ratepay abgetreten und Sie dürfen nur an Ratepay überweisen, nicht an den Händler.
+</div>
       <slot />
     </div>
   </div>
@@ -97,8 +110,6 @@ import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 const props = defineProps<OrderSummaryPropsType>();
 const { format } = usePriceFormatter();
 
-// We removed 'showNetPrices' from useCart() here since we are hardcoding the view to show both!
-
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(props.cart);
   return {
@@ -106,6 +117,14 @@ const totals = computed(() => {
     subTotal: totalsData.subtotal,
     vats: totalsData.totalVats,
   };
+});
+
+// Watch for the active payment method ID
+const isRatepaySelected = computed(() => {
+  // ⚠️ IMPORTANT: Replace '6000' with the actual Payment ID for "Invoice purchase" in your Plentymarkets backend
+  const ratepayPaymentId = 6031; 
+  
+  return props.cart?.methodOfPaymentId === ratepayPaymentId;
 });
 
 const getShippingAmount = (amount: number) => {
