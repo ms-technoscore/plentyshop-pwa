@@ -43,17 +43,17 @@
       >
         <li v-if="categoryTree.length === 0" class="h-10" />
 
-<li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
+        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
           <div
             ref="triggerReference"
             data-testid="category-button"
             class="inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer"
           >
             <NuxtLink 
-  :to="localePath(generateCategoryLink(menuNode))" 
-  class="flex items-center gap-2 w-full"
-  @click="close()"
->
+              :to="localePath(generateCategoryLink(menuNode))" 
+              class="flex items-center gap-2 w-full"
+              @click="close()"
+            >
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
             </NuxtLink>
 
@@ -73,7 +73,7 @@
             "
             :key="activeMenu.id"
             ref="megaMenuReference"
-            class="hidden md:grid absolute top-full left-0 w-full gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 outline-none z-40"
+            class="hidden md:grid absolute top-full left-0 w-full gap-x-6 grid-cols-5 bg-white shadow-lg p-6 pt-5 outline-none z-40"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -197,7 +197,6 @@ const { setDrawerOpen } = useDrawerState();
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
 
-// NOTE: Removed 'style' from destructuring below to avoid unused variable warning
 const { referenceRef, floatingRef } = useDropdown({
   isOpen,
   onClose: close,
@@ -209,7 +208,34 @@ const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const isTouchDevice = ref(false);
-const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
+
+// --- UPDATED: Sorting Logic ---
+// We pass `isRoot` as a flag so we can skip sorting the top-level items
+const sortTreeAlphabetically = (nodes: CategoryTreeItem[], isRoot: boolean = false): CategoryTreeItem[] => {
+  if (!nodes || nodes.length === 0) return [];
+
+  const processedNodes = [...nodes];
+
+  // Only sort alphabetically if we are NOT looking at the root level parents
+  if (!isRoot) {
+    processedNodes.sort((a, b) => {
+      const nameA = categoryTreeGetters.getName(a) || '';
+      const nameB = categoryTreeGetters.getName(b) || '';
+      return nameA.localeCompare(nameB, 'de'); 
+    });
+  }
+
+  // Recursively apply sorting to all children (passing `false` because children are never root)
+  return processedNodes.map((node) => ({
+    ...node,
+    children: sortTreeAlphabetically(node.children || [], false)
+  }));
+};
+
+// Start the tree passing `true` for `isRoot` so the top level keeps its backend order
+const categoryTree = ref(sortTreeAlphabetically(categoryTreeGetters.getTree(props.categories), true));
+// ----------------------------
+
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
@@ -298,7 +324,8 @@ onBeforeUnmount(() => removeHook?.());
 watch(
   () => props.categories,
   (categories: CategoryTreeItem[]) => {
-    categoryTree.value = categoryTreeGetters.getTree(categories);
+    // Re-apply the tree generation with `true` to keep the root items in order
+    categoryTree.value = sortTreeAlphabetically(categoryTreeGetters.getTree(categories), true);
     setCategory(categoryTree.value);
   },
 );
