@@ -1,7 +1,10 @@
 <template>
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      <div class="hidden md:flex flex-1 items-center justify-center px-4">
+      <div class="hidden md:flex flex-1 flex-col items-center justify-center px-4 gap-1">
+        <div v-if="!isHomePage" class="w-full max-w-[500px]">
+          <UiSearch />
+        </div>
         <span class="text-sm font-bold text-red-600 whitespace-nowrap">
           Wir bieten auch Leasing- und Finanzierungsmodelle an!
         </span>
@@ -156,6 +159,7 @@
         <SfIconLanguage />
       </UiButton>
       <UiButton
+        v-if="!isHomePage"
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
         square
@@ -329,4 +333,9 @@ watch(categoryTree, (tree) => {
   // eslint-disable-next-line no-console
   console.log("Category List:", tree);
 }, { immediate: true });
+
+const isHomePage = computed(() => {
+  const home = localePath(paths.home);
+  return route.path === home || route.path === `${home}/`;
+});
 </script>
