@@ -10,16 +10,19 @@
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
     <Cookiebar />
     <PreviewMode />
+    
     <ClientOnly>
-      <FooterBlock v-if="!route.meta.isBlockified" />
+      <FooterBlock v-if="!route.meta.isBlockified" :content="globalFooterData" />
     </ClientOnly>
+    
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
-import FooterBlock from '~/components/blocks/Footer/Footer.vue';
+// Import your exact CMS footer component
+import FooterBlock from '../components/blocks/Footer/Footer.vue';
 
 defineProps<DefaultLayoutProps>();
 
@@ -29,4 +32,65 @@ const viewport = useViewport();
 const route = useRoute();
 
 setLogoMeta();
+
+// --- HARDCODED FOOTER DATA FOR NON-CMS PAGES ---
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalFooterData: any = {
+  backgroundColor: '#333333',
+  textColor: '#ffffff',
+  columns: [
+    {
+      id: 'col-1',
+      image: 'https://cdn03.plentymarkets.com/evlxcyoplb75/frontend/Logo_KK_dp_25K.png',
+      title: 'Komplett Konzept Verwertungs GmbH',
+      links: [
+        { text: 'Über uns', url: '/ueberuns' },
+        { text: 'Abbau und Demontage', url: '/abbau-und-demontage' },
+        { text: 'Reparatur und Instandsetzung', url: '/reparatur-und-instandhaltung' },
+        { text: 'Team', url: '/team' },
+        { text: 'Stellenangebote', url: '/Stellenangebote' },
+        { text: 'Partner', url: '/partner' },
+        { text: 'Kontakt', url: '/Kontakt' },
+        { text: 'Impressum', url: '/impressum' }
+      ],
+      socials: [
+        { icon: 'facebook', url: 'https://www.facebook.com/Komplett.Konzept.GmbH/' },
+        { icon: 'instagram', url: 'https://www.instagram.com/komplettkonzept/' },
+        { icon: 'youtube', url: 'https://www.youtube.com/@konzeptkomplett4034' },
+        { icon: 'linkedin', url: 'https://www.linkedin.com/in/mario-parlitz-77b66239/' }
+      ]
+    },
+    {
+      id: 'col-2',
+      image: 'https://cdn03.plentymarkets.com/evlxcyoplb75/frontend/Bezahlarten.png',
+      title: 'Zahlung und Versand',
+      links: [
+        { text: 'Widerrufsrecht', url: '/widerruf' },
+        { text: 'Datenschutzerklärung', url: '/datenschutz' },
+        { text: 'Datenverarbeitung', url: '/datenverarbeitung' },
+        { text: 'AGB', url: '/agb' }
+      ]
+    },
+    {
+      id: 'col-3',
+      title: 'Im Shop',
+      links: [
+        { text: 'Produktions & Industriebedarf', url: '/kategorie/produktions-industriebedarf' },
+        { text: 'Elektronik', url: '/kategorie/Elektronik-Elektrotechnik' },
+        { text: 'Gastrotechnik', url: '/kategorie/gastronomie' },
+        { text: 'Labor & Medizintechnik', url: '/kategorie/labor-medizintechnik' },
+        { text: 'Automation, Antrieb & Steuerung', url: '/kategorie/automation-antrieb-steuerung' },
+        { text: 'Regale', url: '/' },
+        { text: 'Pumpen & Rohrleitungsbau', url: '/kategorie/pumpen-rohrleitungsbau' },
+        { text: 'Auto, Motorrad & Zubehör', url: '/kategorie/auto-zubehoer' },
+        { text: 'Maschinen & Anlagen', url: '/kategorie/maschinen-anlagen' },
+        { text: 'Werkzeuge', url: '/' },
+        { text: 'Transport & Logistik', url: '/' },
+        { text: 'Filter & Hydraulik', url: '/' }
+      ]
+    }
+  ],
+  footnote: '© Copyright 2024 Komplett Konzept Verwertungs GmbH. All rights reserved.'
+};
+// -----------------------------------------------
 </script>
