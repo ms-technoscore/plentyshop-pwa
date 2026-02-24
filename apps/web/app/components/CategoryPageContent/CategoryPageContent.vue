@@ -10,12 +10,7 @@
       <div class="flex-1">
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold md:text-lg">
-            {{
-              t('x Ergebnisse', {
-                count: products?.length ?? 0,
-                total: totalProducts,
-              })
-            }}
+            {{ totalProducts }} Ergebnisse
           </span>
           <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
             <template #prefix>
