@@ -32,7 +32,7 @@
 
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
-        class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
+        class="flex flex-wrap justify-center px-2 py-2 bg-white border-b border-b-neutral-200 border-b-solid w-full"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -47,11 +47,11 @@
           <div
             ref="triggerReference"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer"
+            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
             <NuxtLink 
               :to="localePath(generateCategoryLink(menuNode))" 
-              class="flex items-center gap-2 w-full"
+              class="flex items-center gap-1 w-full"
               @click="close()"
             >
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
@@ -59,7 +59,7 @@
 
             <SfIconChevronRight
               v-if="menuNode.childCount > 0"
-              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4"
             />
           </div>
 

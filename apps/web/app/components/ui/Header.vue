@@ -263,7 +263,7 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
-const allowedCategoryIds = [895, 490, 1505 ];
+const allowedCategoryIds = [895, 490, 1505, 208, 81, 217, 97 ];
 const filteredCategoryTree = computed(() => {
   if (!categoryTree.value) return [];
   
