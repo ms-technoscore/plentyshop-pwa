@@ -5,9 +5,7 @@
         ref="logo"
         :src="headerLogo"
         :alt="`${storeName} logo`"
-        class="w-100 py-2"
-        width="150"
-        height="40"
+        class="py-2 w-[350px]"
         preload
       />
     </template>
@@ -17,9 +15,7 @@
         ref="logo"
         :src="headerLogo"
         :alt="`${storeName} logo`"
-        :width="imgWidth"
-        :height="imgHeight"
-        class="max-h-[100px] max-w-[200px]"
+        class="w-[350px] object-contain"
         preload
       />
     </template>
@@ -35,13 +31,4 @@ const headerLogo = computed(() => getHeaderLogo());
 const storeName = runtimeConfig.public.storename;
 
 const imageExtension = computed(() => headerLogo.value.split('.').pop());
-const logo = ref<HTMLImageElement | null>(null);
-const imgWidth = ref<string>('');
-const imgHeight = ref<string>('');
-onMounted(() => {
-  if (logo.value) {
-    imgWidth.value = logo.value.clientWidth + '';
-    imgHeight.value = logo.value.clientHeight + '';
-  }
-});
 </script>

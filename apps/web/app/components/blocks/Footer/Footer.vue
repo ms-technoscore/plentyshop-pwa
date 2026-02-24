@@ -44,7 +44,12 @@
           <div v-else-if="col.title === 'Im Shop'" class="flex flex-col gap-3">
             <div v-for="node in footerCategories" :key="node.id" class="w-full">
               
-              <details v-if="node.childCount > 0" class="group">
+              <details 
+                v-if="node.childCount > 0" 
+                class="group"
+                @mouseenter="openAccordion"
+                @mouseleave="closeAccordion"
+              >
                 <summary class="flex items-center justify-between cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                   <NuxtLink :to="localePath(generateCategoryLink(node))" class="hover:underline opacity-90 hover:opacity-100 flex items-center gap-2">
                     <span class="text-xs opacity-50">▶</span> {{ categoryTreeGetters.getName(node) }}
@@ -175,4 +180,15 @@ const footerData = computed((): FooterContent => {
   const content = (props.content as unknown) as FooterContent;
   return content || { columns: [] };
 });
+
+// Helper functions to handle accordion hover states safely for TypeScript
+const openAccordion = (event: Event) => {
+  const target = event.currentTarget as HTMLDetailsElement | null;
+  if (target) target.open = true;
+};
+
+const closeAccordion = (event: Event) => {
+  const target = event.currentTarget as HTMLDetailsElement | null;
+  if (target) target.open = false;
+};
 </script>

@@ -1,5 +1,9 @@
 <template>
-  <div class="w-full py-8 relative">
+  <div 
+    class="w-full py-8 relative"
+    @mouseenter="pauseAutoPlay" 
+    @mouseleave="startAutoPlay"
+  >
     <div v-if="content.title" class="mb-6 text-center">
       <h2 class="text-2xl font-bold text-neutral-900">{{ content.title }}</h2>
     </div>
@@ -40,7 +44,7 @@
       <div
         v-for="(item, index) in content.items"
         :key="index"
-        class="flex-shrink-0 snap-start flex items-center justify-center p-4 border border-neutral-100 rounded-lg bg-white grayscale hover:grayscale-0 transition-all duration-300"
+        class="flex-shrink-0 snap-start flex items-center justify-center p-4 border border-neutral-100 rounded-lg bg-white"
         :style="itemStyle"
       >
         <NuxtLink 
@@ -61,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import type { ComponentPublicInstance } from 'vue';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import type { LogoSliderProps } from './types';
@@ -74,6 +79,7 @@ const localePath = useLocalePath();
 const viewport = useViewport();
 
 const sliderRef = ref<SfScrollableInstance | null>(null);
+let autoPlayInterval: ReturnType<typeof setInterval> | null = null;
 
 // Determine how many items are visible per row
 const itemsCount = computed(() => {
@@ -116,7 +122,7 @@ const getContainer = (): HTMLElement | null => {
   return root;
 };
 
-// Scroll Backward
+// Scroll Backward (1 item at a time)
 const scrollPrev = () => {
   const container = getContainer();
   if (container) {
@@ -125,12 +131,47 @@ const scrollPrev = () => {
   }
 };
 
-// Scroll Forward
+// Scroll Forward (1 item at a time with loop)
 const scrollNext = () => {
   const container = getContainer();
   if (container) {
     const itemWidth = container.offsetWidth / itemsCount.value;
-    container.scrollBy({ left: itemWidth, behavior: 'smooth' });
+    
+    // Check if we have reached the end of the scrollable area
+    // (Added a 10px buffer to account for rounding errors in browser zoom)
+    if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+      // If at the end, smoothly scroll all the way back to the beginning
+      container.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      // Otherwise, slide exactly 1 item to the right
+      container.scrollBy({ left: itemWidth, behavior: 'smooth' });
+    }
   }
 };
+
+// --- AUTO-PLAY LOGIC ---
+const startAutoPlay = () => {
+  if (!autoPlayInterval) {
+    autoPlayInterval = setInterval(() => {
+      scrollNext();
+    }, 1500); 
+  }
+};
+
+const pauseAutoPlay = () => {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
+  }
+};
+
+// Start playing when the component loads
+onMounted(() => {
+  startAutoPlay();
+});
+
+// Stop playing when the user navigates away from the page
+onBeforeUnmount(() => {
+  pauseAutoPlay();
+});
 </script>

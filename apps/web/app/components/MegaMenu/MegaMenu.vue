@@ -21,7 +21,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full lg:w-auto items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -44,10 +44,10 @@
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-          <div
+        <div
             ref="triggerReference"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
+            class="ultra-wide-category inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
             <NuxtLink 
               :to="localePath(generateCategoryLink(menuNode))" 
@@ -59,7 +59,7 @@
 
             <SfIconChevronRight
               v-if="menuNode.childCount > 0"
-              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4"
+              class="ultra-wide-icon rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4"
             />
           </div>
 
@@ -210,30 +210,26 @@ const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 const isTouchDevice = ref(false);
 
 // --- UPDATED: Sorting Logic ---
-// We pass `isRoot` as a flag so we can skip sorting the top-level items
-const sortTreeAlphabetically = (nodes: CategoryTreeItem[], isRoot: boolean = false): CategoryTreeItem[] => {
+// We removed the `isRoot` flag so it sorts ALL levels alphabetically
+const sortTreeAlphabetically = (nodes: CategoryTreeItem[]): CategoryTreeItem[] => {
   if (!nodes || nodes.length === 0) return [];
 
-  const processedNodes = [...nodes];
+  // Sort the current level alphabetically
+  const processedNodes = [...nodes].sort((a, b) => {
+    const nameA = categoryTreeGetters.getName(a) || '';
+    const nameB = categoryTreeGetters.getName(b) || '';
+    return nameA.localeCompare(nameB, 'de'); 
+  });
 
-  // Only sort alphabetically if we are NOT looking at the root level parents
-  if (!isRoot) {
-    processedNodes.sort((a, b) => {
-      const nameA = categoryTreeGetters.getName(a) || '';
-      const nameB = categoryTreeGetters.getName(b) || '';
-      return nameA.localeCompare(nameB, 'de'); 
-    });
-  }
-
-  // Recursively apply sorting to all children (passing `false` because children are never root)
+  // Recursively apply sorting to all children
   return processedNodes.map((node) => ({
     ...node,
-    children: sortTreeAlphabetically(node.children || [], false)
+    children: sortTreeAlphabetically(node.children || [])
   }));
 };
 
-// Start the tree passing `true` for `isRoot` so the top level keeps its backend order
-const categoryTree = ref(sortTreeAlphabetically(categoryTreeGetters.getTree(props.categories), true));
+// Start the tree (no more boolean flags needed)
+const categoryTree = ref(sortTreeAlphabetically(categoryTreeGetters.getTree(props.categories)));
 // ----------------------------
 
 const drawerReference = ref();
@@ -324,8 +320,8 @@ onBeforeUnmount(() => removeHook?.());
 watch(
   () => props.categories,
   (categories: CategoryTreeItem[]) => {
-    // Re-apply the tree generation with `true` to keep the root items in order
-    categoryTree.value = sortTreeAlphabetically(categoryTreeGetters.getTree(categories), true);
+    // Re-apply the tree generation without the flag
+    categoryTree.value = sortTreeAlphabetically(categoryTreeGetters.getTree(categories));
     setCategory(categoryTree.value);
   },
 );
@@ -339,3 +335,23 @@ useTrapFocus(
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
+<style scoped>
+/* TARGET SCREENS 2500PX AND WIDER ONLY */
+@media (min-width: 2500px) {
+  .ultra-wide-category {
+    font-size: 1.5rem !important; /* Much larger text */
+    color: #000000 !important; /* Pure black text */
+    padding-left: 1.5rem !important; /* Extra spacing between items */
+    padding-right: 1.5rem !important;
+  }
+  
+  .ultra-wide-category:hover {
+    color: #333333 !important; /* Dark grey on hover */
+  }
+
+  .ultra-wide-icon {
+    width: 1.5rem !important; /* Larger dropdown arrow */
+    height: 1.5rem !important;
+  }
+}
+</style>
