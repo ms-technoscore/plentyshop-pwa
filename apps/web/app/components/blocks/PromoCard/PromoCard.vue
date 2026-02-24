@@ -1,26 +1,25 @@
 <template>
   <NuxtLink
     :to="localePath(content.link)"
-    class="relative block w-full overflow-hidden group cursor-pointer shadow-md hover:shadow-lg transition-shadow duration-300"
-    :style="{ height: content.height || '400px' }"
+    class="flex flex-col w-full group cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-neutral-100"
+    :style="{ height: content.height || '250px' }"
   >
-    <NuxtImg
-      v-if="isValidImage(content.image)"
-      :src="content.image"
-      :alt="content.alt"
-      class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-    />
-    <div v-else class="absolute inset-0 flex items-center justify-start py-6 pointer-events-none">
-      No Image
+    <div class="relative w-full flex-1 overflow-hidden bg-neutral-50">
+      <NuxtImg
+        v-if="isValidImage(content.image)"
+        :src="content.image"
+        :alt="content.alt"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      <div v-else class="absolute inset-0 flex items-center justify-center text-neutral-400 text-sm">
+        Kein Bild
+      </div>
     </div>
 
-    <div class="absolute inset-0 flex items-center justify-start py-6 pointer-events-none">
-      
-      <div class="bg-white/90 px-1 py-4 shadow-sm backdrop-blur-lg rounded-sm max-w-[85%] pointer-events-auto">
-        <h3 class="text-lg md:text-lg font-extrabold text-black leading-tight tracking-wide">
-            {{ content.title }}
-        </h3>
-      </div>
+    <div class="w-full p-4 flex items-center justify-center bg-white border-t border-neutral-100 z-10 transition-colors duration-300 group-hover:bg-neutral-50">
+      <h3 class="text-sm md:text-base font-bold text-neutral-900 leading-tight text-center line-clamp-2">
+        {{ content.title }}
+      </h3>
     </div>
   </NuxtLink>
 </template>
