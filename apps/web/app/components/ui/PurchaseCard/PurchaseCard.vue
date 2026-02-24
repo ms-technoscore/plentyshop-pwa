@@ -537,7 +537,7 @@ watch(
     delete win.purchaseCardCalculator;
     delete win.lgoCalculatorCallbacks;
 
-    if (Number(netPrice.value) <= 500) return;
+    if (Number(netPrice.value) <= 2500) return;
 
     await nextTick();
 
