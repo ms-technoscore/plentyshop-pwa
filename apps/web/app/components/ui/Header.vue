@@ -1,3 +1,4 @@
+<!-- eslint-disable vuejs-accessibility/no-distracting-elements -->
 <template>
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
@@ -5,27 +6,30 @@
         <div v-if="!isHomePage" class="w-full max-w-[500px]">
           <UiSearch />
         </div>
-        <span class="text-sm font-bold text-red-600 whitespace-nowrap">
-          Wir bieten auch Leasing- und Finanzierungsmodelle an!
-        </span>
       </div>
 
-      <div class="hidden md:flex flex-col items-end justify-center mr-6">
-        <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm font-medium mb-0.5 transition-colors" style="color: #062633;">
+        <div class="hidden md:flex flex-col items-end justify-center mr-6"> 
+        
+        <div class="w-[180px] md:w-[200px] lg:w-[240px] xl:w-[280px] 2xl:w-[320px] min-[2500px]:w-[900px] bg-red-600 rounded-md shadow-sm mb-1 lg:mb-2 overflow-hidden border border-red-700">
+          <marquee behavior="alternate" scrollamount="3" class="text-white text-[9px] md:text-[10px] lg:text-xs xl:text-sm min-[2500px]:text-[1.5rem] min-[2500px]:py-2 font-bold py-0.5 md:py-1 animate-pulse tracking-wide">
+            Wir bieten auch Leasing- und Finanzierungsmodelle an!
+          </marquee>
+        </div>
+        
+        <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors" style="color: #062633;">
           www.komplett-konzept.de
         </a>
-        <a href="tel:+492862587950" class="text-sm font-bold transition-colors" style="color: #062633;">
+        <a href="tel:+492862587950" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-bold transition-colors" style="color: #062633;">
           +49 2862 58795 0
         </a>
       </div>
 
-      <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-        <div class="mr-3"> <GoogleTranslate />
-  </div>
+      <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap items-center">
+        <div class="mr-3"> <GoogleTranslate /> </div>
         <template v-if="localeCodes.length > 1">
           <UiButton
             v-if="!isLanguageSelectOpen"
-            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2"
             :aria-label="t('common.navigation.languageSelector')"
             variant="tertiary"
             :style="{ color: iconColor }"
@@ -35,12 +39,12 @@
             @click="toggleLanguageSelect()"
           >
             <template #prefix>
-              <SfIconLanguage class="relative" />
+              <SfIconLanguage class="relative min-[2500px]:w-10 min-[2500px]:h-10" />
             </template>
           </UiButton>
           <UiButton
             v-else
-            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2"
             :aria-label="t('common.navigation.languageSelector')"
             :style="{ color: isActive ? iconColor : '' }"
             variant="tertiary"
@@ -48,12 +52,12 @@
             data-testid="open-languageselect-button"
           >
             <template #prefix>
-              <SfIconLanguage class="relative" />
+              <SfIconLanguage class="relative min-[2500px]:w-10 min-[2500px]:h-10" />
             </template>
           </UiButton>
         </template>
         <UiButton
-          class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
+          class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
           :style="{ color: iconColor }"
@@ -63,11 +67,11 @@
           data-testid="wishlist-page-navigation"
         >
           <template #prefix>
-            <SfIconFavorite />
+            <SfIconFavorite class="min-[2500px]:w-10 min-[2500px]:h-10" />
             <SfBadge
               :content="wishlistItemIds.length"
               :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
-              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px] min-[2500px]:min-w-[24px] min-[2500px]:min-h-[24px] min-[2500px]:text-base"
               data-testid="wishlist-badge"
               placement="top-right"
               :max="99"
@@ -75,7 +79,7 @@
           </template>
         </UiButton>
         <UiButton
-          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
           :tag="NuxtLink"
           :style="{ color: iconColor }"
           :to="localePath(paths.cart)"
@@ -84,11 +88,11 @@
           square
         >
           <template #prefix>
-            <SfIconShoppingCart />
+            <SfIconShoppingCart class="min-[2500px]:w-10 min-[2500px]:h-10" />
             <SfBadge
               :content="cartItemsCount"
               :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
-              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+              class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px] min-[2500px]:min-w-[24px] min-[2500px]:min-h-[24px] min-[2500px]:text-base"
               data-testid="cart-badge"
               placement="top-right"
               :max="99"
@@ -99,16 +103,16 @@
           <template #trigger>
             <UiButton
               variant="tertiary"
-              class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
+              class="relative hover:bg-header-400 active:bg-header-400 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
               :style="{ color: iconColor }"
               :class="{ 'bg-primary-700': isAccountDropdownOpen }"
               data-testid="account-dropdown-button"
               @click="accountDropdownToggle()"
             >
               <template #prefix>
-                <SfIconPerson />
+                <SfIconPerson class="min-[2500px]:w-10 min-[2500px]:h-10" />
               </template>
-              {{ user?.firstName }}
+              <span class="min-[2500px]:text-[1.3rem]">{{ user?.firstName }}</span>
             </UiButton>
           </template>
           <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -134,13 +138,13 @@
         <UiButton
           v-else
           :style="{ color: iconColor }"
-          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+          class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
           variant="tertiary"
           :aria-label="t('authentication.login.openLoginForm')"
           square
           @click="navigateToLogin"
         >
-          <SfIconPerson />
+          <SfIconPerson class="min-[2500px]:w-10 min-[2500px]:h-10" />
         </UiButton>
       </nav>
     </template>
@@ -339,3 +343,4 @@ const isHomePage = computed(() => {
   return route.path === home || route.path === `${home}/`;
 });
 </script>
+

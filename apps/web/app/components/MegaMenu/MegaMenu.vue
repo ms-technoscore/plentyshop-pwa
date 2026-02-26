@@ -1,5 +1,5 @@
 <template>
-  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-50">
+  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-100">
     <div
       class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
@@ -43,11 +43,11 @@
       >
         <li v-if="categoryTree.length === 0" class="h-10" />
 
-        <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-        <div
+       <li v-for="(menuNode, index) in categoryTree" v-else :key="index" class="relative" @mouseenter="onCategoryMouseEnter(menuNode)">
+          <div
             ref="triggerReference"
             data-testid="category-button"
-            class="ultra-wide-category inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base min-[2500px]:text-2xl min-[2500px]:px-6 tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
             <NuxtLink 
               :to="localePath(generateCategoryLink(menuNode))" 
@@ -59,7 +59,7 @@
 
             <SfIconChevronRight
               v-if="menuNode.childCount > 0"
-              class="ultra-wide-icon rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900 w-4 h-4 min-[2500px]:w-6 min-[2500px]:h-6"
             />
           </div>
 
@@ -73,7 +73,7 @@
             "
             :key="activeMenu.id"
             ref="megaMenuReference"
-            class="hidden md:grid absolute top-full left-0 w-full gap-x-6 grid-cols-5 bg-white shadow-lg p-6 pt-5 outline-none z-40"
+            class="hidden md:flex flex-col absolute top-full left-0 min-w-[280px] bg-white shadow-xl p-3 outline-none z-110 rounded-b-md border border-neutral-100"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -83,7 +83,7 @@
                 :tag="NuxtLink"
                 size="sm"
                 :to="localePath(generateCategoryLink(node))"
-                class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base min-[2500px]:text-xl min-[2500px]:py-3 min-[2500px]:px-4 text-left"
                 @click="close()"
               >
                 {{ categoryTreeGetters.getName(node) }}
@@ -245,7 +245,7 @@ const trapFocusOptions = {
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
-const headerClass = computed(() => ({ 'z-[10]': isOpen.value }));
+const headerClass = computed(() => ({ 'z-[10] lg:z-[100]': isOpen.value }));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -335,23 +335,3 @@ useTrapFocus(
 
 useTrapFocus(drawerReference, trapFocusOptions);
 </script>
-<style scoped>
-/* TARGET SCREENS 2500PX AND WIDER ONLY */
-@media (min-width: 2500px) {
-  .ultra-wide-category {
-    font-size: 1.5rem !important; /* Much larger text */
-    color: #000000 !important; /* Pure black text */
-    padding-left: 1.5rem !important; /* Extra spacing between items */
-    padding-right: 1.5rem !important;
-  }
-  
-  .ultra-wide-category:hover {
-    color: #333333 !important; /* Dark grey on hover */
-  }
-
-  .ultra-wide-icon {
-    width: 1.5rem !important; /* Larger dropdown arrow */
-    height: 1.5rem !important;
-  }
-}
-</style>

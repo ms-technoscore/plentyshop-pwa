@@ -2,7 +2,7 @@
   <NuxtErrorBoundary>
     <div class="relative w-full group">
 
-      <div class="absolute inset-0 z-[50] flex flex-col items-center justify-center pointer-events-none h-full w-full">
+      <div class="absolute inset-0 z-[20] flex flex-col items-center justify-center pointer-events-none h-full w-full">
         <div 
           class="pointer-events-auto bg-[#eadd87] bg-opacity-90 p-6 rounded shadow-lg max-w-[90%] md:max-w-[600px] text-center border-2 border-white relative"
           :style="{ backgroundColor: overlayConfig.bgColor }"
@@ -16,7 +16,7 @@
           </div>
 
           <div class="relative w-full">
-            <form class="flex w-full bg-white border border-gray-400 rounded relative z-[60]" @submit.prevent="handleSearch">
+            <form class="flex w-full bg-white border border-gray-400 rounded relative z-[30]" @submit.prevent="handleSearch">
               <input 
                 v-model="searchQuery" 
                 @input="onSearchInput"
@@ -35,7 +35,7 @@
 
 <div 
   v-if="showResults && searchResults.length > 0" 
-  class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-xl z-[50] overflow-hidden text-left"
+  class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-xl z-[40] overflow-hidden text-left"
 >
               <ul>
 <li 
