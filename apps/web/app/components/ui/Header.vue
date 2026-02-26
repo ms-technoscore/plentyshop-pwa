@@ -8,20 +8,25 @@
         </div>
       </div>
 
-        <div class="hidden md:flex flex-col items-end justify-center mr-6"> 
+        <div class="hidden md:flex flex-row items-center justify-end mr-6 gap-4 min-[2500px]:gap-8"> 
         
-        <div class="w-[180px] md:w-[200px] lg:w-[240px] xl:w-[280px] 2xl:w-[320px] min-[2500px]:w-[900px] bg-red-600 rounded-md shadow-sm mb-1 lg:mb-2 overflow-hidden border border-red-700">
-          <marquee behavior="alternate" scrollamount="3" class="text-white text-[9px] md:text-[10px] lg:text-xs xl:text-sm min-[2500px]:text-[1.5rem] min-[2500px]:py-2 font-bold py-0.5 md:py-1 animate-pulse tracking-wide">
-            Wir bieten auch Leasing- und Finanzierungsmodelle an!
-          </marquee>
+ <img 
+          src="./shared-image-400.jpg" 
+          alt="Banner" 
+          class="w-[150px] object-contain rounded-md"
+        />
+
+        <div class="flex flex-col items-end justify-center">
+          <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
+            www.komplett-konzept.de
+          </a>
+          <a href="tel:+492862587950" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-bold transition-colors whitespace-nowrap" style="color: #062633;">
+            +49 2862 58795 0
+          </a>
         </div>
+
+       
         
-        <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors" style="color: #062633;">
-          www.komplett-konzept.de
-        </a>
-        <a href="tel:+492862587950" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-bold transition-colors" style="color: #062633;">
-          +49 2862 58795 0
-        </a>
       </div>
 
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap items-center">
