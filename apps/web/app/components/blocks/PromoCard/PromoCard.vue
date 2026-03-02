@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="w-full p-4 flex items-center justify-center bg-white border-t border-neutral-100 z-10 transition-colors duration-300 group-hover:bg-neutral-50">
+    <div class="h-[80px] w-full px-4 flex items-center justify-center bg-white border-t border-neutral-100 z-10 transition-colors duration-300 group-hover:bg-neutral-50">
       <h3 class="text-sm md:text-base font-bold text-neutral-900 leading-tight text-center line-clamp-2">
         {{ content.title }}
       </h3>
