@@ -158,18 +158,7 @@
     </template>
 
     <div v-if="viewport.isLessThan('lg')">
-      <UiButton
-        variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
-        square
-        data-testid="open-languageselect-button"
-        :style="{ color: iconColor }"
-        :aria-label="t('common.navigation.languageSelector')"
-        :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-        @click="toggleLanguageSelect()"
-      >
-        <SfIconLanguage />
-      </UiButton>
+      <GoogleTranslate />
       <UiButton
         v-if="!isHomePage"
         variant="tertiary"

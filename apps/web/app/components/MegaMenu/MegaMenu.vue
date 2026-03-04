@@ -1,7 +1,7 @@
 <template>
-  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-100">
+  <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-[100]">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      class="flex justify-between items-center px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
@@ -11,7 +11,7 @@
           variant="tertiary"
           square
           :aria-label="t('common.navigation.closeMenu')"
-          class="mr-5 hover:!bg-header-400"
+          class="mr-3 hover:!bg-header-400"
           :style="{ color: iconColor }"
           @click="openMenu([])"
         >
@@ -21,7 +21,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full lg:w-auto items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full max-w-[160px] md:max-w-none lg:w-auto items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -73,7 +73,7 @@
             "
             :key="activeMenu.id"
             ref="megaMenuReference"
-            class="hidden md:flex flex-col absolute top-full left-0 min-w-[280px] bg-white shadow-xl p-3 outline-none z-110 rounded-b-md border border-neutral-100"
+            class="hidden md:flex flex-col absolute top-full left-0 min-w-[280px] bg-white shadow-xl p-3 outline-none z-[110] rounded-b-md border border-neutral-100"
             tabindex="0"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
@@ -103,8 +103,21 @@
         class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
       >
         <nav>
-          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-            <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
+          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid bg-neutral-50">
+            <div class="flex items-center gap-3">
+              <p class="typography-text-base font-medium">{{ t('common.actions.browseProducts') }}</p>
+              
+              <UiButton
+                variant="tertiary"
+                class="relative text-neutral-600 hover:bg-neutral-200 rounded-md !p-1.5"
+                square
+                :aria-label="t('common.navigation.languageSelector')"
+                @click="toggleLanguageSelect(); close();"
+              >
+                <SfIconLanguage />
+              </UiButton>
+            </div>
+
             <UiButton
               variant="tertiary"
               square
@@ -177,6 +190,7 @@ import {
   SfCounter,
   SfIconArrowBack,
   SfIconMenu,
+  SfIconLanguage, // <-- Imported the Icon
   useTrapFocus,
   useDropdown,
 } from '@storefront-ui/vue';
@@ -197,6 +211,9 @@ const { setDrawerOpen } = useDrawerState();
 const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const { getSetting: getIconColor } = useSiteSettings('iconColor');
 
+// <-- Initialized Localization for the language button
+const { toggle: toggleLanguageSelect } = useLocalization(); 
+
 const { referenceRef, floatingRef } = useDropdown({
   isOpen,
   onClose: close,
@@ -209,28 +226,22 @@ const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const isTouchDevice = ref(false);
 
-// --- UPDATED: Sorting Logic ---
-// We removed the `isRoot` flag so it sorts ALL levels alphabetically
 const sortTreeAlphabetically = (nodes: CategoryTreeItem[]): CategoryTreeItem[] => {
   if (!nodes || nodes.length === 0) return [];
 
-  // Sort the current level alphabetically
   const processedNodes = [...nodes].sort((a, b) => {
     const nameA = categoryTreeGetters.getName(a) || '';
     const nameB = categoryTreeGetters.getName(b) || '';
     return nameA.localeCompare(nameB, 'de'); 
   });
 
-  // Recursively apply sorting to all children
   return processedNodes.map((node) => ({
     ...node,
     children: sortTreeAlphabetically(node.children || [])
   }));
 };
 
-// Start the tree (no more boolean flags needed)
 const categoryTree = ref(sortTreeAlphabetically(categoryTreeGetters.getTree(props.categories)));
-// ----------------------------
 
 const drawerReference = ref();
 const megaMenuReference = ref();
@@ -245,7 +256,9 @@ const trapFocusOptions = {
 } as const;
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
-const headerClass = computed(() => ({ 'z-[10] lg:z-[100]': isOpen.value }));
+
+// 4. PREVENT Z-INDEX DROP ON MOBILE
+const headerClass = computed(() => ({ 'z-[110]': isOpen.value })); 
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -320,7 +333,6 @@ onBeforeUnmount(() => removeHook?.());
 watch(
   () => props.categories,
   (categories: CategoryTreeItem[]) => {
-    // Re-apply the tree generation without the flag
     categoryTree.value = sortTreeAlphabetically(categoryTreeGetters.getTree(categories));
     setCategory(categoryTree.value);
   },
