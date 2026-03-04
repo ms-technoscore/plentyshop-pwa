@@ -134,6 +134,11 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
+
+import './styles/navigation.min.css';
+import './styles/pagination.min.css';
+import './styles/swiper.min.css';
+
 import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import { ref, computed, watch, nextTick } from 'vue';
@@ -358,6 +363,6 @@ watch(
 );
 </script>
 
-<style src="./styles/navigation.min.css"></style>
+<!-- <style src="./styles/navigation.min.css"></style>
 <style src="./styles/pagination.min.css"></style>
-<style src="./styles/swiper.min.css"></style>
+<style src="./styles/swiper.min.css"></style> -->
