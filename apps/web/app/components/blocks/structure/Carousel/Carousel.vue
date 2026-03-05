@@ -2,37 +2,36 @@
   <NuxtErrorBoundary>
     <div class="relative w-full group">
 
-      <div class="absolute inset-0 z-[20] flex flex-col items-center justify-center pointer-events-none h-full w-full">
+     <div class="absolute inset-0 z-[20] flex flex-col items-center justify-center pointer-events-none h-full w-full">
         <div 
-          class="pointer-events-auto bg-[#eadd87] bg-opacity-90 p-6 rounded shadow-lg max-w-[90%] md:max-w-[600px] text-center border-2 border-white relative"
+          class="pointer-events-auto bg-[#eadd87] bg-opacity-90 p-4 md:p-6 rounded shadow-lg max-w-[95%] md:max-w-[600px] text-center border-2 border-white relative"
           :style="{ backgroundColor: overlayConfig.bgColor }"
         >
           
-          <div class="flex items-center justify-center mb-3">
-            <div class="bg-black text-white font-bold px-3 py-1 rounded-full mr-3 text-lg">
+          <div class="flex flex-row md:flex-row items-center justify-center mb-2 md:mb-3">
+            <div class="bg-black text-white font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full mr-2 md:mr-3 text-sm md:text-lg flex-shrink-0">
               {{ overlayConfig.badgeText }}
             </div>
-            <span class="text-black font-medium text-lg md:text-xl text-left leading-tight" v-html="overlayConfig.description" />
+            <span class="text-black font-medium text-sm md:text-xl text-left leading-snug md:leading-tight" v-html="overlayConfig.description" />
           </div>
 
-          <div class="relative w-full">
+          <div class="relative w-full mt-2 md:mt-0">
             <form class="flex w-full bg-white border border-gray-400 rounded relative z-[30]" @submit.prevent="handleSearch">
               <input 
-                v-model="searchQuery" 
-                @input="onSearchInput"
+                v-model="searchQuery"   
                 type="text" 
                 :placeholder="overlayConfig.placeholder" 
-                class="flex-1 px-4 py-3 outline-none text-black rounded-l"
+                class="flex-1 px-3 py-2 md:px-4 md:py-3 outline-none text-black rounded-l text-sm md:text-base"
                 autocomplete="off"
+                @input="onSearchInput"
               />
               <button 
                 type="submit" 
-                class="px-6 py-2 font-bold text-black border-l border-gray-300 hover:bg-gray-50 transition-colors"
+                class="px-3 py-1 md:px-6 md:py-2 font-bold text-black border-l border-gray-300 hover:bg-gray-50 transition-colors text-sm md:text-base"
               >
                 {{ overlayConfig.searchBtnText }}
               </button>
             </form>
-
 <div 
   v-if="showResults && searchResults.length > 0" 
   class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-xl z-[40] overflow-hidden text-left"
@@ -73,13 +72,14 @@
         :key="content.length"
         :modules="enableModules ? [Pagination, Navigation] : []"
         :slides-per-view="1"
+        :touch-release-on-edges="true" 
         v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
         :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
         :loop="true"
         :pagination="paginationConfig"
         :navigation="navigationConfig"
-        class="!z-0 !w-full !max-h-[85vh]"
+        class="!z-0 !w-full !max-h-[85vh] touch-pan-y" 
         @swiper="onSwiperInit"
         @slide-change="onSlideChange"
       >

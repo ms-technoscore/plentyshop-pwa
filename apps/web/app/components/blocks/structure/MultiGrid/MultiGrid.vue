@@ -109,12 +109,20 @@ const gridInlineStyle = computed(() => ({
 }));
 
 const getGridClasses = () => {
-  return gridClassFor({ mobile: 1, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
+  // SMART GRID DETECTION: 
+  // If there are 3 or more items (like your PromoCards), show 2 columns on mobile.
+  // If there are 1 or 2 items (like a Text/Image split), safely stack them in 1 column.
+  const colCount = configuration.columnWidths?.length || 1;
+  const mobileCols = colCount >= 3 ? 2 : 1; 
+
+  return gridClassFor({ mobile: mobileCols, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
 };
 
 const getColumnClasses = (colIndex: number) => {
   const columnWidth = configuration.columnWidths[colIndex];
-  const classes = [`col-span-${columnWidth}`];
+  
+  // FORCE responsive behavior: Take up 1 slot on mobile, but use the CMS size on desktop
+  const classes = ['col-span-1', `md:col-span-${columnWidth}`];
 
   if (Array.isArray(configuration.sticky) && configuration.sticky.includes(colIndex)) {
     classes.push('md:sticky', 'md:top-40');
