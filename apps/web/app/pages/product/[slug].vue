@@ -41,6 +41,9 @@
 
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
+    
+    <WhatsAppModal />
+
   </NuxtLayout>
 </template>
 
@@ -48,6 +51,10 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+
+// ADDED: Import the WhatsApp Modal component
+import WhatsAppModal from '~/components/WhatsAppModal.vue';
+
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
@@ -122,8 +129,8 @@ watch(
 );
 
 /* TODO: This should only be temporary.
- *  It changes the url of the product page while on the page and switching the locale.
- *  Should be removed when the item search is refactored.
+ * It changes the url of the product page while on the page and switching the locale.
+ * Should be removed when the item search is refactored.
  */
 watch(
   () => product.value.texts.urlPath,
