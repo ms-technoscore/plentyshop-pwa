@@ -1,13 +1,13 @@
 <template>
-  <div class="relative w-full" ref="searchContainer">
+  <div ref="searchContainer" class="relative w-full">
     <form class="flex w-full bg-white border border-gray-400 rounded relative z-[60]" @submit.prevent="handleSearch">
       <input 
         v-model="searchQuery" 
-        @input="onSearchInput"
-        type="text" 
+        type="text"
         :placeholder="t('common.actions.search')" 
         class="flex-1 px-4 py-2 outline-none text-black rounded-l"
         autocomplete="off"
+        @input="onSearchInput" 
       />
       <button 
         type="submit" 
@@ -136,11 +136,22 @@ const goToProduct = (product: any) => {
   }
 };
 
+// Replace your existing handleSearch function with this:
 const handleSearch = () => {
-  if (searchQuery.value.trim().length > 0) {
+  const term = searchQuery.value.trim();
+  
+  if (term.length > 0) {
     showResults.value = false;
     props.close?.();
-    window.location.href = `/search?term=${searchQuery.value}`;
+
+    // --- NEW: PATERNOSTER INTERCEPTOR ---
+    if (term.toLowerCase() === 'paternoster') {
+      window.location.href = 'https://www.komplett-konzept.de/paletten-schwerlastregale-zubehoer/Paternoster';
+      return;
+    }
+    // ------------------------------------
+
+    window.location.href = `/search?term=${term}`;
   }
 };
 </script>

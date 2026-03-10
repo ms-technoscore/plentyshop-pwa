@@ -30,6 +30,18 @@ definePageMeta({
 });
 
 const route = useRoute();
+
+// --- NEW: PATERNOSTER INTERCEPTOR ---
+// If the URL contains ?term=paternoster, redirect immediately
+if (route.query.term && (route.query.term as string).toLowerCase().trim() === 'paternoster') {
+  if (import.meta.client) {
+    window.location.href = 'https://www.komplett-konzept.de/paletten-schwerlastregale-zubehoer/Paternoster';
+  } else {
+    navigateTo('https://www.komplett-konzept.de/paletten-schwerlastregale-zubehoer/Paternoster', { external: true });
+  }
+}
+// ------------------------------------
+
 const { getSearch, data: productsCatalog, productsPerPage, loading } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
 
