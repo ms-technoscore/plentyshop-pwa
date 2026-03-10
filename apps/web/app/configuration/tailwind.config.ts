@@ -7,42 +7,38 @@ const fontFamilyText = process.env.NUXT_PUBLIC_FONT || 'Red Hat Text';
 
 export default {
   presets: [tailwindConfig],
-  content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
+  content: [
+    './app/**/*.{vue,js,ts}',
+    './components/**/*.{vue,js,ts}',
+    './layouts/**/*.{vue,js,ts}',
+    './pages/**/*.{vue,js,ts}',
+    './app.vue',
+    '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}',
+    './node_modules/@plentymarkets/**/*.{vue,js,ts,mjs}',
+    '../../node_modules/@plentymarkets/**/*.{vue,js,ts,mjs}'
+  ],
   safelist: [
     {
-      pattern: /^col-span-(1[0-2]|[1-9])$/,
+      pattern: /col-span-(1[0-2]|[1-9])/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'], // This fixes your MultiGrid!
+    },
+    {
+      pattern: /grid-cols-/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'], // This fixes the Category layout!
     },
   ],
   theme: {
     extend: {
       sfTypography: () => ({
-        'display-1': {
-          fontFamily: 'inherit',
-        },
-        'display-2': {
-          fontFamily: 'inherit',
-        },
-        'display-3': {
-          fontFamily: 'inherit',
-        },
-        'headline-1': {
-          fontFamily: 'inherit',
-        },
-        'headline-2': {
-          fontFamily: 'inherit',
-        },
-        'headline-3': {
-          fontFamily: 'inherit',
-        },
-        'headline-4': {
-          fontFamily: 'inherit',
-        },
-        'headline-5': {
-          fontFamily: 'inherit',
-        },
-        'headline-6': {
-          fontFamily: 'inherit',
-        },
+        'display-1': { fontFamily: 'inherit' },
+        'display-2': { fontFamily: 'inherit' },
+        'display-3': { fontFamily: 'inherit' },
+        'headline-1': { fontFamily: 'inherit' },
+        'headline-2': { fontFamily: 'inherit' },
+        'headline-3': { fontFamily: 'inherit' },
+        'headline-4': { fontFamily: 'inherit' },
+        'headline-5': { fontFamily: 'inherit' },
+        'headline-6': { fontFamily: 'inherit' },
       }),
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
@@ -79,7 +75,6 @@ export default {
           'body-bg': '#F1F3F5',
           button: '#062633',
         },
-
         header: {
           '50': 'rgb(var(--colors-2-header-50) / <alpha-value>)',
           '100': 'rgb(var(--colors-2-header-100) / <alpha-value>)',
