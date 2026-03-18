@@ -26,7 +26,8 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
+import type { CategoryItemsPerPageProps } from '~/components/CategoryItemsPerPage/types';
+import { computed, ref, watch } from 'vue';
 import { defaults } from '~/composables';
 
 const props = defineProps<CategoryItemsPerPageProps & { selectionModeCompact?: boolean }>();
@@ -34,45 +35,42 @@ const props = defineProps<CategoryItemsPerPageProps & { selectionModeCompact?: b
 const { updateItemsPerPage: updateItemsPerPageFromComposable, getFacetsFromURL } = useCategoryFilter();
 const selectionModeCompact = computed(() => props.selectionModeCompact ?? false);
 
-const options = ref(
-  defaults.PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })),
-);
+// 1. Build the options cleanly from your new global defaults
+const options = computed(() => {
+  // Grab the [100] from defaults.ts
+  const baseOptions = defaults.PER_PAGE_STEPS.map((step) => ({
+    label: step.toString(),
+    value: step.toString(),
+    disabled: false
+  }));
 
-let firstHigherValueOptionFound = false;
+  // Dynamically calculate and append "Alle" based on the current category's total products
+  const allValue = props.totalProducts > 0 ? props.totalProducts.toString() : '9999';
+  baseOptions.push({
+    label: 'Alle',
+    value: allValue,
+    disabled: false
+  });
 
-options.value = options.value.map((option) => {
-  if (Number(option.value) < props.totalProducts || !firstHigherValueOptionFound) {
-    if (Number(option.value) > props.totalProducts) {
-      firstHigherValueOptionFound = true;
-    }
-    return { ...option, disabled: false };
-  } else {
-    return { ...option, disabled: true };
-  }
+  return baseOptions;
 });
 
-const lastDisabledValue =
-  options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
-
 const facetsFromURL = getFacetsFromURL();
-const selectedValue =
-  facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
-    ? lastDisabledValue
-    : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
 
+// 2. Use the global default (100) safely
+const selectedValue = facetsFromURL.itemsPerPage?.toString() || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
 const selected = ref(selectedValue);
+
 watch(
   selectionModeCompact,
   (on) => {
     if (on) {
       selected.value = '';
-    } else {
-      if (!selected.value) {
-        selected.value = lastDisabledValue;
-      }
+    } else if (!selected.value) {
+      selected.value = defaults.DEFAULT_ITEMS_PER_PAGE.toString();
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 const updateItemsPerPage = (itemsPerPage: number): void => {
