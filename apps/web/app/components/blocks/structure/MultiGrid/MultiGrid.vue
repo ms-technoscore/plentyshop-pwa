@@ -66,11 +66,11 @@ const attrs = useAttrs() as { enableActions?: boolean; root?: boolean };
 const { getSetting: getBlockSize } = useSiteSettings('blockSize');
 const blockSize = computed(() => getBlockSize());
 const gapClassMap: Record<string, string> = {
-  None: 'gap-x-0',
-  S: 'gap-y-1 md:gap-x-1 md:gap-y-0',
-  M: 'gap-y-2 md:gap-x-2 md:gap-y-0',
-  L: 'gap-y-3 md:gap-x-3 md:gap-y-0',
-  XL: 'gap-y-5 md:gap-x-5 md:gap-y-0',
+  None: 'gap-0',
+  S: 'gap-2',
+  M: 'gap-4',
+  L: 'gap-6',
+  XL: 'gap-8',
 };
 const gridGapClass = computed(() => gapClassMap[configuration.layout?.gap || 'M']);
 
