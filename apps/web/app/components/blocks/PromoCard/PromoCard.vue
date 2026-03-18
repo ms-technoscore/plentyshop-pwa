@@ -1,16 +1,18 @@
 <template>
   <NuxtLink
     :to="localePath(content.link)"
-    class="flex flex-col w-full group cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-neutral-100"
+    class="flex flex-col w-full group cursor-pointer bg-white rounded-md shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-400 hover:border-gray-500 hover:scale-105"
     :style="{ height: content.height || '250px' }"
   >
     <div class="relative w-full flex-1 overflow-hidden bg-neutral-50">
+      
       <NuxtImg
         v-if="isValidImage(content.image)"
         :src="content.image"
         :alt="content.alt"
-        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
       />
+      
       <div v-else class="absolute inset-0 flex items-center justify-center text-neutral-400 text-sm">
         Kein Bild
       </div>
