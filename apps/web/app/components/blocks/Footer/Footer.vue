@@ -36,7 +36,7 @@
                 :href="social.url" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="transition-all duration-300 hover:scale-110 hover:-translate-y-1 drop-shadow-sm hover:drop-shadow-md"
+                class="transition-all duration-300 hover:scale-110 hover:-translate-y-1 drop-shadow-sm hover:drop-shadow-md flex items-center justify-center"
                 :aria-label="social.icon"
               >
                 <svg v-if="social.icon === 'facebook'" class="w-8 h-8" viewBox="0 0 24 24" fill="#1877F2">
@@ -61,8 +61,8 @@
                   <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                 </svg>
 
-                <svg v-else-if="social.icon === 'youtube'" class="w-8 h-8" viewBox="0 0 24 24" fill="#FF0000">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                <svg v-else-if="social.icon === 'youtube'" class="w-8 h-8 scale-[1.6]" viewBox="0 0 576 512" fill="#FF0000">
+                  <path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.204z"/>
                 </svg>
 
                 <svg v-else-if="social.icon === 'pinterest'" class="w-8 h-8" viewBox="0 0 24 24" fill="#E60023">
@@ -101,7 +101,7 @@
                 
                 <details 
                   v-if="node.childCount > 0" 
-                  class="group"
+                  class="group relative"
                   @mouseenter="openAccordion"
                   @mouseleave="closeAccordion"
                 >
@@ -116,9 +116,12 @@
                     </span>
                   </summary>
                   
-                  <ul class="pl-4 mt-2 flex flex-col gap-2 border-l border-white/20 ml-[7px]">
+                  <ul 
+                    class="absolute z-[100] left-4 bg-neutral-800 shadow-xl p-3 flex flex-col gap-2 border border-white/10 min-w-[200px] rounded-md max-h-[300px] overflow-y-auto"
+                    :class="node.children.length > 5 ? 'bottom-full mb-1' : 'top-full mt-1'"
+                  >
                     <li v-for="child in node.children" :key="child.id">
-                      <NuxtLink :to="localePath(generateCategoryLink(child))" class="hover:underline opacity-60 hover:opacity-100 text-sm block py-0.5">
+                      <NuxtLink :to="localePath(generateCategoryLink(child))" class="hover:underline opacity-80 hover:opacity-100 text-sm block py-1">
                         {{ categoryTreeGetters.getName(child) }}
                       </NuxtLink>
                     </li>
@@ -137,8 +140,6 @@
               class="text-sm opacity-90 mt-2"
               v-html="col.content"
             />
-
-           
 
             <div v-if="index !== 0 && col.image" class="mt-6">
               <NuxtImg
