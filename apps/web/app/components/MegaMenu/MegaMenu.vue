@@ -43,8 +43,8 @@
       >
         <li v-if="categoryTree.length === 0" class="h-10" />
 
-       <li v-for="(menuNode, index) in categoryTree" v-else :key="index" class="relative" @mouseenter="onCategoryMouseEnter(menuNode)">
-          <div
+<li v-for="(menuNode, index) in categoryTree" v-else :key="index" class="relative" @mouseenter="onCategoryMouseEnter(menuNode)" @mouseleave="onMouseLeave">
+            <div
             ref="triggerReference"
             data-testid="category-button"
             class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base min-[2500px]:text-2xl min-[2500px]:px-6 tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
