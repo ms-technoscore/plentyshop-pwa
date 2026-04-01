@@ -109,13 +109,20 @@ const gridInlineStyle = computed(() => ({
 }));
 
 const getGridClasses = () => {
-  // SMART GRID DETECTION: 
-  // If there are 3 or more items (like your PromoCards), show 2 columns on mobile.
-  // If there are 1 or 2 items (like a Text/Image split), safely stack them in 1 column.
-  const colCount = configuration.columnWidths?.length || 1;
-  const mobileCols = colCount >= 3 ? 2 : 1; 
+  // Read the value from the editor (defaults to 1 if not set)
+  const mobileColsSetting = configuration.layout?.mobileCols === 2 ? 2 : 1;
+  
+  // Explicitly write the literal strings so Tailwind doesn't purge them!
+  const mobileGridClass = mobileColsSetting === 2 ? 'grid-cols-2' : 'grid-cols-1';
 
-  return gridClassFor({ mobile: mobileCols, tablet: 12, desktop: 12 }, [gridGapClass.value ?? '', 'items-start']);
+  return [
+    'grid', 
+    mobileGridClass, // Uses the editor's choice
+    'md:grid-cols-12', // Tablet
+    'lg:grid-cols-12', // Desktop
+    gridGapClass.value || 'gap-4', 
+    'items-start'
+  ];
 };
 
 const colSpanMap: Record<number, string> = {
@@ -134,11 +141,9 @@ const colSpanMap: Record<number, string> = {
 };
 
 const getColumnClasses = (colIndex: number) => {
-  // FIX: Add "|| 12" so if the CMS forgets to pass a width, it safely defaults to 12.
-  // This completely satisfies TypeScript!
-  const columnWidth = configuration.columnWidths[colIndex] || 12;
+  const rawWidth = configuration.columnWidths?.[colIndex];
+  const columnWidth = rawWidth ? Number(rawWidth) : 12; // Safely force to Number
   
-  // Now TS knows columnWidth is definitely a number
   const desktopSpan = colSpanMap[columnWidth] || 'md:col-span-12';
   
   const classes = ['col-span-1', desktopSpan];

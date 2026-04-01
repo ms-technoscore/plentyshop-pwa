@@ -14,6 +14,8 @@ interface MultiGridLayout {
 
   backgroundColor?: string;
   gap?: string;
+
+  mobileCols?: number;
 }
 
 export type MultiGridProps = {
@@ -68,6 +70,9 @@ export type ColumnBlock = Block & {
 
       backgroundColor?: string;
       fullWidth?: boolean;
+      
+      // 🚨 ADD THIS HERE TOO!
+      mobileCols?: number;
     };
   };
 };

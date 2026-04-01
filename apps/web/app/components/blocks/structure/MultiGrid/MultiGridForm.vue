@@ -124,6 +124,33 @@
             {{ getEditorTranslation('spacing-between') }} {{ getGapPx(multiGridStructure.configuration.layout.gap) }}px
           </div>
         </div>
+
+        <div v-if="multiGridStructure.configuration.layout" class="py-2 mt-2">
+          <UiFormLabel>{{ getEditorTranslation('mobile-columns') }}</UiFormLabel>
+          <div class="border-b py-1 flex gap-2">
+            <button
+              type="button"
+              :class="[
+                gapBtnClasses,
+                { 'bg-editor-button text-white': multiGridStructure.configuration.layout.mobileCols === 1 },
+              ]"
+              @click="multiGridStructure.configuration.layout.mobileCols = 1"
+            >
+              1
+            </button>
+            <button
+              type="button"
+              :class="[
+                gapBtnClasses,
+                { 'bg-editor-button text-white': multiGridStructure.configuration.layout.mobileCols === 2 },
+              ]"
+              @click="multiGridStructure.configuration.layout.mobileCols = 2"
+            >
+              2
+            </button>
+          </div>
+        </div>
+
       </div>
       <div v-if="multiGridStructure.configuration.columnWidths?.length" class="py-4">
         <UiFormLabel>{{ getEditorTranslation('sticky-columns') }}</UiFormLabel>
@@ -240,22 +267,22 @@ const multiGridStructure = computed(() => {
       marginBottom: defaultMarginBottom.value,
       marginLeft: 40,
       marginRight: 40,
-      // Initialize Padding Defaults
       paddingTop: 0,
       paddingBottom: 0,
       paddingLeft: 0,
       paddingRight: 0,
       backgroundColor: '#ffffff',
       gap: 'M',
+      mobileCols: 1 // NEW: Default to 1 column on mobile
     };
   } else {
-    // Safety checks to ensure properties exist if they were missing in DB
+    // Safety checks
     if (!block.configuration.layout.backgroundColor) block.configuration.layout.backgroundColor = '#ffffff';
     if (!block.configuration.layout.gap) block.configuration.layout.gap = 'M';
+    if (block.configuration.layout.mobileCols === undefined) block.configuration.layout.mobileCols = 1; // Default fallback
     if (block.configuration.layout.marginBottom === undefined || block.configuration.layout.marginBottom === null) {
       block.configuration.layout.marginBottom = defaultMarginBottom.value;
     }
-    // Initialize Padding if missing
     if (block.configuration.layout.paddingTop === undefined) block.configuration.layout.paddingTop = 0;
     if (block.configuration.layout.paddingBottom === undefined) block.configuration.layout.paddingBottom = 0;
     if (block.configuration.layout.paddingLeft === undefined) block.configuration.layout.paddingLeft = 0;
@@ -268,7 +295,7 @@ const { isFullWidth } = useFullWidthToggleForConfig(computed(() => multiGridStru
 
 const gapOptions = ['None', 'S', 'M', 'L', 'XL'];
 const gapBtnClasses =
-  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed';
+  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed border border-gray-200';
 type GapSize = 'None' | 'S' | 'M' | 'L' | 'XL';
 const gapPxMap: Record<GapSize, number> = {
   None: 0,
@@ -330,7 +357,8 @@ const layoutBackground = ref(false);
     "layout-background": "Layout Background",
     "sticky-columns": "Sticky columns",
     "column-size": "Column Size",
-    "column": "Column"
+    "column": "Column",
+    "mobile-columns": "Mobile Columns"
   },
   "de": {
     "layout-settings": "Layout Settings",
@@ -348,7 +376,8 @@ const layoutBackground = ref(false);
     "layout-background": "Layout Background",
     "sticky-columns": "Sticky columns",
     "column-size": "Column Size",
-    "column": "Column"
+    "column": "Column",
+    "mobile-columns": "Mobile Spalten"
   }
 }
 </i18n>
