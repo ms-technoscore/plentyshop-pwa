@@ -21,7 +21,6 @@
           size="lg"
           square
           class="!rounded-full bg-white border-neutral-200 shadow-md absolute left-4 z-10 hidden md:flex"
-          :disabled="disabled"
           @click.stop="scrollPrev"
         >
           <SfIconChevronLeft />
@@ -34,7 +33,6 @@
           size="lg"
           square
           class="!rounded-full bg-white border-neutral-200 shadow-md absolute right-4 z-10 hidden md:flex"
-          :disabled="disabled"
           @click.stop="scrollNext"
         >
           <SfIconChevronRight />
@@ -42,7 +40,7 @@
       </template>
 
       <div
-        v-for="(item, index) in content.items"
+        v-for="(item, index) in loopedItems"
         :key="index"
         class="flex-shrink-0 snap-start flex items-center justify-center p-4 border border-neutral-100 rounded-lg bg-white"
         :style="itemStyle"
@@ -80,6 +78,12 @@ const viewport = useViewport();
 
 const sliderRef = ref<SfScrollableInstance | null>(null);
 let autoPlayInterval: ReturnType<typeof setInterval> | null = null;
+
+// THE ILLUSION: Triple the array so we have plenty of duplicate runway to snap back and forth
+const loopedItems = computed(() => {
+  const items = props.content.items || [];
+  return [...items, ...items, ...items];
+});
 
 // Determine how many items are visible per row
 const itemsCount = computed(() => {
@@ -122,28 +126,42 @@ const getContainer = (): HTMLElement | null => {
   return root;
 };
 
-// Scroll Backward (1 item at a time)
+// Scroll Backward (Seamless)
 const scrollPrev = () => {
   const container = getContainer();
-  if (container) {
-    const itemWidth = container.offsetWidth / itemsCount.value;
-    container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+  if (container && props.content.items) {
+    const itemWidth = container.scrollWidth / loopedItems.value.length;
+    const singleSetWidth = itemWidth * props.content.items.length;
+
+    // If we are at the very left edge, instantly jump to the identical item in the middle set
+    if (container.scrollLeft <= 10) {
+      container.scrollBy({ left: singleSetWidth, behavior: 'auto' });
+      // Short delay allows the browser to paint the invisible jump before animating again
+      setTimeout(() => {
+        container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+      }, 20);
+    } else {
+      container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+    }
   }
 };
 
-// Scroll Forward (1 item at a time with loop)
+// Scroll Forward (Seamless)
 const scrollNext = () => {
   const container = getContainer();
-  if (container) {
-    const itemWidth = container.offsetWidth / itemsCount.value;
+  if (container && props.content.items) {
+    const itemWidth = container.scrollWidth / loopedItems.value.length;
+    const singleSetWidth = itemWidth * props.content.items.length;
     
-    // Check if we have reached the end of the scrollable area
-    // (Added a 10px buffer to account for rounding errors in browser zoom)
-    if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
-      // If at the end, smoothly scroll all the way back to the beginning
-      container.scrollTo({ left: 0, behavior: 'smooth' });
+    // If we have scrolled past the first full set of original items
+    if (container.scrollLeft >= singleSetWidth - 10) {
+      // Instantly jump backward to the identical item in the first set
+      container.scrollBy({ left: -singleSetWidth, behavior: 'auto' });
+      
+      setTimeout(() => {
+        container.scrollBy({ left: itemWidth, behavior: 'smooth' });
+      }, 20);
     } else {
-      // Otherwise, slide exactly 1 item to the right
       container.scrollBy({ left: itemWidth, behavior: 'smooth' });
     }
   }
