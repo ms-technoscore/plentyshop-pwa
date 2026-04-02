@@ -130,13 +130,15 @@ const getContainer = (): HTMLElement | null => {
 const scrollPrev = () => {
   const container = getContainer();
   if (container && props.content.items) {
-    const itemWidth = container.scrollWidth / loopedItems.value.length;
+    const scrollW = container.scrollWidth;
+    if (scrollW <= 0) return; // FIX: Prevent math by 0 if DOM is not ready
+
+    const itemWidth = scrollW / loopedItems.value.length;
     const singleSetWidth = itemWidth * props.content.items.length;
 
     // If we are at the very left edge, instantly jump to the identical item in the middle set
     if (container.scrollLeft <= 10) {
       container.scrollBy({ left: singleSetWidth, behavior: 'auto' });
-      // Short delay allows the browser to paint the invisible jump before animating again
       setTimeout(() => {
         container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
       }, 20);
@@ -150,7 +152,10 @@ const scrollPrev = () => {
 const scrollNext = () => {
   const container = getContainer();
   if (container && props.content.items) {
-    const itemWidth = container.scrollWidth / loopedItems.value.length;
+    const scrollW = container.scrollWidth;
+    if (scrollW <= 0) return; // FIX: Prevent math by 0 if DOM is not ready
+
+    const itemWidth = scrollW / loopedItems.value.length;
     const singleSetWidth = itemWidth * props.content.items.length;
     
     // If we have scrolled past the first full set of original items
@@ -185,7 +190,16 @@ const pauseAutoPlay = () => {
 
 // Start playing when the component loads
 onMounted(() => {
-  startAutoPlay();
+  // FIX: Delay startup to let SSR hydration and CSS layout shifts finish completely
+  setTimeout(() => {
+    const container = getContainer();
+    if (container) {
+      // Force the scrollbar to the very beginning just in case the browser snapped it to the end
+      container.scrollLeft = 0; 
+    }
+    // Now that the DOM is stable and math is safe, start the loop
+    startAutoPlay();
+  }, 250);
 });
 
 // Stop playing when the user navigates away from the page
