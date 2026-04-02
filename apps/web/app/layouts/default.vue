@@ -16,6 +16,9 @@
     </ClientOnly>
     
     <QuickCheckout v-if="isOpen" :product="product" />
+
+    <StickyContact />
+    
   </div>
 </template>
 

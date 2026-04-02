@@ -17,19 +17,16 @@
         />
 
         <div class="flex flex-col items-end justify-center">
-          <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
+          <!-- <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
             www.komplett-konzept.de
-          </a>
+          </a> -->
           <a href="https://www.waren-ankauf.de/ankauf/" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
-            Ankaufsformular
+            €Ankaufsformular€
           </a>
           <a href="tel:+492862587950" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-bold transition-colors whitespace-nowrap" style="color: #062633;">
             +49 2862 58795 0
           </a>
-        </div>
-
-       
-        
+        </div>      
       </div>
 
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap items-center">
