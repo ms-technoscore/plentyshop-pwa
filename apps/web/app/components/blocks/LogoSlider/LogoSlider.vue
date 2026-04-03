@@ -79,10 +79,18 @@ const viewport = useViewport();
 const sliderRef = ref<SfScrollableInstance | null>(null);
 let autoPlayInterval: ReturnType<typeof setInterval> | null = null;
 
-// THE ILLUSION: Triple the array so we have plenty of duplicate runway to snap back and forth
+// THE ILLUSION: 7 identical sets guarantees we never run out of runway 
+// even if the user aggressively drags the slider manually.
+const SETS = 7;
+const MIDDLE_SET = 3;
+
 const loopedItems = computed(() => {
   const items = props.content.items || [];
-  return [...items, ...items, ...items];
+  let result: typeof items = [];
+  for (let i = 0; i < SETS; i++) {
+    result.push(...items);
+  }
+  return result;
 });
 
 // Determine how many items are visible per row
@@ -104,14 +112,10 @@ const itemStyle = computed(() => {
 
 const getContainer = (): HTMLElement | null => {
   const component = sliderRef.value;
-  if (!component || !component.$el) {
-    return null;
-  }
-
+  if (!component || !component.$el) return null;
   if (component.containerRef) return component.containerRef;
 
   const root = component.$el as HTMLElement;
-
   const byClass = root.querySelector('.sf-scrollable__container');
   if (byClass) return byClass as HTMLElement;
 
@@ -121,55 +125,51 @@ const getContainer = (): HTMLElement | null => {
     return style.overflowX === 'auto' || style.overflowX === 'scroll';
   });
 
-  if (scrollableChild) return scrollableChild;
-
-  return root;
+  return scrollableChild || root;
 };
 
-// Scroll Backward (Seamless)
+// THE MAGIC TRICK: Instantly moves the scrollbar without triggering CSS smooth scrolling
+const teleport = (container: HTMLElement, distance: number) => {
+  const originalBehavior = container.style.scrollBehavior;
+  container.style.scrollBehavior = 'auto'; // Disable smooth scroll
+  container.scrollLeft += distance;
+  void container.offsetHeight; // Force the browser to register the jump instantly
+  container.style.scrollBehavior = originalBehavior; // Restore smooth scroll
+};
+
 const scrollPrev = () => {
   const container = getContainer();
-  if (container && props.content.items) {
-    const scrollW = container.scrollWidth;
-    if (scrollW <= 0) return; // FIX: Prevent math by 0 if DOM is not ready
+  if (!container || !props.content.items?.length) return;
 
-    const itemWidth = scrollW / loopedItems.value.length;
-    const singleSetWidth = itemWidth * props.content.items.length;
+  const singleSetWidth = container.scrollWidth / SETS;
+  const itemWidth = singleSetWidth / props.content.items.length;
 
-    // If we are at the very left edge, instantly jump to the identical item in the middle set
-    if (container.scrollLeft <= 10) {
-      container.scrollBy({ left: singleSetWidth, behavior: 'auto' });
-      setTimeout(() => {
-        container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
-      }, 20);
-    } else {
-      container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
-    }
+  // If we are scrolling too far left (leaving Set 2), teleport forward into Set 3
+  if (container.scrollLeft <= singleSetWidth * 2) {
+    teleport(container, singleSetWidth);
   }
+
+  // Wait 1 frame to ensure the teleport finishes before starting the smooth slide
+  requestAnimationFrame(() => {
+    container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+  });
 };
 
-// Scroll Forward (Seamless)
 const scrollNext = () => {
   const container = getContainer();
-  if (container && props.content.items) {
-    const scrollW = container.scrollWidth;
-    if (scrollW <= 0) return; // FIX: Prevent math by 0 if DOM is not ready
+  if (!container || !props.content.items?.length) return;
 
-    const itemWidth = scrollW / loopedItems.value.length;
-    const singleSetWidth = itemWidth * props.content.items.length;
-    
-    // If we have scrolled past the first full set of original items
-    if (container.scrollLeft >= singleSetWidth - 10) {
-      // Instantly jump backward to the identical item in the first set
-      container.scrollBy({ left: -singleSetWidth, behavior: 'auto' });
-      
-      setTimeout(() => {
-        container.scrollBy({ left: itemWidth, behavior: 'smooth' });
-      }, 20);
-    } else {
-      container.scrollBy({ left: itemWidth, behavior: 'smooth' });
-    }
+  const singleSetWidth = container.scrollWidth / SETS;
+  const itemWidth = singleSetWidth / props.content.items.length;
+  
+  // If we are scrolling too far right (entering Set 4), teleport backward into Set 3
+  if (container.scrollLeft >= singleSetWidth * 4) {
+    teleport(container, -singleSetWidth);
   }
+
+  requestAnimationFrame(() => {
+    container.scrollBy({ left: itemWidth, behavior: 'smooth' });
+  });
 };
 
 // --- AUTO-PLAY LOGIC ---
@@ -188,21 +188,19 @@ const pauseAutoPlay = () => {
   }
 };
 
-// Start playing when the component loads
 onMounted(() => {
-  // FIX: Delay startup to let SSR hydration and CSS layout shifts finish completely
+  // Delay startup to let SSR hydration and CSS layout shifts finish completely
   setTimeout(() => {
     const container = getContainer();
-    if (container) {
-      // Force the scrollbar to the very beginning just in case the browser snapped it to the end
-      container.scrollLeft = 0; 
+    if (container && props.content.items?.length) {
+      const singleSetWidth = container.scrollWidth / SETS;
+      // Start the user exactly at the beginning of Set 3
+      teleport(container, singleSetWidth * MIDDLE_SET);
     }
-    // Now that the DOM is stable and math is safe, start the loop
     startAutoPlay();
   }, 250);
 });
 
-// Stop playing when the user navigates away from the page
 onBeforeUnmount(() => {
   pauseAutoPlay();
 });
