@@ -8,29 +8,45 @@
         </div>
       </div>
 
-        <div class="hidden md:flex flex-row items-center justify-end mr-6 gap-4 min-[2500px]:gap-8"> 
-        
- <img 
-          src="./shared-image-400.jpg" 
-          alt="Banner" 
-          class="w-[150px] object-contain rounded-md"
-        />
+      <div class="hidden md:flex flex-row items-center justify-end mr-6 gap-4 min-[2500px]:gap-8">
+        <img src="./shared-image-400.jpg" alt="Banner" class="w-[150px] object-contain rounded-md" />
 
         <div class="flex flex-col items-end justify-center">
           <!-- <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
             www.komplett-konzept.de
           </a> -->
-          <a href="https://www.waren-ankauf.de/ankauf/" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
-            €Ankaufsformular€
-          </a>
-          <a href="tel:+492862587950" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-bold transition-colors whitespace-nowrap" style="color: #062633;">
+          <NuxtLink to="/ankaufsformular" class="flex items-center gap-1.5 hover:text-blue-600 transition-colors group">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="shrink-0 text-neutral-500 group-hover:text-blue-600 transition-colors"
+            >
+              <path d="M4 10h12" />
+              <path d="M4 14h9" />
+              <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/>
+            </svg>
+
+            <span class="font-medium whitespace-nowrap">Ankaufsformular</span>
+          </NuxtLink>
+          <a
+            href="tel:+492862587950"
+            class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-bold transition-colors whitespace-nowrap"
+            style="color: #062633"
+          >
             +49 2862 58795 0
           </a>
-        </div>      
+        </div>
       </div>
 
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap items-center">
-        <div class="mr-3"> <GoogleTranslate /> </div>
+        <div class="mr-3"><GoogleTranslate /></div>
         <template v-if="localeCodes.length > 1">
           <UiButton
             v-if="!isLanguageSelectOpen"
@@ -261,14 +277,14 @@ const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuth
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
-const allowedCategoryIds = [895, 490, 1505, 208, 81, 217, 97 ];
+const allowedCategoryIds = [895, 490, 1505, 208, 81, 217, 97];
 const filteredCategoryTree = computed(() => {
   if (!categoryTree.value) return [];
-  
+
   // Filter the main top-level categories
-return categoryTree.value.filter((category: { id: number }) => {
-  return allowedCategoryIds.includes(category.id);
-});
+  return categoryTree.value.filter((category: { id: number }) => {
+    return allowedCategoryIds.includes(category.id);
+  });
 });
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
@@ -327,14 +343,17 @@ const navigateToLogin = () => {
     openAuthentication();
   }
 };
-watch(categoryTree, (tree) => {
-  // eslint-disable-next-line no-console
-  console.log("Category List:", tree);
-}, { immediate: true });
+watch(
+  categoryTree,
+  (tree) => {
+    // eslint-disable-next-line no-console
+    console.log('Category List:', tree);
+  },
+  { immediate: true },
+);
 
 const isHomePage = computed(() => {
   const home = localePath(paths.home);
   return route.path === home || route.path === `${home}/`;
 });
 </script>
-

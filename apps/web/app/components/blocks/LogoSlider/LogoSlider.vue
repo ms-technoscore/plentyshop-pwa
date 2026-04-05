@@ -86,7 +86,7 @@ const MIDDLE_SET = 3;
 
 const loopedItems = computed(() => {
   const items = props.content.items || [];
-  let result: typeof items = [];
+  const result: typeof items = [];
   for (let i = 0; i < SETS; i++) {
     result.push(...items);
   }
