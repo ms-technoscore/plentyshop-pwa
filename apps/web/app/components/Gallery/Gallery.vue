@@ -37,9 +37,10 @@
           :modules="thumbsModules"
           :direction="thumbsDirection"
           :slides-per-view="thumbsSlidesPerView"
-          :space-between="4"
+          :space-between="8"
           :free-mode="true"
           :watch-slides-progress="true"
+          :slide-to-clicked-slide="true"
           :centered-slides="false"
           :class="thumbsSwiperClass"
           :style="isSide ? { height: `${thumbsHeight}px` } : {}"
@@ -51,17 +52,21 @@
             :class="thumbSlideClass(index)"
             @click="slideTo(index)"
           >
-            <NuxtImg
-              :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
-              :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"
-              class="rounded h-full w-full object-contain"
-              :class="activeIndex === index ? 'border-primary-500' : ''"
-              :width="productImageGetters.getImageWidth(image) ?? 80"
-              :height="productImageGetters.getImageHeight(image) ?? 80"
-              :src="productImageGetters.getImageUrlPreview(image)"
-              :quality="80"
-              loading="lazy"
-            />
+            <div 
+              class="w-full h-full rounded p-1 transition-all duration-200 border-2"
+              :class="activeIndex === index ? 'border-primary-600 opacity-100 shadow-md' : 'border-transparent opacity-60 hover:opacity-100'"
+            >
+              <NuxtImg
+                :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
+                :title="productImageGetters.getImageName(image) ? productImageGetters.getImageName(image) : null"
+                class="rounded h-full w-full object-contain"
+                :width="productImageGetters.getImageWidth(image) ?? 80"
+                :height="productImageGetters.getImageHeight(image) ?? 80"
+                :src="productImageGetters.getImageUrlPreview(image)"
+                :quality="80"
+                loading="lazy"
+              />
+            </div>
           </SwiperSlide>
         </Swiper>
 
@@ -148,27 +153,23 @@ const thumbsSwiperClass = computed(() =>
   isSide.value ? 'hidden md:block md:h-full md:w-[5.5rem]' : 'hidden md:block md:w-full md:min-h-[5.5rem]',
 );
 
+// CLEANED UP: Removed opacity styling here, moved to the inner div for better control
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const thumbSlideClass = (index: number) =>
   isSide.value
-    ? [
-        '!w-[5rem] !h-[5rem] flex items-center justify-center cursor-pointer snap-start',
-        activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
-      ]
-    : [
-        '!w-[5rem] !h-[5rem] inline-flex items-center justify-center cursor-pointer snap-start',
-        activeIndex.value === index ? 'opacity-100' : 'opacity-80 hover:opacity-100',
-      ];
+    ? ['!w-[5rem] !h-[5rem] flex items-center justify-center cursor-pointer snap-start']
+    : ['!w-[5rem] !h-[5rem] inline-flex items-center justify-center cursor-pointer snap-start'];
 
 const prevThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40 shadow-sm transition-opacity',
     isSide.value ? 'left-1/2 -translate-x-1/2 top-2 rotate-90' : 'left-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
 
 const nextThumbBtnClass = computed(() =>
   [
-    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40',
+    'hidden md:flex items-center justify-center absolute z-[1] rounded-full p-2 bg-white ring-1 ring-neutral-300 disabled:opacity-40 shadow-sm transition-opacity',
     isSide.value ? 'left-1/2 -translate-x-1/2 bottom-2 rotate-90' : 'right-2 top-1/2 -translate-y-1/2',
   ].join(' '),
 );
@@ -195,6 +196,10 @@ const onThumbsInit = (swiper: SwiperType) => {
 
 const onMainSlideChange = (swiper: SwiperType) => {
   activeIndex.value = swiper.realIndex ?? 0;
+  // ADDED: Force the thumbnail swiper to automatically scroll to the newly selected image
+  if (thumbsSwiper.value) {
+    thumbsSwiper.value.slideTo(activeIndex.value);
+  }
 };
 
 const slideTo = (index: number) => {
