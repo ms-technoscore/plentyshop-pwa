@@ -15,25 +15,33 @@
           <!-- <a href="https://www.komplett-konzept.de" target="_blank" class="text-sm min-[2500px]:text-[1.3rem] min-[2500px]:leading-[1.8rem] font-medium mb-0.5 transition-colors whitespace-nowrap" style="color: #062633;">
             www.komplett-konzept.de
           </a> -->
-          <NuxtLink to="/ankaufsformular" class="flex items-center gap-1.5 hover:text-blue-600 transition-colors group">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="shrink-0 text-neutral-500 group-hover:text-blue-600 transition-colors"
-            >
-              <path d="M4 10h12" />
-              <path d="M4 14h9" />
-              <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/>
-            </svg>
+          <NuxtLink 
+            to="/ankaufsformular" 
+            class="flex items-center gap-2.5 px-4 py-1.5 mb-1 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-100 rounded-full hover:shadow-md hover:scale-105 transition-all duration-300 group"
+          >
+            <div class="relative flex items-center justify-center">
+              <span class="absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-40 animate-ping"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="relative shrink-0 text-blue-600"
+              >
+                <path d="M4 10h12" />
+                <path d="M4 14h9" />
+                <path d="M19 6a7.7 7.7 0 0 0-5.2-2A7.9 7.9 0 0 0 6 12c0 4.4 3.5 8 7.8 8 2 0 3.8-.8 5.2-2"/>
+              </svg>
+            </div>
 
-            <span class="font-medium whitespace-nowrap">Ankaufsformular</span>
+            <span class="text-base md:text-lg min-[2500px]:text-2xl font-extrabold text-blue-900 tracking-tight whitespace-nowrap">
+              Ankaufsformular
+            </span>
           </NuxtLink>
           <a
             href="tel:+492862587950"
