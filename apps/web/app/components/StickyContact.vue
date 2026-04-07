@@ -1,7 +1,7 @@
 <template>
-  <div class="fixed z-[9999] flex 
-              bottom-0 left-0 w-full flex-row justify-center gap-6 p-3 bg-white/90 backdrop-blur-sm shadow-[0_-5px_15px_rgba(0,0,0,0.1)]
-              md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-0 md:w-auto md:flex-col md:items-end md:gap-2 md:p-0 md:bg-transparent md:shadow-none md:backdrop-blur-none">
+  <div class="fixed z-[90] flex 
+              bottom-[80px] left-1/2 -translate-x-1/2 w-max flex-row justify-center gap-5 p-2 bg-white/95 backdrop-blur-md shadow-[0_5px_20px_rgba(0,0,0,0.12)] rounded-full
+              md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-0 md:w-auto md:flex-col md:items-end md:gap-2 md:p-0 md:bg-transparent md:shadow-none md:backdrop-blur-none md:rounded-none md:translate-x-0">
     
     <a 
       href="tel:+4902862587950" 

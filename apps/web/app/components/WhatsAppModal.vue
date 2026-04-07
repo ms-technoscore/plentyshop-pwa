@@ -2,7 +2,7 @@
   <div>
     <button
       aria-label="WhatsApp Us"
-      class="fixed bottom-24 right-6 z-[100] flex items-center justify-center gap-2 px-5 py-3 bg-white text-gray-800 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-300 border border-gray-100"
+      class="fixed bottom-[150px] md:bottom-24 right-4 md:right-6 z-[100] flex items-center justify-center gap-2 px-4 py-2.5 md:px-5 md:py-3 bg-white text-gray-800 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-300 border border-gray-100"
       @click="openModal"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-[#25D366]" fill="currentColor" viewBox="0 0 448 512">
