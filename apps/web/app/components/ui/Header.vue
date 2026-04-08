@@ -253,7 +253,7 @@
   <NuxtLazyHydrate when-idle>
     <SfModal
       v-model="isSearchModalOpen"
-      class="w-[95%] max-w-[600px] h-fit max-h-[80vh] rounded-xl shadow-2xl z-[9999] bg-[#EBE09B] border border-black/10"
+      class="w-[95%] max-w-[600px] h-fit max-h-[80vh] rounded-xl shadow-2xl z-[9999] !bg-[#EBE09B] border border-black/10"
       tag="section"
       role="dialog"
       aria-labelledby="search-modal-title"
