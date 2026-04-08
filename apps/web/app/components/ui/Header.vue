@@ -19,7 +19,7 @@
       <div class="hidden md:flex flex-1 flex-row items-center justify-end mr-6 gap-4 lg:gap-8">
     
         <NuxtLink to="/ankaufsformular" class="hover:scale-105 transition-transform duration-300 flex-shrink-0">
-          <img src="/_nuxt-plenty/images/image010.png" alt="Ankaufsformular" class="h-10 lg:h-14 xl:h-16 w-auto object-contain drop-shadow-sm" />
+          <img src="/_nuxt-plenty/images/image010.png" alt="Ankaufsformular" class="h-16 lg:h-20 xl:h-[90px] w-auto object-contain drop-shadow-md" />
         </NuxtLink>
 
         <div class="flex flex-col items-end justify-center gap-1">
