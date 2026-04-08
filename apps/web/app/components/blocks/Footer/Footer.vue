@@ -29,7 +29,7 @@
               class="object-contain"
               loading="lazy"
             />
-            <div v-if="col.socials && col.socials.length > 0" class="flex gap-5 mt-8 flex-wrap items-center">
+            <div v-if="col.socials && col.socials.length > 0" class="flex gap-5 mt-12 flex-wrap items-center">
               <a 
                 v-for="(social, s) in col.socials" 
                 :key="s" 
