@@ -12,14 +12,14 @@
           <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
         </div>
 
-        <img src="/_nuxt-plenty/images/image009.png" alt="Banner" class="w-[100px] lg:w-[130px] xl:w-[150px] object-contain rounded-md shadow-sm" />
-        
-      </div>
+      <img src="/_nuxt-plenty/images/image009.png" alt="Banner" class="h-16 lg:h-[84px] xl:h-[100px] w-auto object-contain rounded-md shadow-sm" />
+     
+    </div>
 
       <div class="hidden md:flex flex-1 flex-row items-center justify-end mr-6 gap-4 lg:gap-8">
     
-        <NuxtLink to="/ankaufsformular" class="hover:scale-105 transition-transform duration-300 flex-shrink-0">
-          <img src="/_nuxt-plenty/images/image010.png" alt="Ankaufsformular" class="h-16 lg:h-20 xl:h-[90px] w-auto object-contain drop-shadow-md" />
+       <NuxtLink to="/ankaufsformular" class="hover:scale-105 transition-transform duration-300 flex-shrink-0 flex items-center">
+          <img src="/_nuxt-plenty/images/image010.png" alt="Ankaufsformular" class="h-16 lg:h-[84px] xl:h-[100px] w-auto object-contain" />
         </NuxtLink>
 
         <div class="flex flex-col items-end justify-center gap-1">
