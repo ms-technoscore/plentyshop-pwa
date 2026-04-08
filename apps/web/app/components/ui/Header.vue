@@ -1,31 +1,50 @@
 <template>
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      
-      <div class="hidden md:flex flex-row items-center justify-start -ml-8 lg:-ml-10 gap-3 lg:gap-5 relative z-10">
-        
-        <div class="flex flex-col items-end justify-center text-[10px] lg:text-xs xl:text-sm font-extrabold text-[#062633] leading-snug tracking-wide whitespace-nowrap">
-          <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors">Reparatur und Instandsetzung</NuxtLink>
-          <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors">Abbau und Demontage</NuxtLink>
+      <div
+        class="hidden md:flex flex-row items-center justify-start -ml-2 lg:-ml-6 xl:-ml-10 gap-1 lg:gap-3 xl:gap-5 relative z-10 transition-all duration-300 min-w-0"
+      >
+        <div
+          class="flex flex-col items-end justify-center text-[6px] lg:text-[8px] xl:text-xs font-extrabold text-[#062633] leading-snug tracking-wide whitespace-nowrap transition-all duration-300"
+        >
+          <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors"
+            >Reparatur und Instandsetzung</NuxtLink
+          >
+          <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors"
+            >Abbau und Demontage</NuxtLink
+          >
           <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors">Über uns</NuxtLink>
           <NuxtLink to="/partner" class="hover:text-blue-600 transition-colors">Partner</NuxtLink>
           <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
         </div>
 
-      <img src="/_nuxt-plenty/images/image009.png" alt="Banner" class="h-16 lg:h-[84px] xl:h-[100px] w-auto object-contain rounded-md shadow-sm" />
-     
-    </div>
+        <img
+          src="/_nuxt-plenty/images/image009.png"
+          alt="Banner"
+          class="h-[40px] lg:h-[70px] xl:h-[140px] max-w-[60px] lg:max-w-[110px] xl:max-w-[180px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+        />
+      </div>
 
-      <div class="hidden md:flex flex-1 flex-row items-center justify-end mr-6 gap-4 lg:gap-8">
-    
-       <NuxtLink to="/ankaufsformular" class="hover:scale-105 transition-transform duration-300 flex-shrink-0 flex items-center">
-          <img src="/_nuxt-plenty/images/image010.png" alt="Ankaufsformular" class="h-16 lg:h-[84px] xl:h-[100px] w-auto object-contain" />
+      <div
+        class="hidden md:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-4 xl:mr-6 gap-1 lg:gap-4 xl:gap-6 transition-all duration-300 min-w-0"
+      >
+        <NuxtLink
+          to="/ankaufsformular"
+          class="hover:scale-105 transition-transform duration-300 flex items-center min-w-0"
+        >
+          <img
+            src="/_nuxt-plenty/images/image010.png"
+            alt="Ankaufsformular"
+            class="h-[45px] lg:h-[80px] xl:h-[130px] max-w-[70px] lg:max-w-[120px] xl:max-w-[190px] w-auto object-contain transition-all duration-300"
+          />
         </NuxtLink>
 
-        <div class="flex flex-col items-end justify-center gap-1">
-          <nav class="flex flex-row flex-nowrap items-center">
+        <div class="flex flex-col items-end justify-center gap-0 lg:gap-1 flex-shrink-0">
+          <nav
+            class="flex flex-row flex-nowrap items-center transform scale-[0.55] lg:scale-[0.75] xl:scale-100 origin-right transition-transform duration-300"
+          >
             <div class="mr-3"><GoogleTranslate /></div>
-            
+
             <UiButton
               v-if="!isHomePage"
               class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2"
@@ -82,7 +101,11 @@
                 <SfIconFavorite class="min-[2500px]:w-10 min-[2500px]:h-10" />
                 <SfBadge
                   :content="wishlistItemIds.length"
-                  :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+                  :style="{
+                    backgroundColor: iconColor,
+                    outlineColor: headerBackgroundColor,
+                    color: headerBackgroundColor,
+                  }"
                   class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px] min-[2500px]:min-w-[24px] min-[2500px]:min-h-[24px] min-[2500px]:text-base"
                   data-testid="wishlist-badge"
                   placement="top-right"
@@ -103,7 +126,11 @@
                 <SfIconShoppingCart class="min-[2500px]:w-10 min-[2500px]:h-10" />
                 <SfBadge
                   :content="cartItemsCount"
-                  :style="{ backgroundColor: iconColor, outlineColor: headerBackgroundColor, color: headerBackgroundColor }"
+                  :style="{
+                    backgroundColor: iconColor,
+                    outlineColor: headerBackgroundColor,
+                    color: headerBackgroundColor,
+                  }"
                   class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px] min-[2500px]:min-w-[24px] min-[2500px]:min-h-[24px] min-[2500px]:text-base"
                   data-testid="cart-badge"
                   placement="top-right"
@@ -131,7 +158,12 @@
                 <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
                   <template v-if="label === t('account.logout')">
                     <UiDivider class="my-2" />
-                    <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
+                    <SfListItem
+                      tag="button"
+                      class="text-left"
+                      data-testid="account-dropdown-logout-item"
+                      @click="logOut()"
+                    >
                       {{ label }}
                     </SfListItem>
                   </template>
@@ -162,7 +194,7 @@
 
           <a
             href="tel:+492862587950"
-            class="text-sm lg:text-base xl:text-lg min-[2500px]:text-2xl font-black transition-colors whitespace-nowrap pr-2 hover:text-blue-600 mt-1"
+            class="text-[10px] lg:text-sm xl:text-xl min-[2500px]:text-2xl font-black transition-all duration-300 whitespace-nowrap pr-1 lg:pr-2 hover:text-blue-600 mt-0 lg:mt-1"
             style="color: #062633"
           >
             +49 2862 58795 0
@@ -172,31 +204,42 @@
     </template>
 
     <div v-if="viewport.isLessThan('md')" class="flex items-center justify-end pr-2">
-      
-      <div class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap">
-        <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors">Reparatur und Instandsetzung</NuxtLink>
+      <div
+        class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap"
+      >
+        <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors"
+          >Reparatur und Instandsetzung</NuxtLink
+        >
         <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors">Abbau und Demontage</NuxtLink>
         <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors">Über uns</NuxtLink>
         <NuxtLink to="/partner" class="hover:text-blue-600 transition-colors">Partner</NuxtLink>
         <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
       </div>
 
-      <div class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-row items-center justify-between px-2 sm:px-3 py-2 z-[90]">
-        
+      <div
+        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-row items-center justify-between px-2 sm:px-3 py-2 z-[90]"
+      >
         <div class="flex flex-row items-center gap-2 sm:gap-3">
-          <img src="/_nuxt-plenty/images/image009.png" alt="Banner" class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm" />
+          <img
+            src="/_nuxt-plenty/images/image009.png"
+            alt="Banner"
+            class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
+          />
           <NuxtLink to="/ankaufsformular" class="active:scale-95 transition-transform duration-200 flex-shrink-0">
-            <img src="/_nuxt-plenty/images/image010.png" alt="Ankaufsformular" class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm" />
+            <img
+              src="/_nuxt-plenty/images/image010.png"
+              alt="Ankaufsformular"
+              class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
+            />
           </NuxtLink>
         </div>
 
         <div class="flex flex-col items-end gap-0.5">
-          
           <div class="flex flex-row items-center gap-0">
             <div class="scale-[0.75] transform origin-right">
               <GoogleTranslate />
             </div>
-            
+
             <UiButton
               v-if="!isHomePage"
               variant="tertiary"
@@ -217,12 +260,10 @@
           >
             +49 2862 58795 0
           </a>
-
         </div>
-
       </div>
     </div>
-    </MegaMenu>
+  </MegaMenu>
   <LanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
