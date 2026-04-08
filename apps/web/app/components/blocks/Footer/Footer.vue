@@ -88,10 +88,7 @@
                     </span>
                   </summary>
                   
-                  <div 
-                    class="absolute z-[100] left-4 min-w-[260px]"
-                    :class="node.children.length > 5 ? 'bottom-full pb-2' : 'top-full pt-2'"
-                  >
+                  <div class="absolute z-[100] left-4 min-w-[260px] bottom-full pb-2">
                     <ul class="bg-neutral-800 shadow-xl p-3 flex flex-col gap-2 border border-white/10 rounded-md max-h-[300px] overflow-y-auto w-full">
                       <li v-for="child in node.children" :key="child.id">
                         <NuxtLink :to="localePath(generateCategoryLink(child))" class="hover:underline opacity-80 hover:opacity-100 text-sm block py-1">
