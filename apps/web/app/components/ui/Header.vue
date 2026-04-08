@@ -253,7 +253,7 @@
   <NuxtLazyHydrate when-idle>
     <SfModal
       v-model="isSearchModalOpen"
-      class="w-[95%] max-w-[600px] h-fit max-h-[80vh] rounded-xl shadow-2xl z-[9999] bg-white/95 backdrop-blur-md border border-neutral-100/50"
+      class="w-[95%] max-w-[600px] h-fit max-h-[80vh] rounded-xl shadow-2xl z-[9999] bg-[#EBE09B] border border-black/10"
       tag="section"
       role="dialog"
       aria-labelledby="search-modal-title"
@@ -263,12 +263,12 @@
           :aria-label="t('common.navigation.closeDialog')"
           square
           variant="tertiary"
-          class="absolute right-4 top-2"
+          class="absolute right-4 top-2 text-black hover:bg-black/10 active:bg-black/20 transition-colors"
           @click="searchModalClose"
         >
-          <SfIconClose class="text-neutral-500" />
+          <SfIconClose />
         </UiButton>
-        <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
+        <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4 text-black">
           {{ t('common.actions.search') }}
         </h3>
       </header>
