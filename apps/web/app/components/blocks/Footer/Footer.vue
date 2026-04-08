@@ -21,7 +21,7 @@
             index === 0 ? 'col-span-1 md:col-span-2 flex-col sm:flex-row gap-6 lg:gap-10' : 'flex-col gap-4'
           ]"
         >
-          <div v-if="index === 0 && col.image" class="flex-shrink-0 flex flex-col items-start">
+          <div v-if="index === 0 && col.image" class="flex-shrink-0 flex flex-col justify-between">
             <NuxtImg
               :src="col.image"
               :alt="col.title || 'Footer Image'"
