@@ -59,7 +59,9 @@
             <ul v-if="col.title !== 'Im Shop' && col.links && col.links.length > 0" class="flex flex-col gap-2 mt-2">
               <li v-for="(link, i) in col.links" :key="i">
                 <NuxtLink 
-                  :to="localePath(link.url)" 
+                  :to="isExternal(link.url) ? link.url : localePath(link.url)" 
+                  :target="isExternal(link.url) ? '_blank' : undefined"
+                  :rel="isExternal(link.url) ? 'noopener noreferrer' : undefined"
                   class="hover:underline opacity-90 hover:opacity-100 flex items-center gap-2"
                 >
                   <span v-if="i > -1" class="text-xs opacity-50">▶</span>
@@ -142,6 +144,11 @@ import type { FooterProps, FooterContent } from './types';
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
+
+// --- HELPER FUNCTION FOR EXTERNAL LINKS ---
+const isExternal = (url: string) => {
+  return url && (url.startsWith('http://') || url.startsWith('https://'));
+};
 
 // --- LOAD DYNAMIC CATEGORIES ---
 const { data: categoryTree } = useCategoryTree();
