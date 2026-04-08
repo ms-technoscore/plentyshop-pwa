@@ -94,7 +94,7 @@
                 <VariationProperties :product="product" />
               </div>
             </template>
-            <template v-if="key === 'starRating' && configuration?.fields.starRating">
+            <!-- <template v-if="key === 'starRating' && configuration?.fields.starRating">
               <div class="inline-flex items-center mb-2">
                 <SfRating
                   size="xs"
@@ -112,7 +112,7 @@
                   {{ t('product.showAllReviews') }}
                 </UiButton>
               </div>
-            </template>
+            </template> -->
             <template v-if="key === 'previewText' && configuration?.fields.previewText">
               <div
                 v-if="productGetters.getShortDescription(product).length > 0"
@@ -269,8 +269,12 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
-import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
+// import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
+import { productGetters, productBundleGetters } from '@plentymarkets/shop-api';
+
+// import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
+import { SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
+
 import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
@@ -328,10 +332,10 @@ const props = withDefaults(defineProps<PurchaseCardProps>(), {
   }),
 });
 
-const { currentProduct } = useProducts();
+// const { currentProduct } = useProducts();
 
-const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
-const reviewAverage = computed(() => reviewGetters.getReviewCounts(productReviews.value));
+// const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
+// const reviewAverage = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
@@ -354,7 +358,7 @@ const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(props?.
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
-const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
+// const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
@@ -452,31 +456,31 @@ const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
 };
 
-const isReviewsAccordionOpen = () => {
-  const customerReviewsAccordionDetailsElement = document.querySelector('#customerReviewsAccordion')
-    ?.firstChild as HTMLDetailsElement;
+// const isReviewsAccordionOpen = () => {
+//   const customerReviewsAccordionDetailsElement = document.querySelector('#customerReviewsAccordion')
+//     ?.firstChild as HTMLDetailsElement;
 
-  return customerReviewsAccordionDetailsElement.open;
-};
+//   return customerReviewsAccordionDetailsElement.open;
+// };
 
-const openReviewsAccordion = () => {
-  const customerReviewsClickElement = document.querySelector('#customerReviewsClick') as HTMLElement;
-  customerReviewsClickElement?.click();
-};
+// const openReviewsAccordion = () => {
+//   const customerReviewsClickElement = document.querySelector('#customerReviewsClick') as HTMLElement;
+//   customerReviewsClickElement?.click();
+// };
 
 const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('product.notAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('product.attributes.notValidVariation')));
 const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
 
-const scrollToReviews = () => {
-  if (!isReviewsAccordionOpen()) {
-    openReviewsAccordion();
-  }
+// const scrollToReviews = () => {
+//   if (!isReviewsAccordionOpen()) {
+//     openReviewsAccordion();
+//   }
 
-  if (reviewArea.value) {
-    reviewArea.value.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+//   if (reviewArea.value) {
+//     reviewArea.value.scrollIntoView({ behavior: 'smooth' });
+//   }
+// };
 
 // --- LEASINGO INTEGRATION START ---
 interface LeasingoWindow extends Window {

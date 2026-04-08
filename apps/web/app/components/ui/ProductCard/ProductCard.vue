@@ -89,12 +89,12 @@
             {{ manufacturer.externalName }}
           </div>
         </template>
-        <template v-if="key === 'rating' && configuration?.fields?.rating">
+        <!-- <template v-if="key === 'rating' && configuration?.fields?.rating">
           <div class="flex items-center pt-1 gap-1 mb-2">
             <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
             <SfCounter size="xs">{{ ratingCount }}</SfCounter>
           </div>
-        </template>
+        </template> -->
         <template v-if="key === 'previewText' && configuration?.fields?.previewText">
           <div
             v-if="shortDescription"
@@ -157,7 +157,9 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
+// import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
+import { SfLink, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
+
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
@@ -208,8 +210,8 @@ const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
 const name = computed(() => productGetters.getName(product.value) ?? '');
 const manufacturer = computed(() => productGetters.getManufacturer(product.value));
-const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
-const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
+// const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
+// const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
 const shortDescription = computed(() => productGetters.getShortDescription(product.value) || '');
 const canAddFromCategory = computed(() => productGetters.canBeAddedToCartFromCategoryPage(product.value));
 const showFromText = computed(() => productGetters.showFromText(product.value));
