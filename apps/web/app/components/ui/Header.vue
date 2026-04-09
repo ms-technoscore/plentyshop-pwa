@@ -2,7 +2,7 @@
   <MegaMenu :categories="filteredCategoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <div
-        class="hidden md:flex flex-row items-center justify-start -ml-2 lg:-ml-6 xl:-ml-10 gap-1 lg:gap-3 xl:gap-5 relative z-10 transition-all duration-300 min-w-0"
+        class="hidden md:flex flex-row items-center justify-start gap-1 lg:gap-3 xl:gap-5 relative z-10 transition-all duration-300 min-w-0"
       >
         <div
           class="flex flex-col items-end justify-center text-[6px] lg:text-[8px] xl:text-xs font-extrabold text-[#062633] leading-snug tracking-wide whitespace-nowrap transition-all duration-300"
@@ -28,6 +28,11 @@
       <div
         class="hidden md:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-4 xl:mr-6 gap-1 lg:gap-4 xl:gap-6 transition-all duration-300 min-w-0"
       >
+        
+        <div v-if="!isHomePage" class="hidden min-[1500px]:block w-full max-w-[280px] 2xl:max-w-[350px] mr-auto ml-4 lg:ml-8 transition-all duration-300">
+          <UiSearch />
+        </div>
+
         <NuxtLink
           to="/ankaufsformular"
           class="hover:scale-105 transition-transform duration-300 flex items-center min-w-0"
@@ -47,7 +52,7 @@
 
             <UiButton
               v-if="!isHomePage"
-              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2"
+              class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md cursor-pointer min-[2500px]:p-4 min-[2500px]:mr-2 min-[1500px]:hidden"
               :aria-label="t('common.actions.search')"
               variant="tertiary"
               :style="{ color: iconColor }"
