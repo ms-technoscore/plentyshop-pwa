@@ -1,207 +1,118 @@
 <template>
-  <div 
-    class="w-full py-8 relative"
-    @mouseenter="pauseAutoPlay" 
-    @mouseleave="startAutoPlay"
-  >
+  <div class="w-full py-8 overflow-hidden relative bg-white marquee-container">
     <div v-if="content.title" class="mb-6 text-center">
       <h2 class="text-2xl font-bold text-neutral-900">{{ content.title }}</h2>
     </div>
 
-    <SfScrollable
-      ref="sliderRef"
-      class="items-center w-full"
-      :wrapper-class="'gap-4'"
-      buttons-placement="floating"
-      drag
+    <div
+      class="flex w-full"
+      @mouseenter="isPaused = true"
+      @mouseleave="isPaused = false"
     >
-      <template #previousButton="{ disabled }">
-        <SfButton
-          variant="secondary"
-          size="lg"
-          square
-          class="!rounded-full bg-white border-neutral-200 shadow-md absolute left-4 z-10 hidden md:flex"
-          @click.stop="scrollPrev"
-        >
-          <SfIconChevronLeft />
-        </SfButton>
-      </template>
-
-      <template #nextButton="{ disabled }">
-        <SfButton
-          variant="secondary"
-          size="lg"
-          square
-          class="!rounded-full bg-white border-neutral-200 shadow-md absolute right-4 z-10 hidden md:flex"
-          @click.stop="scrollNext"
-        >
-          <SfIconChevronRight />
-        </SfButton>
-      </template>
-
       <div
-        v-for="(item, index) in loopedItems"
-        :key="index"
-        class="flex-shrink-0 snap-start flex items-center justify-center p-4 border border-neutral-100 rounded-lg bg-white"
-        :style="itemStyle"
+        class="marquee-track flex whitespace-nowrap"
+        :class="{ 'paused': isPaused }"
       >
-        <NuxtLink 
-          :to="item.link ? localePath(item.link) : undefined" 
-          class="flex items-center justify-center w-full h-24"
+        <div
+          v-for="(item, index) in loopedItems"
+          :key="index"
+          class="marquee-item flex-shrink-0 flex items-center justify-center p-4 border border-neutral-100 rounded-lg mx-2 bg-white"
         >
-          <NuxtImg
-            v-if="item.image && typeof item.image === 'string'"
-            :src="item.image"
-            :alt="item.alt || 'Brand Logo'"
-            class="max-w-full max-h-full object-contain"
-            loading="lazy"
-          />
-        </NuxtLink>
+          <NuxtLink
+            v-if="item.link"
+            :to="localePath(item.link)"
+            class="flex items-center justify-center w-full h-24"
+          >
+            <NuxtImg
+              v-if="item.image && typeof item.image === 'string'"
+              :src="item.image"
+              :alt="item.alt || 'Brand Logo'"
+              class="max-w-full max-h-full object-contain"
+              loading="lazy"
+            />
+          </NuxtLink>
+          
+          <div v-else class="flex items-center justify-center w-full h-24">
+            <NuxtImg
+              v-if="item.image && typeof item.image === 'string'"
+              :src="item.image"
+              :alt="item.alt || 'Brand Logo'"
+              class="max-w-full max-h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        </div>
       </div>
-    </SfScrollable>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import type { ComponentPublicInstance } from 'vue';
-import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
+import { ref, computed } from 'vue';
 import type { LogoSliderProps } from './types';
-
-interface SfScrollableInstance extends ComponentPublicInstance {
-  containerRef?: HTMLElement;
-}
 
 const props = defineProps<LogoSliderProps>();
 const localePath = useLocalePath();
-const viewport = useViewport();
 
-const sliderRef = ref<SfScrollableInstance | null>(null);
-let autoPlayInterval: ReturnType<typeof setInterval> | null = null;
+const isPaused = ref(false);
 
-// THE ILLUSION: 7 identical sets guarantees we never run out of runway 
-// even if the user aggressively drags the slider manually.
-const SETS = 7;
-const MIDDLE_SET = 3;
-
+// THE MAGIC TRICK: We render exactly 4 identical sets of your logos. 
+// The CSS animation will shift exactly 1 set over, then instantly reset to 0.
+// Because the sets are identical, the human eye cannot see the reset!
 const loopedItems = computed(() => {
   const items = props.content.items || [];
-  const result: typeof items = [];
-  for (let i = 0; i < SETS; i++) {
-    result.push(...items);
-  }
-  return result;
-});
-
-// Determine how many items are visible per row
-const itemsCount = computed(() => {
-  if (viewport.isGreaterOrEquals('lg')) {
-    return props.content.itemsPerPageDesktop || 5;
-  } else if (viewport.isGreaterOrEquals('md')) {
-    return props.content.itemsPerPageTablet || 3;
-  } else {
-    return props.content.itemsPerPageMobile || 2;
-  }
-});
-
-const itemStyle = computed(() => {
-  return {
-    flex: `0 0 calc(100% / ${itemsCount.value} - 16px)`, 
-  };
-});
-
-const getContainer = (): HTMLElement | null => {
-  const component = sliderRef.value;
-  if (!component || !component.$el) return null;
-  if (component.containerRef) return component.containerRef;
-
-  const root = component.$el as HTMLElement;
-  const byClass = root.querySelector('.sf-scrollable__container');
-  if (byClass) return byClass as HTMLElement;
-
-  const children = Array.from(root.children) as HTMLElement[];
-  const scrollableChild = children.find((child) => {
-    const style = window.getComputedStyle(child);
-    return style.overflowX === 'auto' || style.overflowX === 'scroll';
-  });
-
-  return scrollableChild || root;
-};
-
-// THE MAGIC TRICK: Instantly moves the scrollbar without triggering CSS smooth scrolling
-const teleport = (container: HTMLElement, distance: number) => {
-  const originalBehavior = container.style.scrollBehavior;
-  container.style.scrollBehavior = 'auto'; // Disable smooth scroll
-  container.scrollLeft += distance;
-  void container.offsetHeight; // Force the browser to register the jump instantly
-  container.style.scrollBehavior = originalBehavior; // Restore smooth scroll
-};
-
-const scrollPrev = () => {
-  const container = getContainer();
-  if (!container || !props.content.items?.length) return;
-
-  const singleSetWidth = container.scrollWidth / SETS;
-  const itemWidth = singleSetWidth / props.content.items.length;
-
-  // If we are scrolling too far left (leaving Set 2), teleport forward into Set 3
-  if (container.scrollLeft <= singleSetWidth * 2) {
-    teleport(container, singleSetWidth);
-  }
-
-  // Wait 1 frame to ensure the teleport finishes before starting the smooth slide
-  requestAnimationFrame(() => {
-    container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
-  });
-};
-
-const scrollNext = () => {
-  const container = getContainer();
-  if (!container || !props.content.items?.length) return;
-
-  const singleSetWidth = container.scrollWidth / SETS;
-  const itemWidth = singleSetWidth / props.content.items.length;
-  
-  // If we are scrolling too far right (entering Set 4), teleport backward into Set 3
-  if (container.scrollLeft >= singleSetWidth * 4) {
-    teleport(container, -singleSetWidth);
-  }
-
-  requestAnimationFrame(() => {
-    container.scrollBy({ left: itemWidth, behavior: 'smooth' });
-  });
-};
-
-// --- AUTO-PLAY LOGIC ---
-const startAutoPlay = () => {
-  if (!autoPlayInterval) {
-    autoPlayInterval = setInterval(() => {
-      scrollNext();
-    }, 1500); 
-  }
-};
-
-const pauseAutoPlay = () => {
-  if (autoPlayInterval) {
-    clearInterval(autoPlayInterval);
-    autoPlayInterval = null;
-  }
-};
-
-onMounted(() => {
-  // Delay startup to let SSR hydration and CSS layout shifts finish completely
-  setTimeout(() => {
-    const container = getContainer();
-    if (container && props.content.items?.length) {
-      const singleSetWidth = container.scrollWidth / SETS;
-      // Start the user exactly at the beginning of Set 3
-      teleport(container, singleSetWidth * MIDDLE_SET);
-    }
-    startAutoPlay();
-  }, 250);
-});
-
-onBeforeUnmount(() => {
-  pauseAutoPlay();
+  return [...items, ...items, ...items, ...items];
 });
 </script>
+
+<style scoped>
+/* Responsive CSS Variables for exactly how many items show on screen */
+.marquee-container {
+  --items-per-page: 2; /* Mobile Default */
+}
+
+@media (min-width: 768px) {
+  .marquee-container {
+    --items-per-page: 3; /* Tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .marquee-container {
+    --items-per-page: 5; /* Desktop */
+  }
+}
+
+.marquee-item {
+  /* Dynamically calculate width based on screen size, minus margin space (mx-2) */
+  width: calc(100vw / var(--items-per-page) - 2rem);
+  max-width: 250px;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  /* 40 seconds for a smooth, slow glide. Lower this number to make it slide faster! */
+  animation: marquee-scroll 40s linear infinite;
+}
+
+/* Pauses the animation gracefully when the user hovers over a logo */
+.marquee-track.paused {
+  animation-play-state: paused;
+}
+
+/* Pause the animation gracefully when the user hovers anywhere over the track */
+.marquee-track:hover {
+  animation-play-state: paused !important;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Translates exactly 25% (1 full original set out of the 4 we rendered) */
+    transform: translateX(-25%);
+  }
+}
+</style>
