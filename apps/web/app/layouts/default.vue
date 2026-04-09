@@ -48,13 +48,14 @@ const globalFooterData: any = {
       title: 'Komplett Konzept Verwertungs GmbH',
       links: [
         { text: 'Über uns', url: '/ueberuns' },
-        { text: 'Abbau und Demontage', url: '/abbau-und-demontage' },
+        { text: 'Abbau und Demontage', url: 'https://www.industrie-demontage.de/' },
         { text: 'Reparatur und Instandsetzung', url: '/reparatur-und-instandhaltung' },
         { text: 'Team', url: '/team' },
         { text: 'Stellenangebote', url: '/Stellenangebote' },
         { text: 'Partner', url: '/partner' },
         { text: 'Kontakt', url: '/Kontakt' },
-        { text: 'Impressum', url: '/impressum' }
+        { text: 'Impressum', url: '/impressum' },
+        { text: 'Warenankauf', url: 'http://www.waren-ankauf.de/' }
       ],
       socials: [
         { icon: 'facebook', url: 'https://www.facebook.com/Komplett.Konzept.GmbH/' },

@@ -19,7 +19,7 @@
         </div>
 
         <img
-          src="/_nuxt-plenty/images/image009.png"
+          src="/_nuxt-plenty/images/image009-2.png"
           alt="Banner"
           class="h-[40px] lg:h-[70px] xl:h-[140px] max-w-[60px] lg:max-w-[110px] xl:max-w-[180px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
@@ -226,7 +226,7 @@
       >
         <div class="flex flex-row items-center gap-2 sm:gap-3">
           <img
-            src="/_nuxt-plenty/images/image009.png"
+            src="/_nuxt-plenty/images/image009-2.png"
             alt="Banner"
             class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
           />

@@ -16,7 +16,7 @@
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <ReviewsAccordion
-            v-if="product"
+            v-if="false"
             :product="product"
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
           />
@@ -42,7 +42,7 @@
     <UiReviewModal />
     <ProductLegalDetailsDrawer v-if="open" :product="product" />
     
-    <WhatsAppModal />
+    <!-- <WhatsAppModal /> -->
 
   </NuxtLayout>
 </template>
