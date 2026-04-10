@@ -52,7 +52,7 @@ const globalFooterData: any = {
         { text: 'Reparatur und Instandsetzung', url: '/reparatur-und-instandhaltung' },
         { text: 'Team', url: '/team' },
         { text: 'Stellenangebote', url: '/Stellenangebote' },
-        { text: 'Partner', url: '/partner' },
+        { text: 'Ankauf', url: '/partner' },
         { text: 'Kontakt', url: '/Kontakt' },
         { text: 'Impressum', url: '/impressum' },
         { text: 'Warenankauf', url: 'http://www.waren-ankauf.de/' }
