@@ -34,9 +34,11 @@
         </div>
 
         <NuxtLink
-          to="/ankaufsformular"
-          class="hover:scale-105 transition-transform duration-300 flex items-center min-w-0"
-        >
+            to="https://www.waren-ankauf.de/ankauf/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="active:scale-95 transition-transform duration-200 flex-shrink-0"
+          >
           <img
             src="/_nuxt-plenty/images/image010.png"
             alt="Ankaufsformular"
@@ -230,7 +232,12 @@
             alt="Banner"
             class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
           />
-          <NuxtLink to="/ankaufsformular" class="active:scale-95 transition-transform duration-200 flex-shrink-0">
+          <NuxtLink
+            to="https://www.waren-ankauf.de/ankauf/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="active:scale-95 transition-transform duration-200 flex-shrink-0"
+          >
             <img
               src="/_nuxt-plenty/images/image010.png"
               alt="Ankaufsformular"
