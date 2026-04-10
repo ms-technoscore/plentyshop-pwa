@@ -14,7 +14,7 @@
             >Abbau und Demontage</NuxtLink
           >
           <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors">Über uns</NuxtLink>
-          <NuxtLink to="/partner" class="hover:text-blue-600 transition-colors">Ankauf</NuxtLink>
+          <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">Ankauf</a>
           <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
         </div>
 
@@ -217,7 +217,7 @@
         >
         <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors">Abbau und Demontage</NuxtLink>
         <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors">Über uns</NuxtLink>
-        <NuxtLink to="/partner" class="hover:text-blue-600 transition-colors">Ankauf</NuxtLink>
+        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">Ankauf</a>
         <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
       </div>
 
