@@ -48,7 +48,7 @@ const globalFooterData: any = {
       title: 'Komplett Konzept Verwertungs GmbH',
       links: [
         { text: 'Über uns', url: '/ueberuns' },
-        { text: 'Abbau und Demontage', url: 'https://www.industrie-demontage.de/' },
+        { text: 'Abbau und Demontage', url: '/abbau-und-demontage' },
         { text: 'Reparatur und Instandsetzung', url: '/reparatur-und-instandhaltung' },
         { text: 'Team', url: '/team' },
         { text: 'Stellenangebote', url: '/Stellenangebote' },
