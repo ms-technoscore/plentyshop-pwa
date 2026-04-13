@@ -70,13 +70,18 @@
       <Swiper
         :id="`carousel-${index}`"
         :key="content.length"
-        :modules="enableModules ? [Pagination, Navigation] : []"
+        :modules="enableModules ? [Pagination, Navigation, Autoplay] : []"
         :slides-per-view="1"
         :touch-release-on-edges="true" 
         v-bind="carouselProps"
         :aria-roledescription="t('homepage.banner.ariaRoleDescriptionCarousel')"
         :aria-label="t('homepage.banner.ariaRoleDescriptionCarousel')"
         :loop="true"
+        :autoplay="enableModules ? {
+          delay: 4000, 
+          disableOnInteraction: false, 
+          pauseOnMouseEnter: true 
+        } : false"
         :pagination="paginationConfig"
         :navigation="navigationConfig"
         class="!z-0 !w-full !max-h-[85vh] touch-pan-y" 
@@ -133,7 +138,7 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
 import './styles/navigation.min.css';
 import './styles/pagination.min.css';
