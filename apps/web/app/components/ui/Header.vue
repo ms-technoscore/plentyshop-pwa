@@ -224,54 +224,49 @@
       </div>
 
       <div
-        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-row items-center justify-between px-2 sm:px-3 py-2 z-[90]"
+        class="absolute top-[100%] left-0 w-full bg-white border-t border-gray-100 shadow-md flex flex-col gap-3 px-2 sm:px-3 py-2.5 z-[90]"
       >
-        <div class="flex flex-row items-center gap-2 sm:gap-3">
-          <img
-            src="/_nuxt-plenty/images/image009-2.png"
-            alt="Banner"
-            class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
-          />
-          <NuxtLink
-            to="https://www.waren-ankauf.de/ankauf/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="active:scale-95 transition-transform duration-200 flex-shrink-0"
-          >
-            <img
-              src="/_nuxt-plenty/images/image010.png"
-              alt="Ankaufsformular"
-              class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
-            />
-          </NuxtLink>
+        
+        <div v-if="!isHomePage" class="w-full">
+          <UiSearch />
         </div>
 
-        <div class="flex flex-col items-end gap-0.5">
-          <div class="flex flex-row items-center gap-0">
-            <div class="scale-[0.75] transform origin-right">
-              <GoogleTranslate />
-            </div>
-
-            <UiButton
-              v-if="!isHomePage"
-              variant="tertiary"
-              class="relative text-neutral-800 hover:bg-neutral-100 active:bg-neutral-200 rounded-md p-1"
-              square
-              :style="{ color: iconColor }"
-              :aria-label="t('common.navigation.openSearchModal')"
-              @click="searchModalOpen"
+        <div class="flex flex-row items-center justify-between w-full">
+          <div class="flex flex-row items-center gap-2 sm:gap-3">
+            <img
+              src="/_nuxt-plenty/images/image009-2.png"
+              alt="Banner"
+              class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
+            />
+            <NuxtLink
+              to="https://www.waren-ankauf.de/ankauf/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="active:scale-95 transition-transform duration-200 flex-shrink-0"
             >
-              <SfIconSearch class="w-5 h-5 sm:w-6 sm:h-6" />
-            </UiButton>
+              <img
+                src="/_nuxt-plenty/images/image010.png"
+                alt="Ankaufsformular"
+                class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
+              />
+            </NuxtLink>
           </div>
 
-          <a
-            href="tel:+492862587950"
-            class="text-[11px] sm:text-[13px] font-black transition-colors whitespace-nowrap hover:text-blue-600 pr-1"
-            style="color: #062633"
-          >
-            +49 2862 58795 0
-          </a>
+          <div class="flex flex-col items-end gap-0.5">
+            <div class="flex flex-row items-center gap-0">
+              <div class="scale-[0.85] transform origin-right">
+                <GoogleTranslate />
+              </div>
+              </div>
+
+            <a
+              href="tel:+492862587950"
+              class="text-[12px] sm:text-[14px] font-black transition-colors whitespace-nowrap hover:text-blue-600 pr-1 mt-0.5"
+              style="color: #062633"
+            >
+              +49 2862 58795 0
+            </a>
+          </div>
         </div>
       </div>
     </div>
