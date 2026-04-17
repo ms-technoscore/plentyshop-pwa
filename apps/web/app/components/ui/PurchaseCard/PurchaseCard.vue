@@ -235,7 +235,7 @@
 
               <div class="mt-6 mb-4 flex justify-center w-full">
                 <img 
-                  src="/_nuxt-plenty/images/wider_version.png" 
+                  src="/_nuxt-plenty/images/wider_version_opt.jpg" 
                   alt="Komplett Konzept" 
                   class="w-auto object-contain rounded shadow-sm" 
                 />
