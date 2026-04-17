@@ -573,7 +573,7 @@ watch(
         script.async = true;
         document.body.appendChild(script);
       });
-    }, 1000);
+    }, 100);
   },
   { immediate: true },
 );
