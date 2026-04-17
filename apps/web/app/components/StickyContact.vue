@@ -71,8 +71,8 @@
 </template>
 
 <style scoped>
-/* From Tablet (768px) up to 1800px: Show icons only, slide out text on hover */
-@media (min-width: 768px) and (max-width: 1800px) {
+/* From Tablet (768px) up to 2559px (right before 2560px): Show icons only, slide out text on hover */
+@media (min-width: 768px) and (max-width: 2559px) {
   .sticky-label {
     max-width: 0;
     opacity: 0;
@@ -85,14 +85,14 @@
     gap: 0 !important; 
   }
   
-  /* NEW: Trigger the gap on ALL buttons when the ENTIRE container is hovered */
+  /* Trigger the gap on ALL buttons when the ENTIRE container is hovered */
   .sticky-contact:hover .sticky-btn {
     gap: 0.5rem !important; 
   }
   
-  /* NEW: Reveal ALL labels when the ENTIRE container is hovered */
+  /* Reveal ALL labels when the ENTIRE container is hovered */
   .sticky-contact:hover .sticky-label {
-    max-width: 200px; /* Gives enough space for the text to reveal */
+    max-width: 400px; /* Increased to allow the larger 1920px text to fit safely */
     opacity: 1;
   }
 }
