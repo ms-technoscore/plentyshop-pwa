@@ -232,6 +232,15 @@
                   />
                 </template>
               </div>
+
+              <div class="mt-6 mb-4 flex justify-center w-full">
+                <img 
+                  src="/_nuxt-plenty/images/wider_version.png" 
+                  alt="Komplett Konzept" 
+                  class="w-auto object-contain rounded shadow-sm" 
+                />
+              </div>
+              
               <div
                 v-if="isWidgetReady"
                 :key="productGetters.getId(product)"
@@ -574,7 +583,7 @@ watch(
   () => props.product,
   (p) => {
     // eslint-disable-next-line no-console
-    console.log('🔍 STOCK CHECK 🔍');
+    // console.log('🔍 STOCK CHECK 🔍');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rawStock = (p as any)?.variation?.stock;
     // eslint-disable-next-line no-console
