@@ -1,4 +1,4 @@
-import type { FacetSearchCriteria, Product, Facet, Block } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria, FilterGroup, Product, Facet, Block } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
 import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
@@ -6,6 +6,25 @@ import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
 import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
 
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
+
+const mergeFacetsWithBase = (currentFacets: FilterGroup[], baseFacets: FilterGroup[]): FilterGroup[] => {
+  if (!baseFacets.length) return currentFacets;
+
+  return baseFacets.map((baseFacet) => {
+    const currentFacet = currentFacets.find((f) => f.id === baseFacet.id);
+    if (!currentFacet) {
+      return { ...baseFacet };
+    }
+
+    const mergedValues =
+      baseFacet.values?.map((baseValue) => {
+        const currentValue = currentFacet.values?.find((v) => v.id === baseValue.id);
+        return currentValue ?? { ...baseValue };
+      }) ?? [];
+
+    return { ...currentFacet, values: mergedValues };
+  });
+};
 
 /**
  * @description Composable for managing products.
@@ -18,6 +37,8 @@ const useCategoryTemplateData = () => categoryTemplateData as Block[];
 export const useProducts: UseProductsReturn = (category = '') => {
   const state = useState<UseProductsState>(`useProducts${category}`, () => ({
     data: {} as Facet,
+    baseFacets: [] as FilterGroup[],
+    rawFacets: [] as FilterGroup[],
     loading: false,
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
     currentProduct: {} as Product,
@@ -96,6 +117,14 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (data.value?.data) {
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
+      state.value.rawFacets = data.value.data.facets ?? [];
+
+      if (!params.facets) {
+        state.value.baseFacets = state.value.rawFacets;
+      } else if (state.value.baseFacets.length) {
+        data.value.data.facets = mergeFacetsWithBase(state.value.rawFacets, state.value.baseFacets);
+      }
+
       state.value.data = data.value.data;
       handlePreviewProducts(state, $i18n.locale.value);
 

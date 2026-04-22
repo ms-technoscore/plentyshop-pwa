@@ -91,7 +91,7 @@
               v-model="models[filter.id]"
               :value="filter"
               class="flex items-center"
-              @change="facetChange"
+              @change="facetChange(filter)"
             />
           </template>
           <p class="select-none">
@@ -154,7 +154,20 @@ const updateFilter = () => {
   }
 };
 
-const facetChange = () => updateFilters(models.value);
+const facetChange = (changedFilter?: Filter) => {
+  if (props.facet && facetGetters.getType(props.facet) === 'producer' && changedFilter) {
+    const changedFilterId = typeof changedFilter.id === 'string' ? changedFilter.id : changedFilter.id.toString();
+
+    if (models.value[changedFilterId]) {
+      for (const filter of filters) {
+        const filterId = typeof filter.id === 'string' ? filter.id : filter.id.toString();
+        models.value[filterId] = filterId === changedFilterId;
+      }
+    }
+  }
+
+  updateFilters(models.value);
+};
 
 updateFilter();
 

@@ -1,4 +1,5 @@
 import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
+import type { Filter, FilterGroup } from '@plentymarkets/shop-api';
 import type { RouteLocationNormalizedGeneric } from 'vue-router';
 import { isPageOfType } from '~/utils/pathHelper';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
@@ -255,23 +256,28 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * ```
    */
   const checkFiltersInURL = (): void => {
-    const { data: productsCatalog } = useProducts();
+    const { data: productsCatalog, rawFacets } = useProducts();
     const facetsFromUrl = getFacetsFromURL();
-    const facetsFromResponse = productsCatalog.value.facets;
+    const facetsFromResponse: FilterGroup[] =
+      rawFacets.value.length > 0 ? rawFacets.value : (productsCatalog.value.facets ?? []);
 
     if (facetsFromUrl.facets) {
       const facets = facetsFromUrl.facets.split(',');
 
       const updatedFacets = facets.filter((facet) => {
-        return facetsFromResponse.some((facetItem) => {
+        return facetsFromResponse.some((facetItem: FilterGroup) => {
           if (facetItem.values) {
-            return facetItem.values.some((facetValue) => facetValue.id.toString() === facet);
+            return facetItem.values.some((facetValue: Filter) => facetValue.id.toString() === facet);
           }
           return false;
         });
       });
 
-      updateQuery({ facets: updatedFacets.join(',') });
+      if (updatedFacets.length > 0) {
+        updateQuery({ facets: updatedFacets.join(',') });
+      } else {
+        updateQuery({ facets: null });
+      }
     }
   };
 
