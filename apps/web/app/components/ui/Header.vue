@@ -5,17 +5,13 @@
         class="hidden md:flex flex-row items-center justify-start gap-1 lg:gap-3 xl:gap-5 relative z-10 transition-all duration-300 min-w-0"
       >
         <div
-          class="flex flex-col items-end justify-center text-[6px] lg:text-[8px] xl:text-xs font-extrabold text-[#062633] leading-snug tracking-wide whitespace-nowrap transition-all duration-300"
+          class="flex flex-col items-end justify-center text-[10px] lg:text-[14px] xl:text-xl font-extrabold text-[#062633] leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
         >
-          <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors"
-            >Reparatur und Instandsetzung</NuxtLink
-          >
-          <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors"
-            >Abbau und Demontage</NuxtLink
-          >
-          <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors">Über uns</NuxtLink>
-          <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">Ankauf</a>
-          <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
+          <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1">Reparatur und Instandsetzung<span>•</span></NuxtLink>
+          <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1">Abbau und Demontage<span>•</span></NuxtLink>
+          <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1">Über uns<span>•</span></NuxtLink>
+          <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1">Ankauf<span>•</span></a>
+          <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1">Team<span>•</span></NuxtLink>
         </div>
 
         <img

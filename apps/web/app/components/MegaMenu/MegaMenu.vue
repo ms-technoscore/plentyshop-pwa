@@ -47,7 +47,7 @@
             <div
             ref="triggerReference"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base min-[2500px]:text-2xl min-[2500px]:px-6 tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
+            class="inline-flex items-center justify-center gap-1 font-medium text-sm xl:text-base min-[2500px]:text-[2rem] min-[2500px]:px-6 tracking-tight rounded-md py-2 px-2 group mr-1 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900 cursor-pointer whitespace-nowrap"
           >
             <NuxtLink 
               :to="localePath(generateCategoryLink(menuNode))" 
@@ -83,7 +83,7 @@
                 :tag="NuxtLink"
                 size="sm"
                 :to="localePath(generateCategoryLink(node))"
-                class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base min-[2500px]:text-xl min-[2500px]:py-3 min-[2500px]:px-4 text-left"
+                class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base min-[2500px]:text-[2rem] min-[2500px]:py-3 min-[2500px]:px-4 text-left"
                 @click="close()"
               >
                 {{ categoryTreeGetters.getName(node) }}
