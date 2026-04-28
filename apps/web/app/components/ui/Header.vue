@@ -91,6 +91,7 @@
               </UiButton>
             </template>
             <UiButton
+              v-if="wishlistItemIds.length > 0"
               class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md min-[2500px]:p-4 min-[2500px]:mr-2"
               :tag="NuxtLink"
               :to="localePath(paths.wishlist)"
