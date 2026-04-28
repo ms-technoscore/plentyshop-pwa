@@ -1,11 +1,11 @@
 <template>
   <MegaMenu :categories="filteredCategoryTree">
-    <template v-if="viewport.isGreaterOrEquals('md')">
+    <template v-if="viewport.isGreaterOrEquals('lg')">
       <div
-        class="hidden md:flex flex-row items-center justify-start gap-1 lg:gap-3 xl:gap-5 relative z-10 transition-all duration-300 min-w-0"
+        class="hidden lg:flex flex-row items-center justify-start gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-4 2xl:gap-5 relative z-10 transition-all duration-300 min-w-0"
       >
         <div
-          class="flex flex-col items-end justify-center text-[10px] lg:text-[14px] xl:text-xl font-extrabold text-[#062633] leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
+          class="flex flex-col items-end justify-center text-[9px] lg:text-[10px] min-[1152px]:text-[11px] min-[1280px]:text-[13px] min-[1367px]:text-[16px] 2xl:text-xl font-extrabold text-[#062633] leading-tight min-[1280px]:leading-snug min-[1367px]:leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
         >
           <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Reparatur und Instandsetzung</NuxtLink>
           <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
@@ -17,12 +17,12 @@
         <img
           src="/_nuxt-plenty/images/image009-2.png"
           alt="Banner"
-          class="h-[40px] lg:h-[70px] xl:h-[140px] max-w-[60px] lg:max-w-[110px] xl:max-w-[180px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
+          class="h-[34px] lg:h-[42px] min-[1152px]:h-[48px] min-[1280px]:h-[68px] min-[1367px]:h-[100px] 2xl:h-[140px] max-w-[54px] lg:max-w-[68px] min-[1152px]:max-w-[78px] min-[1280px]:max-w-[100px] min-[1367px]:max-w-[140px] 2xl:max-w-[180px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
       </div>
 
       <div
-        class="hidden md:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-4 xl:mr-6 gap-1 lg:gap-4 xl:gap-6 transition-all duration-300 min-w-0"
+        class="hidden lg:flex flex-1 flex-row items-center justify-end mr-1 lg:mr-1 min-[1152px]:mr-2 min-[1280px]:mr-3 min-[1367px]:mr-6 gap-1 lg:gap-1 min-[1152px]:gap-2 min-[1280px]:gap-3 min-[1367px]:gap-5 transition-all duration-300 min-w-0"
       >
         
         <div v-if="!isHomePage" class="hidden min-[1500px]:block w-full max-w-[280px] 2xl:max-w-[350px] mr-auto ml-4 lg:ml-8 transition-all duration-300">
@@ -38,13 +38,13 @@
           <img
             src="/_nuxt-plenty/images/image010.png"
             alt="Ankaufsformular"
-            class="h-[45px] lg:h-[80px] xl:h-[130px] max-w-[70px] lg:max-w-[120px] xl:max-w-[190px] w-auto object-contain transition-all duration-300"
+            class="h-[38px] lg:h-[48px] min-[1152px]:h-[56px] min-[1280px]:h-[76px] min-[1367px]:h-[105px] 2xl:h-[130px] max-w-[58px] lg:max-w-[74px] min-[1152px]:max-w-[86px] min-[1280px]:max-w-[116px] min-[1367px]:max-w-[160px] 2xl:max-w-[190px] w-auto object-contain transition-all duration-300"
           />
         </NuxtLink>
 
         <div class="flex flex-col items-end justify-center gap-0 lg:gap-1 flex-shrink-0">
           <nav
-            class="flex flex-row flex-nowrap items-center transform scale-[0.55] lg:scale-[0.75] xl:scale-100 origin-right transition-transform duration-300"
+            class="flex flex-row flex-nowrap items-center transform scale-[0.55] lg:scale-[0.6] min-[1152px]:scale-[0.68] min-[1280px]:scale-[0.84] min-[1367px]:scale-100 origin-right transition-transform duration-300"
           >
             <div class="mr-3"><GoogleTranslate /></div>
 
@@ -198,7 +198,7 @@
 
           <a
             href="tel:+492862587950"
-            class="text-[10px] lg:text-sm xl:text-xl min-[2500px]:text-2xl font-black transition-all duration-300 whitespace-nowrap pr-1 lg:pr-2 hover:text-blue-600 mt-0 lg:mt-1"
+            class="text-[10px] lg:text-[11px] min-[1152px]:text-xs min-[1280px]:text-base min-[1367px]:text-xl min-[2500px]:text-2xl font-black transition-all duration-300 whitespace-nowrap pr-1 lg:pr-2 hover:text-blue-600 mt-0 lg:mt-1"
             style="color: #062633"
           >
             +49 2862 58795 0
@@ -207,17 +207,17 @@
       </div>
     </template>
 
-    <div v-if="viewport.isLessThan('md')" class="flex items-center justify-end pr-2">
+    <div v-if="viewport.isLessThan('lg')" class="flex items-center justify-end pr-2">
       <div
         class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap"
       >
-        <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors"
-          >Reparatur und Instandsetzung</NuxtLink
+        <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"
+          ><span>•</span>Reparatur und Instandsetzung</NuxtLink
         >
-        <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors">Abbau und Demontage</NuxtLink>
-        <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors">Über uns</NuxtLink>
-        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">Ankauf</a>
-        <NuxtLink to="/team" class="hover:text-blue-600 transition-colors">Team</NuxtLink>
+        <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
+        <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Über uns</NuxtLink>
+        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Ankauf</a>
+        <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Team</NuxtLink>
       </div>
 
       <div
