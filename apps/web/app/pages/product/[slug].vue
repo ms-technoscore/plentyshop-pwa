@@ -3,15 +3,15 @@
     <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" prevent-blocks-request />
 
     <NarrowContainer v-else>
-      <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
-        <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
+      <div class="lg:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
+        <section class="grid-in-left-top lg:h-full xl:max-h-[700px]">
           <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
-        <section class="mb-10 grid-in-right md:mb-0">
+        <section class="mb-10 grid-in-right lg:mb-0">
           <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
         </section>
-        <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
+        <section class="grid-in-left-bottom lg:mt-8">
+          <UiDivider class="mt-4 mb-2 lg:mt-8" />
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
@@ -51,9 +51,6 @@
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-
-// ADDED: Import the WhatsApp Modal component
-import WhatsAppModal from '~/components/WhatsAppModal.vue';
 
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
