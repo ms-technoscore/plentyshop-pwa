@@ -3,7 +3,10 @@
     <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" prevent-blocks-request />
 
     <NarrowContainer v-else>
-      <div class="lg:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
+      <div
+        class="lg:grid gap-x-6 grid-areas-product-page grid-cols-product-page product-page-layout"
+        :class="{ 'product-page-layout--ar': locale === 'ar' }"
+      >
         <section class="grid-in-left-top lg:h-full xl:max-h-[700px]">
           <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
@@ -53,6 +56,7 @@ import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
 const route = useRoute();
+const { locale } = useI18n();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
 const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
@@ -117,6 +121,12 @@ async function fetchReviews() {
 }
 await fetchReviews();
 
+watch(locale, async () => {
+  await fetchProduct(productParams);
+  await fetchReviews();
+  setBreadcrumbs();
+});
+
 watch(
   disableActions,
   () => {
@@ -132,15 +142,26 @@ watch(
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
-    if (value !== oldValue) {
-      navigateTo({
-        path: buildProductLanguagePath(
-          `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`,
-        ),
-        query: route.query,
-        replace: true,
-      });
+    if (!oldValue || value === oldValue) {
+      return;
     }
+
+    const itemIdParam = route.params.itemId as string;
+    const routePieces = itemIdParam.split('_');
+    const itemId = productGetters.getItemId(product.value);
+    const variationId = productGetters.getVariationId(product.value);
+    const routeVariationId = routePieces[1];
+    const variationSuffix =
+      routeVariationId ||
+      (variationId && productGetters.getSalableVariationCount(product.value) === 1 ? `_${variationId}` : '');
+
+    const urlPath = productGetters.getUrlPath(product.value).replace(/^(pt|it|ar|en|es|fr|de|cn)\//, '');
+
+    navigateTo({
+      path: buildProductLanguagePath(`/${urlPath}_${itemId}${variationSuffix}`),
+      query: route.query,
+      replace: true,
+    });
   },
 );
 

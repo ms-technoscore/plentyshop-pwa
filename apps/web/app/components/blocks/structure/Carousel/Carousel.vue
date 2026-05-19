@@ -152,6 +152,7 @@ import { productGetters } from '@plentymarkets/shop-api';
 // --- 1. Import useSearch (if not auto-imported) ---
 // import { useSearch } from '~/composables/useSearch';
 
+const { t } = useI18n();
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
@@ -161,10 +162,10 @@ const overlayConfig = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const custom = (configuration as any).overlay || {};
   return {
-    badgeText: custom.badgeText || 'Finden',
-    description: custom.description || 'was Du suchst! Einfach Typnummer,<br />Modell, oder Hersteller eingeben',
-    placeholder: custom.placeholder || 'Suchbegriff...',
-    searchBtnText: custom.searchBtnText || 'und los!',
+    badgeText: custom.badgeText || t('homeSearch.badge'),
+    description: custom.description || t('homeSearch.description'),
+    placeholder: custom.placeholder || t('homeSearch.placeholder'),
+    searchBtnText: custom.searchBtnText || t('homeSearch.submit'),
     bgColor: custom.bgColor || '#eadd87',
     showBottomBtn: custom.showBottomBtn !== false,
     bottomBtnText: custom.bottomBtnText || 'LAGERTECHNIK >',

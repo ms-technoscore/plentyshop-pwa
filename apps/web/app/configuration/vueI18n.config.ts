@@ -184,5 +184,12 @@ export default {
         currencyDisplay: 'symbol',
       },
     },
+    ar: {
+      currency: {
+        style: 'currency',
+        currency: 'EUR',
+        currencyDisplay: 'symbol',
+      },
+    },
   },
 };

@@ -7,16 +7,16 @@
         <div
           class="flex flex-col items-end justify-center text-[9px] lg:text-[10px] min-[1152px]:text-[11px] min-[1280px]:text-[13px] min-[1367px]:text-[16px] 2xl:text-xl font-extrabold text-[#062633] leading-tight min-[1280px]:leading-snug min-[1367px]:leading-relaxed tracking-wide whitespace-nowrap transition-all duration-300"
         >
-          <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Reparatur und Instandsetzung</NuxtLink>
-          <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
-          <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Über uns</NuxtLink>
-          <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Ankauf</a>
-          <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Team</NuxtLink>
+          <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.repair') }}</NuxtLink>
+          <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.dismantling') }}</NuxtLink>
+          <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.about') }}</NuxtLink>
+          <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.purchase') }}</a>
+          <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.team') }}</NuxtLink>
         </div>
 
         <img
           src="/_nuxt-plenty/images/image009-2.png"
-          alt="Banner"
+          :alt="t('customHeader.bannerAlt')"
           class="h-[34px] lg:h-[42px] min-[1152px]:h-[48px] min-[1280px]:h-[68px] min-[1367px]:self-stretch min-[1367px]:h-full max-w-[54px] lg:max-w-[68px] min-[1152px]:max-w-[78px] min-[1280px]:max-w-[100px] min-[1367px]:max-w-[160px] 2xl:max-w-[200px] w-auto object-contain rounded-md shadow-sm transition-all duration-300"
         />
       </div>
@@ -37,7 +37,7 @@
           >
           <img
             src="/_nuxt-plenty/images/image010.png"
-            alt="Ankaufsformular"
+            :alt="t('customHeader.purchaseFormAlt')"
             class="h-[38px] lg:h-[48px] min-[1152px]:h-[56px] min-[1280px]:h-[76px] min-[1367px]:h-[105px] 2xl:h-[130px] max-w-[58px] lg:max-w-[74px] min-[1152px]:max-w-[86px] min-[1280px]:max-w-[116px] min-[1367px]:max-w-[160px] 2xl:max-w-[190px] w-auto object-contain transition-all duration-300"
           />
         </NuxtLink>
@@ -46,7 +46,6 @@
           <nav
             class="flex flex-row flex-nowrap items-center transform scale-[0.55] lg:scale-[0.6] min-[1152px]:scale-[0.68] min-[1280px]:scale-[0.84] min-[1367px]:scale-100 origin-right transition-transform duration-300"
           >
-            <div class="mr-3"><GoogleTranslate /></div>
 
             <UiButton
               v-if="!isHomePage"
@@ -212,12 +211,12 @@
         class="flex flex-col items-end justify-center text-[7px] min-[375px]:text-[8px] font-extrabold text-[#062633] leading-tight tracking-wide whitespace-nowrap"
       >
         <NuxtLink to="/reparatur-und-instandhaltung" class="hover:text-blue-600 transition-colors flex items-center gap-1"
-          ><span>•</span>Reparatur und Instandsetzung</NuxtLink
+          ><span>•</span>{{ t('customHeader.repair') }}</NuxtLink
         >
-        <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Abbau und Demontage</NuxtLink>
-        <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Über uns</NuxtLink>
-        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Ankauf</a>
-        <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>Team</NuxtLink>
+        <NuxtLink to="/abbau-und-demontage" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.dismantling') }}</NuxtLink>
+        <NuxtLink to="/ueberuns" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.about') }}</NuxtLink>
+        <a href="https://www.waren-ankauf.de/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.purchase') }}</a>
+        <NuxtLink to="/team" class="hover:text-blue-600 transition-colors flex items-center gap-1"><span>•</span>{{ t('customHeader.team') }}</NuxtLink>
       </div>
 
       <div
@@ -232,7 +231,7 @@
           <div class="flex flex-row items-center gap-2 sm:gap-3">
             <img
               src="/_nuxt-plenty/images/image009-2.png"
-              alt="Banner"
+              :alt="t('customHeader.bannerAlt')"
               class="h-10 sm:h-12 w-auto object-contain rounded shadow-sm"
             />
             <NuxtLink
@@ -243,19 +242,13 @@
             >
               <img
                 src="/_nuxt-plenty/images/image010.png"
-                alt="Ankaufsformular"
+                :alt="t('customHeader.purchaseFormAlt')"
                 class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
               />
             </NuxtLink>
           </div>
 
           <div class="flex flex-col items-end gap-0.5">
-            <div class="flex flex-row items-center gap-0">
-              <div class="scale-[0.85] transform origin-right">
-                <GoogleTranslate />
-              </div>
-              </div>
-
             <a
               href="tel:+492862587950"
               class="text-[12px] sm:text-[14px] font-black transition-colors whitespace-nowrap hover:text-blue-600 pr-1 mt-0.5"
@@ -341,8 +334,6 @@ import {
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
 import { handleLogout } from '~/utils/logout';
-import GoogleTranslate from '~/components/GoogleTranslate.vue';
-
 const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();

@@ -4,6 +4,8 @@ import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/compo
 import categoryTemplateData from '~/composables/useCategoryTemplate/categoryTemplateData.json';
 import { fakeFacetCallEN } from '~/utils/facets/fakeFacetCallEN';
 import { fakeFacetCallDE } from '~/utils/facets/fakeFacetCallDE';
+import { getPlentyTextSlot } from '~/utils/localePlentyMap';
+import { applyPlentyTextSlotForLocale } from '~/utils/mergePlentyTextSlot';
 
 const useCategoryTemplateData = () => categoryTemplateData as Block[];
 
@@ -108,9 +110,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
     }
 
     const identifier = category || params.categoryUrlPath || params.categoryId;
+    const textSlot = getPlentyTextSlot($i18n.locale.value);
 
-    const { data } = await useAsyncData(`useProducts-${identifier}-${JSON.stringify(params)}`, () =>
-      useSdk().plentysystems.getFacet(params),
+    const { data } = await useAsyncData(
+      `useProducts-${identifier}-${JSON.stringify(params)}-${textSlot}`,
+      () => useSdk().plentysystems.getFacet(params),
     );
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
@@ -123,6 +127,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
         state.value.baseFacets = state.value.rawFacets;
       } else if (state.value.baseFacets.length) {
         data.value.data.facets = mergeFacetsWithBase(state.value.rawFacets, state.value.baseFacets);
+      }
+
+      const products = data.value.data.products ?? [];
+      if (products.length > 0) {
+        data.value.data.products = await applyPlentyTextSlotForLocale(products, $i18n.locale.value);
       }
 
       state.value.data = data.value.data;

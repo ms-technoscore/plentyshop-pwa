@@ -753,6 +753,21 @@
     "women": "Frauen",
     "womenHomepageCategory": "Kategorie Frauen auf der Startseite"
   },
+  "customHeader": {
+    "repair": "Reparatur und Instandsetzung",
+    "dismantling": "Abbau und Demontage",
+    "about": "Über uns",
+    "purchase": "Ankauf",
+    "team": "Team",
+    "bannerAlt": "Banner",
+    "purchaseFormAlt": "Ankaufsformular"
+  },
+  "homeSearch": {
+    "badge": "Finden",
+    "description": "was Du suchst! Einfach Typnummer, Modell, oder Hersteller eingeben",
+    "placeholder": "Suchbegriff...",
+    "submit": "und los!"
+  },
   "lang": {
     "bg": "Bulgarisch",
     "cn": "Chinesisch",
@@ -1020,7 +1035,13 @@
       "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
       "productNameMissing": "Artikelname fehlt",
       "seeAvailableOptions": "Verfügbare Optionen anzeigen"
-    }
+    },
+    "itemNumber": "Artikelnummer",
+    "variationId": "Varianten ID",
+    "condition": "Zustand",
+    "content": "Inhalt",
+    "availableQuantity": "Verfügbare Menge",
+    "conditionNew": "Neu"
   },
   "quickCheckout": {
     "cartContains": "Ihr Warenkorb enthält {count} Artikel",

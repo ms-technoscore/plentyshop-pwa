@@ -37,40 +37,34 @@
               />
               <div class="mt-6 pt-4 border-t border-neutral-200 text-sm">
                 <div class="flex justify-between items-center py-1">
-                  <span class="text-neutral-500 font-medium">Artikelnummer</span>
+                  <span class="text-neutral-500 font-medium">{{ t('product.itemNumber') }}</span>
                   <span class="text-neutral-900 font-bold">{{ productGetters.getItemId(product) }}</span>
                 </div>
 
                 <div class="flex justify-between items-center py-1">
-                  <span class="text-neutral-500 font-medium">Varianten ID</span>
+                  <span class="text-neutral-500 font-medium">{{ t('product.variationId') }}</span>
                   <span class="text-neutral-900 font-bold">{{ productGetters.getId(product) }}</span>
                 </div>
 
                 <div class="flex justify-between items-center py-1">
-                  <span class="text-neutral-500 font-medium">Zustand</span>
-                  <span class="text-neutral-900 font-bold">
-  {{
-    (product as any)?.item?.conditionApi?.names?.name
-    ?? (product as any)?.item?.condition?.names?.name
-    ?? 'Neu'
-  }}
-</span>
+                  <span class="text-neutral-500 font-medium">{{ t('product.condition') }}</span>
+                  <span class="text-neutral-900 font-bold">{{ localizedConditionName }}</span>
                 </div>
 
                 <div class="flex justify-between items-center py-1">
-                  <span class="text-neutral-500 font-medium">Inhalt</span>
+                  <span class="text-neutral-500 font-medium">{{ t('product.content') }}</span>
                   <span class="text-neutral-900 font-bold">{{ productGetters.getUnitContent(product) }}</span>
                 </div>
 
                 <div class="flex justify-between items-center py-1">
-  <span class="text-neutral-500 font-medium">Verfügbare Menge</span>
+  <span class="text-neutral-500 font-medium">{{ t('product.availableQuantity') }}</span>
 
   <span
     v-if="(product as any)?.variation?.availability?.names?.name"
     class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
            bg-green-100 text-green-700"
   >
-    {{ (product as any).variation.availability.names.name }}
+    {{ localizedAvailabilityName }}
   </span>
 
   <span
@@ -287,6 +281,7 @@ import { SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storef
 import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
+import { getLocalizedAvailabilityName, getLocalizedConditionName } from '~/utils/plentyCatalogLabels';
 import { nextTick } from 'vue';
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
@@ -369,6 +364,9 @@ const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 // const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const localePath = useLocalePath();
+
+const localizedAvailabilityName = computed(() => getLocalizedAvailabilityName(props.product, t));
+const localizedConditionName = computed(() => getLocalizedConditionName(props.product, t));
 
 const inlineStyle = computed(() => {
   const layout = props?.configuration?.layout || ({} as PriceCardPadding);

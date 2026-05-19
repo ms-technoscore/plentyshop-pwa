@@ -13,7 +13,7 @@
         type="submit" 
         class="px-6 py-2 font-bold text-black border-l border-gray-300 hover:bg-gray-50 transition-colors"
       >
-        und los!
+        {{ t('homeSearch.submit') }}
       </button>
     </form>
 

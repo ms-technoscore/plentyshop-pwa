@@ -4,6 +4,8 @@ import type {
   FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
 import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import { getPlentyTextSlot } from '~/utils/localePlentyMap';
+import { applyPlentyTextSlotForLocale } from '~/utils/mergePlentyTextSlot';
 
 /**
  * Composable for managing recommended products data
@@ -29,6 +31,10 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
    * @param params
    */
   const fetchProductRecommended: FetchProductRecommended = async (params: FacetSearchCriteria) => {
+    const { $i18n } = useNuxtApp();
+    const pwaLocale = $i18n.locale.value;
+    const textSlot = getPlentyTextSlot(pwaLocale);
+
     state.value.loading = true;
 
     const common = {
@@ -47,12 +53,14 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
     const idForKey = params.type === 'cross_selling' ? params.itemId : params.categoryId;
 
     const { data, error } = await useAsyncData(
-      `useProductRecommended-${params.type}-${idForKey}-${params.crossSellingRelation}`,
+      `useProductRecommended-${params.type}-${idForKey}-${params.crossSellingRelation}-${textSlot}`,
       () => useSdk().plentysystems.getFacet(payload),
     );
 
     useHandleError(error.value ?? null);
-    state.value.data = data?.value?.data?.products ?? state.value.data;
+
+    const products = data?.value?.data?.products ?? [];
+    state.value.data = await applyPlentyTextSlotForLocale(products, pwaLocale);
     state.value.loading = false;
     return state.value.data;
   };

@@ -2,7 +2,7 @@ import type { Block } from '@plentymarkets/shop-api';
 import type { Ref } from 'vue';
 
 export type FooterProps = {
-  content?: FooterSettings;
+  content?: FooterContent | FooterSettings;
 };
 
 export interface FooterSwitchDefinition {

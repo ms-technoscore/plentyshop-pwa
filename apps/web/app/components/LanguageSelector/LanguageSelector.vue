@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
+import { hiddenUiLocales } from '~/utils/localePlentyMap';
 
 const { isOpen } = useLocalization();
 const viewport = useViewport();
@@ -51,7 +52,9 @@ const activeLanguages = (config.public.activeLanguages as string)
   .filter((lang) => (availableLocales as string[]).includes(lang))
   .map((lang: string) => lang.trim());
 const filteredLocaleCodes = computed(() =>
-  localeCodes.value.filter((localeCode) => activeLanguages.includes(localeCode)),
+  localeCodes.value.filter(
+    (localeCode) => activeLanguages.includes(localeCode) && !hiddenUiLocales.has(localeCode),
+  ),
 );
 
 filteredLocaleCodes.value.forEach((localeCode) => {

@@ -6,9 +6,16 @@
 import type { RecommendedProductsProps } from './types';
 
 const props = withDefaults(defineProps<RecommendedProductsProps>(), { cacheKey: '' });
+const { locale } = useI18n();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
 
-if (props.categoryId) {
-  fetchProductRecommended({ type: 'category', categoryId: String(props.categoryId) });
-}
+const loadRecommended = () => {
+  if (props.categoryId) {
+    fetchProductRecommended({ type: 'category', categoryId: String(props.categoryId) });
+  }
+};
+
+loadRecommended();
+
+watch(locale, loadRecommended);
 </script>

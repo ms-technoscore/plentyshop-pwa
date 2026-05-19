@@ -4,6 +4,8 @@ import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
+import { getPlentyApiLocale, getPlentyTextSlot } from '~/utils/localePlentyMap';
+import { mergePlentyTextSlot } from '~/utils/mergePlentyTextSlot';
 import productTemplateData from '~/composables/useCategoryTemplate/productTemplateData.json';
 
 const useProductTemplateData = () => productTemplateData as Block[];
@@ -79,8 +81,11 @@ export const useProduct: UseProductReturn = (slug) => {
       return state.value.data;
     }
 
+    const pwaLocale = $i18n.locale.value;
+    const plentyApiLocale = getPlentyApiLocale(pwaLocale);
+    const textSlot = getPlentyTextSlot(pwaLocale);
     const { data, error } = await useAsyncData(
-      `fetchProduct-${params.id}-${params.variationId}-${$i18n.locale.value}`,
+      `fetchProduct-${params.id}-${params.variationId}-${plentyApiLocale}-${textSlot}`,
       () => useSdk().plentysystems.getProduct(params),
     );
     useHandleError(error.value ?? null);
@@ -89,7 +94,13 @@ export const useProduct: UseProductReturn = (slug) => {
     setupBlocks(fetchedBlocks && fetchedBlocks.length > 0 ? fetchedBlocks : useProductTemplateData());
 
     properties.setProperties(data.value?.data.properties ?? []);
-    state.value.data = data.value?.data ?? ({} as Product);
+    let product = data.value?.data ?? ({} as Product);
+
+    if (textSlot !== plentyApiLocale && Object.keys(product).length > 0) {
+      product = await mergePlentyTextSlot(product, params, textSlot);
+    }
+
+    state.value.data = product;
     handlePreviewProduct(state, $i18n.locale.value, true);
     state.value.loading = false;
     return state.value.data;

@@ -5,6 +5,7 @@ import { nuxtI18nOptions } from './app/configuration/i18n.config';
 import { appConfiguration } from './app/configuration/app.config';
 import { paths } from './app/utils/paths';
 import { resolve } from 'pathe';
+import { plentyLocaleSdkPlugin } from './build/vite-plugin-plenty-locale';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -25,6 +26,7 @@ export default defineNuxtConfig({
     dirs: ['~/composables', '~/composables/**', '~/utils/**'],
   },
   vite: {
+    plugins: [plentyLocaleSdkPlugin(__dirname)],
     server: {
       fs: {
         allow: ['../../..'], // relative to the current nuxt.config.ts

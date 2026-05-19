@@ -81,3 +81,24 @@ apple-pay-button {
     vertical-align: middle;
   }
 }
+
+body.locale-ar {
+  font-family: 'Noto Sans Arabic', system-ui, sans-serif;
+}
+
+/* Arabic product page: mirror default layout — text left, gallery right */
+@media (min-width: 1024px) {
+  .product-page-layout--ar.grid-areas-product-page {
+    grid-template-areas: 'right left-top' 'right left-bottom';
+    grid-template-columns: auto minmax(56%, 500px);
+  }
+}
+
+.product-page-layout--ar [data-testid='purchase-card'] {
+  direction: rtl;
+  text-align: right;
+
+  .flex.justify-between {
+    flex-direction: row-reverse;
+  }
+}

@@ -56,7 +56,7 @@
               {{ col.title }}
             </h3>
 
-            <ul v-if="col.title !== 'Im Shop' && col.links && col.links.length > 0" class="flex flex-col gap-2 mt-2">
+            <ul v-if="!isShopColumn(col.title) && col.links && col.links.length > 0" class="flex flex-col gap-2 mt-2">
               <li v-for="(link, i) in col.links" :key="i">
                 <NuxtLink 
                   :to="isExternal(link.url) ? link.url : localePath(link.url)" 
@@ -70,7 +70,7 @@
               </li>
             </ul>
 
-            <div v-else-if="col.title === 'Im Shop'" class="flex flex-col gap-3 mt-2">
+            <div v-else-if="isShopColumn(col.title)" class="flex flex-col gap-3 mt-2">
               <div v-for="node in footerCategories" :key="node.id" class="w-full">
                 
                 <details 
@@ -140,8 +140,10 @@
 <script setup lang="ts">
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import type { FooterProps, FooterContent } from './types';
+import { isFooterShopColumn as isShopColumn } from '~/configuration/footerContent';
 
 const props = defineProps<FooterProps>();
+const { locale } = useI18n();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
 
@@ -165,7 +167,7 @@ const sortTreeAlphabetically = (nodes: any[]): any[] => {
   const sortedRoot = [...nodes].sort((a, b) => {
     const nameA = categoryTreeGetters.getName(a) || '';
     const nameB = categoryTreeGetters.getName(b) || '';
-    return nameA.localeCompare(nameB, 'de');
+    return nameA.localeCompare(nameB, locale.value);
   });
 
   // 2. Sort only their direct children (Prevents infinite loops!)
@@ -175,7 +177,7 @@ const sortTreeAlphabetically = (nodes: any[]): any[] => {
       sortedChildren = [...node.children].sort((a, b) => {
         const nameA = categoryTreeGetters.getName(a) || '';
         const nameB = categoryTreeGetters.getName(b) || '';
-        return nameA.localeCompare(nameB, 'de');
+        return nameA.localeCompare(nameB, locale.value);
       });
     }
     
