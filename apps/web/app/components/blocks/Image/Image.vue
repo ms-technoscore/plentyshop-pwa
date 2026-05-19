@@ -49,7 +49,7 @@
         :data-testid="'image-button-' + (meta?.uuid ?? '')"
         v-bind="isExternalLink(props.content.button.link) ? { target: '_blank', rel: 'noopener' } : {}"
       >
-        {{ props.content.button.label }}
+        {{ localizedButtonLabel }}
       </UiButton>
     </div>
   </div>
@@ -57,10 +57,12 @@
 
 <script setup lang="ts">
 import type { ImageProps, ImageDimensions } from './types';
+import { localizeEditorButtonLabel } from '~/utils/localizeEditorButtonLabel';
 
 const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
+const { t, te, locale } = useI18n();
 const { getBlockDepth } = useBlockManager();
 
 const props = defineProps<ImageProps>();
@@ -90,6 +92,16 @@ const linkTag = computed(() => (linkTarget.value ? NuxtLink : 'div'));
 const ariaLabel = computed(() => props.content?.image?.alt || 'Image link');
 
 const isExternalLink = (link: string | undefined) => !!link && /^(https?:)?\/\//.test(link);
+
+const localizedButtonLabel = computed(() =>
+  localizeEditorButtonLabel(
+    locale.value,
+    props.content?.button?.label ?? '',
+    props.content?.button?.link,
+    t,
+    te,
+  ),
+);
 
 const depth = getBlockDepth(props.meta.uuid);
 

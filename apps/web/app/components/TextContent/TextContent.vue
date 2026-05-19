@@ -26,18 +26,24 @@
       data-testid="text-button"
       class="mt-3 px-4 py-2"
     >
-      {{ button?.label }}
+      {{ localizedButtonLabel }}
     </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { TextContentProps } from '~/components/TextContent/types';
+import { localizeEditorButtonLabel } from '~/utils/localizeEditorButtonLabel';
 
 const props = defineProps<TextContentProps>();
 
 const localePath = useLocalePath();
+const { t, te, locale } = useI18n();
 const NuxtLink = resolveComponent('NuxtLink');
+
+const localizedButtonLabel = computed(() =>
+  localizeEditorButtonLabel(locale.value, props.button?.label ?? '', props.button?.link, t, te),
+);
 
 const textAlignmentClass = computed(() => {
   switch (props.text?.textAlignment) {

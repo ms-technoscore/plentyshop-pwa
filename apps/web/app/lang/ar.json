@@ -707,12 +707,12 @@
   "homepage": {
     "background": "New Wireless Pro headphones with sleek design and modern features",
     "banner": {
-      "ariaLabelNextSlide": "Next slide",
-      "ariaLabelPreviousSlide": "Previous slide",
-      "ariaLabelSlideControls": "Slide controls",
-      "ariaLabelSlidePosition": "Slide {current} of {total}",
-      "ariaRoleDescriptionCarousel": "Carousel",
-      "ariaRoleDescriptionSlide": "Slide",
+      "ariaLabelNextSlide": "الشريحة التالية",
+      "ariaLabelPreviousSlide": "الشريحة السابقة",
+      "ariaLabelSlideControls": "عناصر التحكم في الشرائح",
+      "ariaLabelSlidePosition": "الشريحة {current} من {total}",
+      "ariaRoleDescriptionCarousel": "عرض دوّار",
+      "ariaRoleDescriptionSlide": "شريحة",
       "moto1": "Feel the music",
       "moto2": "New Wireless Pro",
       "moto3": "Spatial audio. Adjustable ear cups. On-device controls. All-day battery.",
@@ -765,9 +765,26 @@
   },
   "homeSearch": {
     "badge": "ابحث",
-    "description": "عما تبحث عنه! أدخل رقم الطراز أو الموديل أو الشركة المصنعة",
+    "description": "ما الذي تبحث عنه! أدخل رقم الطراز أو الموديل أو الشركة المصنعة",
     "placeholder": "كلمة البحث...",
-    "submit": "ابدأ!"
+    "submit": "ابدأ!",
+    "bottomBtn": "تقنية المستودعات >"
+  },
+  "editorButtons": {
+    "lagertechnik": "تقنية المستودعات",
+    "gastronomie": "المطاعم والضيافة",
+    "labor-medizintechnik": "تقنية المختبرات والطب",
+    "maschinen-anlagen": "الآلات والمعدات",
+    "paternoster": "باترنوستر",
+    "elektronik": "الإلكترونيات",
+    "gastrotechnik": "تقنية المطاعم",
+    "automation-antrieb-steuerung": "الأتمتة والمحركات والتحكم",
+    "regale": "الرفوف",
+    "pumpen-rohrleitungsbau": "المضخات وخطوط الأنابيب",
+    "auto-motorrad-zubehoer": "السيارات والدراجات والملحقات",
+    "tueren-fenster-zubehoer": "الأبواب والنوافذ والملحقات",
+    "transport-logistik": "النقل واللوجستيات",
+    "sensoren-regler": "المستشعرات والمنظمات"
   },
   "lang": {
     "ar": "العربية",

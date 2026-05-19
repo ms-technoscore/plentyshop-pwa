@@ -766,7 +766,8 @@
     "badge": "Finden",
     "description": "was Du suchst! Einfach Typnummer, Modell, oder Hersteller eingeben",
     "placeholder": "Suchbegriff...",
-    "submit": "und los!"
+    "submit": "und los!",
+    "bottomBtn": "LAGERTECHNIK >"
   },
   "lang": {
     "bg": "Bulgarisch",

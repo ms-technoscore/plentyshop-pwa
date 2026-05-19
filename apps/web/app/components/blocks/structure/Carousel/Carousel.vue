@@ -12,7 +12,15 @@
             <div class="bg-black text-white font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full mr-2 md:mr-3 text-sm md:text-lg flex-shrink-0">
               {{ overlayConfig.badgeText }}
             </div>
-            <span class="text-black font-medium text-sm md:text-xl text-left leading-snug md:leading-tight" v-html="overlayConfig.description" />
+            <span
+              v-if="overlayConfig.usePlainDescription"
+              class="text-black font-medium text-sm md:text-xl text-start leading-snug md:leading-tight"
+            >{{ overlayConfig.description }}</span>
+            <span
+              v-else
+              class="text-black font-medium text-sm md:text-xl text-start leading-snug md:leading-tight"
+              v-html="overlayConfig.description"
+            />
           </div>
 
           <div class="relative w-full mt-2 md:mt-0">
@@ -32,6 +40,15 @@
                 {{ overlayConfig.searchBtnText }}
               </button>
             </form>
+
+            <NuxtLink
+              v-if="overlayConfig.showBottomBtn && overlayConfig.bottomBtnText"
+              :to="localePath(overlayConfig.bottomBtnLink)"
+              class="inline-block mt-3 px-4 py-2 font-bold text-black bg-white border border-gray-400 rounded hover:bg-gray-50 transition-colors text-sm md:text-base"
+            >
+              {{ overlayConfig.bottomBtnText }}
+            </NuxtLink>
+
 <div 
   v-if="showResults && searchResults.length > 0" 
   class="absolute top-full left-0 w-full bg-white border border-gray-300 rounded-b-lg shadow-xl z-[40] overflow-hidden text-left"
@@ -148,28 +165,40 @@ import type { CarouselStructureProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import { ref, computed, watch, nextTick } from 'vue';
 import { productGetters } from '@plentymarkets/shop-api';
+import { localizeEditorButtonLabel } from '~/utils/localizeEditorButtonLabel';
 
 // --- 1. Import useSearch (if not auto-imported) ---
 // import { useSearch } from '~/composables/useSearch';
 
-const { t } = useI18n();
+const { t, te, locale } = useI18n();
 const { activeSlideIndex, setIndex } = useCarousel();
 const { content, index, configuration, meta } = defineProps<CarouselStructureProps>();
 const isInternalChange = ref(false);
 
 // --- DYNAMIC SEARCH CONFIGURATION ---
+/** Shop-editor overlay defaults are German; use locale files for other storefront languages. */
+const useLocaleHomeSearchText = computed(() => locale.value !== 'de');
+
 const overlayConfig = computed(() => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const custom = (configuration as any).overlay || {};
+  const fromI18n = useLocaleHomeSearchText.value;
+
+  const bottomBtnLink = custom.bottomBtnLink || '/lagertechnik';
+  const cmsBottomLabel = custom.bottomBtnText || t('homeSearch.bottomBtn');
+
   return {
-    badgeText: custom.badgeText || t('homeSearch.badge'),
-    description: custom.description || t('homeSearch.description'),
-    placeholder: custom.placeholder || t('homeSearch.placeholder'),
-    searchBtnText: custom.searchBtnText || t('homeSearch.submit'),
+    badgeText: fromI18n ? t('homeSearch.badge') : custom.badgeText || t('homeSearch.badge'),
+    description: fromI18n ? t('homeSearch.description') : custom.description || t('homeSearch.description'),
+    usePlainDescription: fromI18n,
+    placeholder: fromI18n ? t('homeSearch.placeholder') : custom.placeholder || t('homeSearch.placeholder'),
+    searchBtnText: fromI18n ? t('homeSearch.submit') : custom.searchBtnText || t('homeSearch.submit'),
     bgColor: custom.bgColor || '#eadd87',
     showBottomBtn: custom.showBottomBtn !== false,
-    bottomBtnText: custom.bottomBtnText || 'LAGERTECHNIK >',
-    bottomBtnLink: custom.bottomBtnLink || '/lagertechnik'
+    bottomBtnText: fromI18n
+      ? localizeEditorButtonLabel(locale.value, cmsBottomLabel, bottomBtnLink, t, te)
+      : cmsBottomLabel,
+    bottomBtnLink,
   };
 });
 
@@ -256,7 +285,7 @@ const goToProduct = (product: any) => {
 const handleSearch = () => {
   if (searchQuery.value.trim().length > 0) {
     showResults.value = false;
-    window.location.href = `/search?term=${searchQuery.value}`;
+    router.push(localePath({ path: '/search', query: { term: searchQuery.value } }));
   }
 };
 // ------------------------------------

@@ -5,7 +5,7 @@
         v-model="searchQuery" 
         @input="onSearchInput"
         type="text" 
-        :placeholder="t('common.actions.search')" 
+        :placeholder="t('homeSearch.placeholder')" 
         class="flex-1 px-4 py-2 outline-none text-black rounded-l"
         autocomplete="off"
       />
@@ -140,7 +140,7 @@ const handleSearch = () => {
   if (searchQuery.value.trim().length > 0) {
     showResults.value = false;
     props.close?.();
-    window.location.href = `/search?term=${searchQuery.value}`;
+    router.push(localePath({ path: '/search', query: { term: searchQuery.value } }));
   }
 };
 </script>

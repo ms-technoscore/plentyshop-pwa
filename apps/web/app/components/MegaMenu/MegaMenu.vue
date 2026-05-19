@@ -54,7 +54,7 @@
               class="flex items-center gap-1 w-full"
               @click="close()"
             >
-              <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+              <span>{{ navButtonLabel(menuNode) }}</span>
             </NuxtLink>
 
             <SfIconChevronRight
@@ -86,7 +86,7 @@
                 class="mb-1 hover:bg-secondary-100 rounded font-medium typography-text-base min-[2500px]:text-[2rem] min-[2500px]:py-3 min-[2500px]:px-4 text-left"
                 @click="close()"
               >
-                {{ categoryTreeGetters.getName(node) }}
+                {{ navButtonLabel(node) }}
               </SfListItem>
             </template>
           </div>
@@ -139,7 +139,7 @@
               >
                 <div class="flex items-center">
                   <SfIconArrowBack class="text-neutral-500" />
-                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
+                  <p class="ml-5 font-medium">{{ navButtonLabel(activeMenu) }}</p>
                 </div>
               </SfListItem>
             </li>
@@ -153,7 +153,7 @@
                   @click="close()"
                 >
                   <div class="flex items-center">
-                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                    <p class="text-left">{{ navButtonLabel(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                   </div>
                 </SfListItem>
@@ -163,7 +163,7 @@
                   <div class="flex items-center w-100">
                     <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
                       <div class="flex items-center">
-                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                        <p class="text-left">{{ navButtonLabel(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                       </div>
                     </NuxtLink>
@@ -198,9 +198,11 @@ import { unrefElement } from '@vueuse/core';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
+import { localizeEditorButtonLabel } from '~/utils/localizeEditorButtonLabel';
 
 const props = defineProps<MegaMenuProps>();
 const NuxtLink = resolveComponent('NuxtLink');
+const { t, te, locale } = useI18n();
 
 const viewport = useViewport();
 const localePath = useLocalePath();
@@ -271,6 +273,12 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 
 const generateCategoryLink = (category: CategoryTreeItem) => {
   return buildCategoryMenuLink(category, categoryTree.value);
+};
+
+/** Shop-editor / API German nav labels → Arabic via editorButtons.* when locale is not `de`. */
+const navButtonLabel = (node: CategoryTreeItem) => {
+  const cmsLabel = categoryTreeGetters.getName(node) || '';
+  return localizeEditorButtonLabel(locale.value, cmsLabel, generateCategoryLink(node), t, te);
 };
 
 const openMenu = (menuType: number[]) => {

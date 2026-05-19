@@ -79,7 +79,7 @@
           size="lg"
           :data-testid="'banner-button-' + meta.uuid"
         >
-          {{ banner.button.label }}
+          {{ localizedButtonLabel }}
         </UiButton>
       </div>
     </div>
@@ -88,10 +88,12 @@
 
 <script setup lang="ts">
 import type { BannerProps } from './types';
+import { localizeEditorButtonLabel } from '~/utils/localizeEditorButtonLabel';
 
 const NuxtLink = resolveComponent('NuxtLink');
 
 const localePath = useLocalePath();
+const { t, te, locale } = useI18n();
 
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
@@ -121,4 +123,14 @@ const getImageUrl = () => {
 const bannerContentClass = computed(() => {
   return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%] mx-5';
 });
+
+const localizedButtonLabel = computed(() =>
+  localizeEditorButtonLabel(
+    locale.value,
+    banner.value.button?.label ?? '',
+    banner.value.button?.link,
+    t,
+    te,
+  ),
+);
 </script>
