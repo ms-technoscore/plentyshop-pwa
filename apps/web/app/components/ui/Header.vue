@@ -310,12 +310,12 @@ const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocali
 const { data: categoryTree } = useCategoryTree();
 const allowedCategoryIds = [895, 490, 1505, 208, 81, 217, 97];
 const filteredCategoryTree = computed(() => {
-  if (!categoryTree.value) return [];
+  const tree = categoryTree.value ?? [];
+  if (tree.length === 0) return [];
 
-  // Filter the main top-level categories
-  return categoryTree.value.filter((category: { id: number }) => {
-    return allowedCategoryIds.includes(category.id);
-  });
+  // Prefer configured top-level categories, but never hide the whole menu if IDs differ between envs
+  const filtered = tree.filter((category: { id: number }) => allowedCategoryIds.includes(category.id));
+  return filtered.length > 0 ? filtered : tree;
 });
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
@@ -374,15 +374,6 @@ const navigateToLogin = () => {
     openAuthentication();
   }
 };
-watch(
-  categoryTree,
-  (tree) => {
-    // eslint-disable-next-line no-console
-    console.log('Category List:', tree);
-  },
-  { immediate: true },
-);
-
 const isHomePage = computed(() => {
   const home = localePath(paths.home);
   return route.path === home || route.path === `${home}/`;

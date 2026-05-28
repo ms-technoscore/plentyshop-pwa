@@ -5,7 +5,7 @@
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
-      <div class="flex items-center w-full min-w-0">
+      <div class="flex items-center shrink-0 min-w-0">
         <UiButton
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
@@ -21,7 +21,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full max-w-[132px] md:max-w-[148px] lg:max-w-[180px] xl:max-w-[220px] items-center mr-auto text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-auto max-w-[132px] md:max-w-[148px] lg:max-w-[180px] xl:max-w-[220px] items-center text-white focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
