@@ -190,7 +190,9 @@
             class="text-[10px] lg:text-[11px] min-[1152px]:text-xs min-[1280px]:text-base min-[1367px]:text-base font-black transition-all duration-300 whitespace-nowrap pr-1 lg:pr-2 hover:text-blue-600 mt-0 lg:mt-1"
             style="color: #062633"
           >
+
             +49 2862 58795 0
+
           </a>
 
           <div
@@ -241,7 +243,9 @@
             class="text-[12px] sm:text-[14px] font-black transition-colors whitespace-nowrap hover:text-blue-600 pr-1"
             style="color: #062633"
           >
+
             +49 2862 58795 0
+            
           </a>
         </div>
       </div>
