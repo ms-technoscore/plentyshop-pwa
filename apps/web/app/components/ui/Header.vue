@@ -37,7 +37,7 @@
           class="active:scale-95 transition-transform duration-200 flex-shrink-0"
         >
           <img
-            src="/_nuxt-plenty/images/image010.png"
+            src="/_nuxt-plenty/images/ankaufsformular-logo.png"
             alt="Ankaufsformular"
             class="h-[40px] lg:h-[50px] min-[1152px]:h-[58px] min-[1280px]:h-[84px] min-[1367px]:h-[110px] max-w-[62px] lg:max-w-[78px] min-[1152px]:max-w-[90px] min-[1280px]:max-w-[128px] min-[1367px]:max-w-[172px] w-auto object-contain transition-all duration-300"
           />
@@ -191,7 +191,7 @@
             style="color: #062633"
           >
 
-            +49 2862 58795 
+            +49 2862 58795 0
 
           </a>
 
@@ -226,7 +226,7 @@
             class="active:scale-95 transition-transform duration-200 flex-shrink-0"
           >
             <img
-              src="/_nuxt-plenty/images/image010.png"
+              src="/_nuxt-plenty/images/ankaufsformular-logo.png"
               alt="Ankaufsformular"
               class="h-11 sm:h-14 w-auto object-contain drop-shadow-sm"
             />
@@ -244,7 +244,7 @@
             style="color: #062633"
           >
 
-            +49 2862 58795 
+            +49 2862 58795 0
             
           </a>
         </div>
