@@ -86,7 +86,7 @@ const globalFooterData: any = {
         { text: 'Datenschutzerklärung', url: '/datenschutz' },
         { text: 'Datenverarbeitung', url: '/datenverarbeitung' },
         { text: 'AGB', url: '/agb' },
-        { text: '↩ Vertrag widerrufen', url: '/widerruf' }
+        { text: 'Vertrag widerrufen', url: '/widerruf' }
       ]
     },
     {
