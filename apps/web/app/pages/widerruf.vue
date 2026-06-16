@@ -20,7 +20,7 @@
           <div class="return-address">
             <strong>Komplett Konzept Verwertungs GmbH</strong><br>
             Hauptlager<br>
-            Karl-Leisner-Str. 6<br>
+            Dunkerstraße 29<br>
             46325 Borken<br>
             Deutschland
           </div>
