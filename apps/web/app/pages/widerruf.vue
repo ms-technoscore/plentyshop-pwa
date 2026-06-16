@@ -1,36 +1,6 @@
 <template>
   <div class="widerruf-page">
 
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="eyebrow">Verbraucherrecht · Widerrufsbelehrung</div>
-        <h1>Vertrag widerrufen.</h1>
-        <p class="lead">
-          Sie haben Ihre Bestellung erhalten und möchten den Kaufvertrag widerrufen?
-          Hier können Sie Ihren Widerruf einfach und rechtssicher online erklären.
-        </p>
-
-        <div class="info-grid">
-          <div class="info-card">
-            <div class="info-num">14</div>
-            <div class="info-label">Tage Widerrufsfrist</div>
-            <div class="info-sub">ab Erhalt der Ware</div>
-          </div>
-          <div class="info-card">
-            <div class="info-num">0 €</div>
-            <div class="info-label">Bearbeitungsgebühr</div>
-            <div class="info-sub">kein Grund nötig</div>
-          </div>
-          <div class="info-card">
-            <div class="info-num">24h</div>
-            <div class="info-label">Bestätigung per Mail</div>
-            <div class="info-sub">automatisch nach Absenden</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ===== FORM ===== -->
     <section class="form-section">
       <div class="form-wrap">
