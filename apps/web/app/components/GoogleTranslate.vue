@@ -7,6 +7,25 @@
 <script setup lang="ts">
 import { useRoute } from '#imports';
 
+type GoogleTranslateElementOptions = {
+  pageLanguage: string;
+  autoDisplay: boolean;
+};
+
+type GoogleTranslateConstructor = new (
+  options: GoogleTranslateElementOptions,
+  elementId: string,
+) => unknown;
+
+type GoogleTranslateWindow = Window & typeof globalThis & {
+  googleTranslateElementInit?: () => void;
+  google?: typeof globalThis.google & {
+    translate?: {
+      TranslateElement: GoogleTranslateConstructor;
+    };
+  };
+};
+
 const route = useRoute();
 const { locale } = useI18n();
 
@@ -18,6 +37,8 @@ const GOOGLE_TRANSLATE_LOCALE_MAP: Record<string, string> = {
 const getGoogleTranslatePageLanguage = () => GOOGLE_TRANSLATE_LOCALE_MAP[locale.value] ?? locale.value;
 
 const loadGoogleTranslate = async () => {
+  const translateWindow = window as GoogleTranslateWindow;
+
   // 1. Wait for Vue to finish its page-transition DOM updates
   await nextTick();
 
@@ -34,13 +55,16 @@ const loadGoogleTranslate = async () => {
   document.querySelectorAll('.goog-te-menu-frame').forEach((el) => el.remove());
 
   // 4. NUKE: Delete the global translate object so Google is forced to start fresh
-  if (window.google && window.google.translate) {
-    delete window.google.translate;
+  if (translateWindow.google?.translate) {
+    delete translateWindow.google.translate;
   }
 
   // 5. Define the initialization callback
-  window.googleTranslateElementInit = () => {
-    new window.google.translate.TranslateElement(
+  translateWindow.googleTranslateElementInit = () => {
+    const TranslateElement = translateWindow.google?.translate?.TranslateElement;
+    if (!TranslateElement) return;
+
+    new TranslateElement(
       {
         pageLanguage: getGoogleTranslatePageLanguage(),
         autoDisplay: false,
