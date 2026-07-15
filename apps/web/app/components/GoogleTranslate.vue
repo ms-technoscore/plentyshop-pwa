@@ -9,6 +9,7 @@ import { useRoute } from '#imports';
 
 type GoogleTranslateElementOptions = {
   pageLanguage: string;
+  includedLanguages: string;
   autoDisplay: boolean;
 };
 
@@ -33,6 +34,22 @@ const GOOGLE_TRANSLATE_LOCALE_MAP: Record<string, string> = {
   cn: 'zh-CN',
   nn: 'ar',
 };
+
+/** Languages shown in the Google Translate dropdown. */
+const INCLUDED_LANGUAGES = [
+  'en', // English
+  'es', // Spanish
+  'pt', // Portuguese
+  'ru', // Russian
+  'nl', // Dutch
+  'pl', // Polish
+  'da', // Danish
+  'fr', // French
+  'it', // Italian
+  'cs', // Czech
+  'zh-CN', // Chinese
+  'ar', // Arabic
+].join(',');
 
 const getGoogleTranslatePageLanguage = () => GOOGLE_TRANSLATE_LOCALE_MAP[locale.value] ?? locale.value;
 
@@ -67,6 +84,7 @@ const loadGoogleTranslate = async () => {
     new TranslateElement(
       {
         pageLanguage: getGoogleTranslatePageLanguage(),
+        includedLanguages: INCLUDED_LANGUAGES,
         autoDisplay: false,
       },
       'google_translate_element'
