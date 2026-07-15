@@ -1,21 +1,26 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { ref } from 'vue';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 
-const { useHead, useRuntimeConfig, useState, useProductReviews, useProductReviewAverage } = vi.hoisted(() => {
-  return {
-    useHead: vi.fn(),
-    useRuntimeConfig: vi.fn(() => ({
-      public: {
-        domain: 'https://example.com',
-      },
-    })),
-    useState: vi.fn((key: string, init: () => { loading: boolean }) => ref(init())),
-    useProductReviews: vi.fn(),
-    useProductReviewAverage: vi.fn(),
-  };
-});
+const { useHead, useRuntimeConfig, useState, useProductReviews, useProductReviewAverage, useRoute, useLocalePath } =
+  vi.hoisted(() => {
+    return {
+      useHead: vi.fn(),
+      useRuntimeConfig: vi.fn(() => ({
+        public: {
+          domain: 'https://example.com',
+        },
+      })),
+      useState: vi.fn((key: string, init: () => { loading: boolean }) => ref(init())),
+      useProductReviews: vi.fn(),
+      useProductReviewAverage: vi.fn(),
+      useRoute: vi.fn(() => ({
+        path: '/kategorie/neu-eingetroffen/test-product_58645_61987',
+      })),
+      useLocalePath: vi.fn(() => (path: string) => path),
+    };
+  });
 
 vi.mock('@plentymarkets/shop-api', () => ({
   categoryTreeGetters: {
@@ -52,6 +57,12 @@ vi.mock('@plentymarkets/shop-api', () => ({
     getIsbn: vi.fn(() => ''),
     getMpn: vi.fn(() => ''),
     getPriceValidUntil: vi.fn(() => ''),
+    getForcedCanonicalUrl: vi.fn(() => ''),
+    getCanonical: vi.fn(() => ({})),
+    getCanonicalHref: vi.fn(() => ''),
+    getCanonicalAlternate: vi.fn(() => []),
+    getCanonicalAlternateHref: vi.fn((item: { href: string }) => item.href),
+    getCanonicalAlternateHreflang: vi.fn((item: { hreflang: string }) => item.hreflang),
   },
   reviewGetters: {
     getReviewAuthor: vi.fn(() => 'Jane Doe'),
@@ -65,6 +76,8 @@ mockNuxtImport('useRuntimeConfig', () => useRuntimeConfig);
 mockNuxtImport('useState', () => useState);
 mockNuxtImport('useProductReviews', () => useProductReviews);
 mockNuxtImport('useProductReviewAverage', () => useProductReviewAverage);
+mockNuxtImport('useRoute', () => useRoute);
+mockNuxtImport('useLocalePath', () => useLocalePath);
 
 import { useStructuredData } from '../useStructuredData';
 
@@ -84,6 +97,10 @@ describe('useStructuredData', () => {
     useProductReviews.mockReturnValue({ data: ref([{ id: 'review-1' }]) });
     useProductReviewAverage.mockReturnValue({ data: ref(undefined) });
     vi.mocked(productGetters.getTotalReviews).mockReturnValue(0);
+    vi.mocked(productSeoSettingsGetters.getForcedCanonicalUrl).mockReturnValue('');
+    vi.mocked(productSeoSettingsGetters.getCanonical).mockReturnValue({} as never);
+    vi.mocked(productSeoSettingsGetters.getCanonicalHref).mockReturnValue('');
+    vi.mocked(productSeoSettingsGetters.getCanonicalAlternate).mockReturnValue([]);
   });
 
   it('omits aggregateRating when there are no reviews and sets a return policy', () => {
@@ -128,6 +145,38 @@ describe('useStructuredData', () => {
       '@type': 'AggregateRating',
       ratingValue: 4.5,
       reviewCount: 3,
+    });
+  });
+
+  it('sets product canonical from the current page URL when SEO canonical is empty', () => {
+    const { setProductCanonicalMetaData } = useStructuredData();
+
+    setProductCanonicalMetaData({} as never);
+
+    expect(useHead).toHaveBeenCalledWith({
+      link: [
+        {
+          rel: 'canonical',
+          href: 'https://example.com/kategorie/neu-eingetroffen/test-product_58645_61987',
+        },
+      ],
+    });
+  });
+
+  it('prefers a forced canonical URL over the page URL', () => {
+    vi.mocked(productSeoSettingsGetters.getForcedCanonicalUrl).mockReturnValue('https://example.com/custom-canonical');
+
+    const { setProductCanonicalMetaData } = useStructuredData();
+
+    setProductCanonicalMetaData({} as never);
+
+    expect(useHead).toHaveBeenCalledWith({
+      link: [
+        {
+          rel: 'canonical',
+          href: 'https://example.com/custom-canonical',
+        },
+      ],
     });
   });
 });

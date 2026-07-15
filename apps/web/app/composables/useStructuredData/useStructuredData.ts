@@ -227,14 +227,27 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const setProductCanonicalMetaData: SetProductCanonicalMetaData = (product: Product) => {
     state.value.loading = true;
 
+    const route = useRoute();
+    const runtimeConfig = useRuntimeConfig();
+    const localePath = useLocalePath();
+
     const canonical = productSeoSettingsGetters.getCanonical(product);
+    const forcedCanonicalUrl = productSeoSettingsGetters.getForcedCanonicalUrl(product)?.trim();
+    const seoCanonicalHref = productSeoSettingsGetters.getCanonicalHref(canonical)?.trim();
 
-    if (canonical) {
-      useHead({
-        link: [{ rel: 'canonical', href: productSeoSettingsGetters.getCanonicalHref(canonical) }],
-      });
+    // Prefer a configured canonical; otherwise use the current product page URL.
+    // shop-api's getCanonical() returns {} when unset, which previously produced an empty href.
+    const canonicalHref =
+      forcedCanonicalUrl ||
+      seoCanonicalHref ||
+      `${runtimeConfig.public.domain}${localePath(route.path)}`;
 
-      const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
+    useHead({
+      link: [{ rel: 'canonical', href: canonicalHref }],
+    });
+
+    const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
+    if (canonicalAlternates.length > 0) {
       const alternateLocales = canonicalAlternates.map((item: CanonicalAlternate) => {
         return {
           rel: 'alternate',
@@ -247,6 +260,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         link: alternateLocales,
       });
     }
+
     state.value.loading = false;
   };
 
