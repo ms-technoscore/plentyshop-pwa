@@ -112,9 +112,12 @@ const blockHasGoogleMapsEmbed = (block: Block) => {
 
 const gridHasGoogleMapsEmbed = computed(() => content.some(blockHasGoogleMapsEmbed));
 
+// Map grids must share NarrowContainer alignment (max-w-screen-3xl + lg:px-10).
+// Without the max-width, Kontakt text sits near the viewport edge on wide screens
+// while breadcrumbs/header stay centered.
 const gridOuterPaddingClass = computed(() =>
   gridHasGoogleMapsEmbed.value
-    ? 'max-lg:px-0 md:px-6 lg:px-8 2xl:px-0'
+    ? 'max-w-screen-3xl mx-auto w-full px-4 md:px-6 lg:px-10 max-lg:!px-0'
     : 'px-4 md:px-6 lg:px-8 2xl:px-0',
 );
 
@@ -173,10 +176,12 @@ const gridInlineStyle = computed(() => {
   };
 
   if (gridHasGoogleMapsEmbed.value) {
-    style['--mg-ml'] = resolveHorizontalSpacing('marginLeft');
-    style['--mg-mr'] = resolveHorizontalSpacing('marginRight');
-    style['--mg-pl'] = resolveHorizontalSpacing('paddingLeft');
-    style['--mg-pr'] = resolveHorizontalSpacing('paddingRight');
+    // Horizontal inset comes from gridOuterPaddingClass (matches NarrowContainer).
+    // Zero CMS side margins/paddings so they do not double up or overflow the max-width.
+    style['--mg-ml'] = '0px';
+    style['--mg-mr'] = '0px';
+    style['--mg-pl'] = '0px';
+    style['--mg-pr'] = '0px';
     return style;
   }
 
