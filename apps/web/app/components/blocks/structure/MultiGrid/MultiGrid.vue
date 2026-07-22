@@ -112,12 +112,10 @@ const blockHasGoogleMapsEmbed = (block: Block) => {
 
 const gridHasGoogleMapsEmbed = computed(() => content.some(blockHasGoogleMapsEmbed));
 
-// Map grids must share NarrowContainer alignment (max-w-screen-3xl + lg:px-10).
-// Without the max-width, Kontakt text sits near the viewport edge on wide screens
-// while breadcrumbs/header stay centered.
+// Map grids must share NarrowContainer / MegaMenu gutters (px-4 md:px-5 lg:px-5).
 const gridOuterPaddingClass = computed(() =>
   gridHasGoogleMapsEmbed.value
-    ? 'max-w-screen-3xl mx-auto w-full px-4 md:px-6 lg:px-10 max-lg:!px-0'
+    ? 'max-w-screen-3xl mx-auto w-full px-4 md:px-5 lg:px-5 max-lg:!px-0'
     : 'px-4 md:px-6 lg:px-8 2xl:px-0',
 );
 

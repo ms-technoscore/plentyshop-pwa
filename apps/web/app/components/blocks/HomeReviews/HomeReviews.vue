@@ -1,6 +1,6 @@
 <template>
   <section class="w-full py-6 md:py-8">
-    <div class="mx-auto max-w-screen-3xl px-4 md:px-6 lg:px-10">
+    <div class="mx-auto max-w-screen-3xl px-4 md:px-5 lg:px-5">
       <div class="flex items-center justify-center">
         <h2 class="text-center text-xl font-semibold tracking-wide text-neutral-900 md:text-2xl">
           {{ sectionTitle }}

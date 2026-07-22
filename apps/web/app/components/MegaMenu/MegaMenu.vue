@@ -1,7 +1,7 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-[100]">
     <div
-      class="flex max-w-screen-3xl mx-auto flex-col px-[10px] py-0 md:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-2 md:py-4"
+      class="flex max-w-screen-3xl mx-auto flex-col px-4 py-0 md:px-5 lg:flex-row lg:items-center lg:justify-between lg:px-5 lg:py-2 md:py-4"
       :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
@@ -38,7 +38,7 @@
       class="bg-white border-b border-b-neutral-200 border-b-solid w-full"
     >
       <ul
-        class="flex flex-nowrap items-center justify-between xl:justify-center w-full max-w-screen-3xl mx-auto px-[10px] md:px-6 lg:px-10 py-1.5 lg:py-2 gap-x-[5px]"
+        class="flex flex-nowrap items-center justify-between xl:justify-center w-full max-w-screen-3xl mx-auto px-4 md:px-5 lg:px-5 py-1.5 lg:py-2 gap-x-[5px]"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {

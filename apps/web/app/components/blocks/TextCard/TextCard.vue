@@ -9,6 +9,8 @@
       'space-y-4',
       textAlignmentClass,
       containsGoogleMapsEmbed ? 'text-card--map-bleed max-lg:!pl-0 max-lg:!pr-0' : '',
+      // Match MegaMenu / NarrowContainer gutters when CMS leaves horizontal padding at 0
+      !containsGoogleMapsEmbed && !hasExplicitHorizontalPadding ? 'px-4 md:px-5 lg:px-5' : '',
     ]"
     :style="inlineStyle"
   >
@@ -23,6 +25,17 @@ import { hasGoogleMapsEmbed as htmlHasGoogleMapsEmbed } from '~/utils/parseGoogl
 const props = defineProps<TextCardProps>();
 
 const containsGoogleMapsEmbed = computed(() => htmlHasGoogleMapsEmbed(props.content.text?.htmlDescription));
+
+const toPositivePaddingPx = (value: unknown): number => {
+  if (value === undefined || value === null || value === '') return 0;
+  const numeric = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : 0;
+};
+
+const hasExplicitHorizontalPadding = computed(() => {
+  const layout = props.content.layout || {};
+  return toPositivePaddingPx(layout.paddingLeft) > 0 || toPositivePaddingPx(layout.paddingRight) > 0;
+});
 
 const textAlignmentClass = computed(() => {
   switch (props.content.text?.textAlignment) {
@@ -43,14 +56,18 @@ const inlineStyle = computed(() => {
     paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
   };
 
+  const paddingLeft = toPositivePaddingPx(layout.paddingLeft);
+  const paddingRight = toPositivePaddingPx(layout.paddingRight);
+
   if (containsGoogleMapsEmbed.value) {
-    style['--text-card-pl'] = layout.paddingLeft ? `${layout.paddingLeft}px` : '0px';
-    style['--text-card-pr'] = layout.paddingRight ? `${layout.paddingRight}px` : '0px';
+    style['--text-card-pl'] = paddingLeft ? `${paddingLeft}px` : '0px';
+    style['--text-card-pr'] = paddingRight ? `${paddingRight}px` : '0px';
     return style;
   }
 
-  style.paddingLeft = layout.paddingLeft ? `${layout.paddingLeft}px` : 0;
-  style.paddingRight = layout.paddingRight ? `${layout.paddingRight}px` : 0;
+  // Only inline CMS horizontal padding when set; otherwise Tailwind gutters above apply.
+  if (paddingLeft) style.paddingLeft = `${paddingLeft}px`;
+  if (paddingRight) style.paddingRight = `${paddingRight}px`;
 
   return style;
 });

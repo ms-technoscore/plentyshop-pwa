@@ -44,7 +44,7 @@ describe('TextCard - Layout Property', () => {
     const wrapper = mount(TextCard, { props: mockWithoutLayout });
     const textCard = wrapper.find('[data-testid="text-card"]');
     expect(textCard.attributes('style')).toContain('background-color: transparent');
-    expect(textCard.attributes('style')).toContain('padding: 0px;');
+    expect(textCard.classes()).toEqual(expect.arrayContaining(['px-4', 'md:px-5', 'lg:px-5']));
   });
 
   it('should apply mixed layout values correctly', () => {
@@ -65,6 +65,8 @@ describe('TextCard - Layout Property', () => {
     const wrapper = mount(TextCard, { props: mockWithMixedLayout });
     const textCard = wrapper.find('[data-testid="text-card"]');
     expect(textCard.attributes('style')).toContain('background-color: #e0e0e0');
-    expect(textCard.attributes('style')).toContain('padding: 5px 0px 0px 10px;');
+    expect(textCard.attributes('style')).toContain('padding-top: 5px');
+    expect(textCard.attributes('style')).toContain('padding-left: 10px');
+    expect(textCard.classes()).not.toContain('px-4');
   });
 });
