@@ -151,15 +151,20 @@ const gridContainerClasses = computed(() => {
   return classes;
 });
 
-const resolveHorizontalSpacing = (side: 'marginLeft' | 'marginRight' | 'paddingLeft' | 'paddingRight') => {
-  const useCompactHorizontalSpacing = isCategoryFilterLayout.value && viewport.isLessThan('lg');
+const toSpacingPx = (value: unknown): string => {
+  if (value === undefined || value === null || value === '') return '0px';
+  const numeric = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(numeric) ? `${numeric}px` : '0px';
+};
 
-  if (useCompactHorizontalSpacing) return '0px';
+const resolveHorizontalSpacing = (side: 'marginLeft' | 'marginRight' | 'paddingLeft' | 'paddingRight') => {
+  // Desktop CMS values (e.g. paddingLeft: 350) crush stacked columns on mobile/tablet.
+  // Outer grid wrapper already provides px-4/md:px-6 gutters below lg.
+  if (viewport.isLessThan('lg')) return '0px';
 
   if (shouldStretchBackground.value && side.startsWith('margin')) return 'auto';
 
-  const layoutValue = configuration.layout?.[side];
-  return layoutValue !== undefined ? `${layoutValue}px` : '0px';
+  return toSpacingPx(configuration.layout?.[side]);
 };
 
 // Horizontal spacing for map grids is applied via CSS (see .multi-grid--map-bleed) so mobile can override CMS inline margins.
@@ -350,8 +355,9 @@ const columns = computed<Block[][]>(() => {
 </script>
 
 <style scoped>
+/* Always drop CMS side margins/paddings below lg — desktop-only insets break stacked assets. */
 @media (max-width: 1023px) {
-  [data-testid='multi-grid-structure'].multi-grid--map-bleed {
+  [data-testid='multi-grid-structure'] {
     margin-left: 0 !important;
     margin-right: 0 !important;
     padding-left: 0 !important;

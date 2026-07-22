@@ -1,5 +1,9 @@
 <template>
-  <div class="relative w-full flex justify-center" :style="wrapperStyle" data-testid="image-block">
+  <div
+    class="relative w-full max-w-full min-w-0 flex justify-center overflow-hidden"
+    :style="wrapperStyle"
+    data-testid="image-block"
+  >
     <component
       :is="linkTag"
       v-if="finalImageUrl"
@@ -7,12 +11,12 @@
       :aria-label="ariaLabel"
       v-bind="isExternalLink(linkTarget) ? { target: '_blank', rel: 'noopener' } : {}"
       data-testid="image-link"
-      class="w-full h-full"
+      class="w-full h-full max-w-full min-w-0"
     >
       <NuxtImg
         :src="finalImageUrl"
         :alt="props.content.image.alt || 'Image'"
-        class="w-full h-full"
+        class="w-full h-full max-w-full"
         :class="[
           imageClasses,
           props.content.image.fillMode === 'fit' ? 'object-contain' : 'object-cover'
@@ -102,25 +106,40 @@ const isAutoHeight = computed(() => {
 
 const wrapperStyle = computed(() => {
   const userHeight = props.content?.image?.height;
+  const bp = viewport.breakpoint.value;
+  const isMobile = bp === 'xs' || bp === 'sm';
 
   if (depth > 0) {
-    const bp = viewport.breakpoint.value;
-    const isMobile = bp === 'xs' || bp === 'sm';
-    return { position: 'relative' as const, height: isMobile ? '14rem' : '24rem' };
+    // Nested portraits (e.g. Team cards): keep a stable frame that scales with the column.
+    return {
+      position: 'relative' as const,
+      height: isMobile ? '16rem' : '24rem',
+      width: '100%',
+    };
   }
 
   if (userHeight === 'auto') {
-    return { position: 'relative' as const, height: 'auto' };
+    return { position: 'relative' as const, height: 'auto', width: '100%' };
   }
 
   if (userHeight && userHeight.trim() !== '') {
     const finalHeight = /^\d+$/.test(userHeight) ? `${userHeight}px` : userHeight;
-    return { position: 'relative' as const, height: finalHeight };
+    // Cap fixed CMS heights on small screens so hero assets don't dominate the viewport.
+    if (isMobile && /^\d+$/.test(userHeight)) {
+      const px = Number(userHeight);
+      return {
+        position: 'relative' as const,
+        height: `${Math.min(px, 200)}px`,
+        width: '100%',
+      };
+    }
+    return { position: 'relative' as const, height: finalHeight, width: '100%' };
   }
 
   return {
     aspectRatio: '16 / 9',
     position: 'relative' as const,
+    width: '100%',
   };
 });
 
