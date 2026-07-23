@@ -37,6 +37,7 @@ const GOOGLE_TRANSLATE_LOCALE_MAP: Record<string, string> = {
 
 /** Languages shown in the Google Translate dropdown. */
 const INCLUDED_LANGUAGES = [
+  'de', // German
   'en', // English
   'es', // Spanish
   'pt', // Portuguese

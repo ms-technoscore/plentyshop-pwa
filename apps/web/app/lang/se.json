@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "På den här sidan finns en Google Maps-karta inbäddad. När kartan laddas upprättas en anslutning till Googles servrar. Därvid kan personuppgifter, särskilt din IP-adress samt information om din webbläsare och enhet, överföras till Google och behandlas där.",
+      "ctaBefore": "Genom att klicka på",
+      "loadButton": "Ladda karta",
+      "ctaAfter": "samtycker du till att dina uppgifter överförs till Google."
+    }
+  }
+}

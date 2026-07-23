@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Trang này có nhúng bản đồ Google Maps. Khi tải bản đồ, kết nối tới máy chủ của Google sẽ được thiết lập. Khi đó, dữ liệu cá nhân, đặc biệt là địa chỉ IP cũng như thông tin về trình duyệt và thiết bị của bạn, có thể được truyền tới Google và được xử lý tại đó.",
+      "ctaBefore": "Bằng cách nhấp vào",
+      "loadButton": "Tải bản đồ",
+      "ctaAfter": "bạn đồng ý việc chuyển dữ liệu của mình cho Google."
+    }
+  }
+}

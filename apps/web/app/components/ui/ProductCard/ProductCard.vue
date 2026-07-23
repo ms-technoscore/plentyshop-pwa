@@ -121,6 +121,14 @@
               {{ format(crossedPrice) }}
             </span>
           </div>
+          <p
+            v-if="showSecondaryNetPrice"
+            class="typography-text-xs text-neutral-600 -mt-1 pb-2"
+            data-testid="product-card-net-price"
+          >
+            <span class="font-medium">{{ formattedSecondaryNetPrice }}</span>
+            <span class="ml-1 text-neutral-500">({{ t('common.labels.netPrice') }})</span>
+          </p>
         </template>
         <template v-if="key === 'addToCart' && configuration?.fields?.addToCart">
           <UiButton
@@ -163,6 +171,7 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
+import { getProductUnitPriceNet, shouldShowProductNetPrice } from '~/utils/product/getProductNetPrice';
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({
@@ -215,6 +224,12 @@ const manufacturer = computed(() => productGetters.getManufacturer(product.value
 const shortDescription = computed(() => productGetters.getShortDescription(product.value) || '');
 const canAddFromCategory = computed(() => productGetters.canBeAddedToCartFromCategoryPage(product.value));
 const showFromText = computed(() => productGetters.showFromText(product.value));
+
+const showSecondaryNetPrice = computed(() => shouldShowProductNetPrice(product.value, 1));
+const formattedSecondaryNetPrice = computed(() => {
+  const netPrice = getProductUnitPriceNet(product.value, 1);
+  return netPrice === null ? '' : format(netPrice);
+});
 
 const cover = computed(() => productGetters.getCoverImage(product.value));
 const secondCover = computed(() => productGetters.getSecondCoverImage(product.value));

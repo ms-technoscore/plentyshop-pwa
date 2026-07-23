@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "本页嵌入了 Google Maps 地图。加载地图时会连接 Google 服务器。在此过程中，个人数据（尤其是您的 IP 地址以及浏览器和设备信息）可能会被传输至 Google 并由其处理。",
+      "ctaBefore": "点击",
+      "loadButton": "加载地图",
+      "ctaAfter": "即表示您同意将数据传输给 Google。"
+    }
+  }
+}

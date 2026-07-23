@@ -69,4 +69,30 @@ describe('useProductPrice', () => {
 
     expect(crossedPrice.value).toBe(120);
   });
+
+  it('should prefer VAT-inclusive price when storefront prices are net', () => {
+    const defaultPrice = ProductPriceFixture.prices!.default!;
+    const netStorefrontProduct = {
+      ...ProductPriceFixture,
+      prices: {
+        ...ProductPriceFixture.prices,
+        specialOffer: { ...defaultPrice, unitPrice: { value: 0, formatted: 'EUR 0.00' } },
+        graduatedPrices: [],
+        default: {
+          ...defaultPrice,
+          isNet: true,
+          unitPrice: { value: 54.62, formatted: 'EUR 54.62' },
+          data: {
+            ...defaultPrice.data,
+            unitPrice: 65,
+            unitPriceNet: 54.62,
+          },
+        },
+      },
+    } as unknown as Product;
+
+    const { price } = useProductPrice(netStorefrontProduct);
+
+    expect(price.value).toBe(65);
+  });
 });

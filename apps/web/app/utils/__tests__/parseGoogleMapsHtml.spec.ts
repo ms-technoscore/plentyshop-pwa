@@ -27,4 +27,35 @@ describe('parseGoogleMapsHtml', () => {
       { type: 'map', embedUrl, previewUrl: preview, width: undefined, height: '400' },
     ]);
   });
+
+  it('replaces an isolated static google-maps-consent widget with a live map segment', async () => {
+    const { googleMapsKontaktEmbedUrl } = await import('~/configuration/googleMapsConsent.config');
+    const html = `
+      <div data-testid="google-maps-consent" class="google-maps-consent">
+        <button data-testid="google-maps-consent-button">Karte laden</button>
+      </div>
+    `;
+
+    expect(parseGoogleMapsHtml(html)).toEqual([
+      { type: 'map', embedUrl: googleMapsKontaktEmbedUrl, width: '600', height: '450' },
+    ]);
+  });
+
+  it('keeps full page DOM dumps as HTML so layout can be preserved and hydrated in place', () => {
+    const html = `
+      <div data-draggable="true">
+        <div data-testid="block-wrapper">
+          <h1>Contact</h1>
+          <div data-testid="multi-grid-column">
+            <div data-testid="text-content"><p>WhatsApp: +49 177</p></div>
+          </div>
+          <div data-testid="multi-grid-column">
+            <div data-testid="google-maps-consent"><button>Load map</button></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    expect(parseGoogleMapsHtml(html)).toEqual([{ type: 'html', content: html }]);
+  });
 });

@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Bu sayfada bir Google Maps haritası yer almaktadır. Harita yüklenirken Google sunucularına bir bağlantı kurulur. Bu sırada kişisel verileriniz, özellikle IP adresiniz ile tarayıcı ve cihaz bilgileriniz Google’a aktarılabilir ve orada işlenebilir.",
+      "ctaBefore": "Şuna tıklayarak",
+      "loadButton": "Haritayı yükle",
+      "ctaAfter": "verilerinizin Google’a aktarılmasına izin vermiş olursunuz."
+    }
+  }
+}

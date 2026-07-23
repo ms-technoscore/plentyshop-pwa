@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Šiame puslapyje įterptas „Google Maps“ žemėlapis. Įkeliant žemėlapį užmezgamas ryšys su „Google“ serveriais. Tokiu atveju asmens duomenys, ypač jūsų IP adresas bei informacija apie naršyklę ir įrenginį, gali būti perduoti „Google“ ir ten tvarkomi.",
+      "ctaBefore": "Spustelėję",
+      "loadButton": "Įkelti žemėlapį",
+      "ctaAfter": "sutinkate, kad jūsų duomenys būtų perduoti „Google“."
+    }
+  }
+}

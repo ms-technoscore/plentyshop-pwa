@@ -48,8 +48,7 @@
     <LazyCategoryEmptyState v-else />
     <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
       <span>{{ t('common.labels.asterisk') }}</span>
-      <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
-      <span v-else>{{ t('product.priceInclVAT') }}</span>
+      <span>{{ vatFootnoteLabel }}</span>
       <i18n-t keypath="shipping.excludedLabel" scope="global">
         <template #shipping>
           <SfLink
@@ -81,11 +80,13 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import { SfLink } from '@storefront-ui/vue';
 import type { ItemGridProps } from '~/components/blocks/ItemGrid/types';
+import { hasProductGrossUnitPrice } from '~/utils/product/getProductNetPrice';
 
 const { getFacetsFromURL } = useCategoryFilter();
 
 const viewport = useViewport();
 const localePath = useLocalePath();
+const { t } = useI18n();
 const { showNetPrices } = useCart();
 const { data: productsCatalog, productsPerPage } = useProducts();
 
@@ -98,6 +99,15 @@ const itemsPerPage = computed(() => Number(productsPerPage.value) || 0);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 const currentPage = computed(() => getFacetsFromURL().page ?? 1);
 const categoryId = computed(() => getFacetsFromURL().categoryUrlPath ?? null);
+
+const vatFootnoteLabel = computed(() => {
+  const listingShowsGross = products.value.some((product) => hasProductGrossUnitPrice(product));
+  if (listingShowsGross || !showNetPrices.value) {
+    return t('product.priceInclVAT');
+  }
+
+  return t('product.priceExclVAT');
+});
 
 const gridClasses = computed(() => {
   const extras = ['gap-4', 'md:gap-6', 'mb-10', 'md:mb-5'];

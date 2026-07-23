@@ -15,8 +15,7 @@
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
     <span>{{ t('common.labels.asterisk') }}</span>
-    <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
-    <span v-else>{{ t('product.priceInclVAT') }}</span>
+    <span>{{ vatFootnoteLabel }}</span>
     <i18n-t keypath="shipping.excludedLabel" scope="global">
       <template #shipping>
         <SfLink
@@ -35,10 +34,21 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import { SfScrollable, SfLink } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
+import { hasProductGrossUnitPrice } from '~/utils/product/getProductNetPrice';
 import { paths } from '~/utils/paths';
 
 const { showNetPrices } = useCart();
 const localePath = useLocalePath();
+const { t } = useI18n();
 
-defineProps<ProductSliderProps>();
+const props = defineProps<ProductSliderProps>();
+
+const vatFootnoteLabel = computed(() => {
+  const listingShowsGross = (props.items ?? []).some((product) => hasProductGrossUnitPrice(product));
+  if (listingShowsGross || !showNetPrices.value) {
+    return t('product.priceInclVAT');
+  }
+
+  return t('product.priceExclVAT');
+});
 </script>

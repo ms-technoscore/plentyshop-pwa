@@ -55,8 +55,7 @@
         <LazyCategoryEmptyState v-else />
         <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
           <span>{{ t('common.labels.asterisk') }}</span>
-          <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
-          <span v-else>{{ t('product.priceInclVAT') }}</span>
+          <span>{{ vatFootnoteLabel }}</span>
           <i18n-t keypath="shipping.excludedLabel" scope="global">
             <template #shipping>
               <SfLink
@@ -86,6 +85,7 @@
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure, SfLink } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { hasProductGrossUnitPrice } from '~/utils/product/getProductNetPrice';
 import { paths } from '~/utils/paths';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
@@ -93,8 +93,18 @@ const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<C
 const localePath = useLocalePath();
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
+const { t } = useI18n();
 
 const { showNetPrices } = useCart();
+
+const vatFootnoteLabel = computed(() => {
+  const listingShowsGross = products.some((product) => hasProductGrossUnitPrice(product));
+  if (listingShowsGross || !showNetPrices.value) {
+    return t('product.priceInclVAT');
+  }
+
+  return t('product.priceExclVAT');
+});
 
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();

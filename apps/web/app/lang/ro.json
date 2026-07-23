@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Această pagină include o hartă Google Maps. La încărcarea hărții se stabilește o conexiune cu serverele Google. În acest proces, datele personale, în special adresa dvs. IP și informații despre browser și dispozitiv, pot fi transmise către Google și prelucrate acolo.",
+      "ctaBefore": "Făcând clic pe",
+      "loadButton": "Încarcă harta",
+      "ctaAfter": "sunteți de acord cu transferul datelor dvs. către Google."
+    }
+  }
+}

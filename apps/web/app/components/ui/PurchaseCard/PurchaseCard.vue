@@ -18,7 +18,7 @@
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
-                <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+                <Price :price="displayPriceWithProperties" :crossed-price="displayCrossedPrice" />
                 <div
                   v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0 && showBundleComponents"
                   class="m-auto"
@@ -28,6 +28,14 @@
                   }}</UiTag>
                 </div>
               </div>
+              <p
+                v-if="showSecondaryNetPrice"
+                class="typography-text-sm text-neutral-600 -mt-1"
+                data-testid="product-net-price"
+              >
+                <span class="font-medium">{{ formattedSecondaryNetPrice }}</span>
+                <span class="ml-1 text-neutral-500">({{ t('common.labels.netPrice') }})</span>
+              </p>
               <LowestPrice :product="product" />
               <BasePrice
                 v-if="productGetters.showPricePerUnit(product)"
@@ -226,7 +234,7 @@
 
                 <div class="mt-4 typography-text-xs flex gap-1">
                   <span>{{ t('common.labels.asterisk') }}</span>
-                  <span>{{ showNetPrices ? t('product.priceExclVAT') : t('product.priceInclVAT') }}</span>
+                  <span>{{ vatFootnoteLabel }}</span>
                   <i18n-t keypath="shipping.excludedLabel" scope="global">
                     <template #shipping>
                       <SfLink
@@ -249,7 +257,7 @@
                   <PayPalPayLaterBanner
                     placement="product"
                     location="itemPage"
-                    :amount="priceWithProperties * quantitySelectorValue"
+                    :amount="displayPriceWithProperties * quantitySelectorValue"
                   />
                 </template>
               </div>
@@ -281,7 +289,7 @@
                 v-if="isWidgetReady"
                 :key="productGetters.getId(product)"
                 class="leasingo-calculator mt-4"
-                :data-object-price-netto="netPrice"
+                :data-object-price-netto="leasingNetPrice"
                 data-maturity="48"
                 data-finance-product="1"
                 data-object-condition="1"
@@ -323,6 +331,11 @@ import { SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storef
 import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
+import {
+  getProductUnitPriceGross,
+  getProductUnitPriceNet,
+  shouldShowProductNetPrice,
+} from '~/utils/product/getProductNetPrice';
 import { nextTick } from 'vue';
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
@@ -391,6 +404,7 @@ const { showNetPrices } = useCart();
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
+const { format } = usePriceFormatter();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
 const {
   validateAllFields: validateAllFieldsAttributes,
@@ -436,6 +450,58 @@ const priceWithProperties = computed(
       productGetters.getPrice(props?.product) ||
       0) + getPropertiesPrice(props?.product),
 );
+
+const netPriceWithProperties = computed(() => {
+  const unitPriceNet = getProductUnitPriceNet(props.product, quantitySelectorValue.value);
+  if (unitPriceNet === null) {
+    return null;
+  }
+
+  return unitPriceNet + getPropertiesPrice(props.product);
+});
+
+const showSecondaryNetPrice = computed(
+  () => shouldShowProductNetPrice(props.product, quantitySelectorValue.value) && netPriceWithProperties.value !== null,
+);
+
+const formattedSecondaryNetPrice = computed(() => {
+  const netPrice = netPriceWithProperties.value;
+  return netPrice === null ? '' : format(netPrice);
+});
+
+const vatFootnoteLabel = computed(() => {
+  if (showSecondaryNetPrice.value) {
+    return t('product.priceInclVAT');
+  }
+
+  return showNetPrices.value ? t('product.priceExclVAT') : t('product.priceInclVAT');
+});
+
+const displayPriceWithProperties = computed(() => {
+  if (!showSecondaryNetPrice.value) {
+    return priceWithProperties.value;
+  }
+
+  const unitPriceGross = getProductUnitPriceGross(props.product, quantitySelectorValue.value);
+  if (unitPriceGross === null) {
+    return priceWithProperties.value;
+  }
+
+  return unitPriceGross + getPropertiesPrice(props.product);
+});
+
+const displayCrossedPrice = computed(() => {
+  if (!showSecondaryNetPrice.value) {
+    return crossedPrice.value;
+  }
+
+  const rrpGross = props.product.prices?.rrp?.data?.unitPrice;
+  if (typeof rrpGross === 'number' && Number.isFinite(rrpGross)) {
+    return rrpGross;
+  }
+
+  return crossedPrice.value;
+});
 
 const basePriceSingleValue = computed(
   () =>
@@ -543,7 +609,12 @@ const widgetMainCategory = ref('');
 const widgetSubCategory = ref('');
 const isWidgetReady = ref(false);
 
-const netPrice = computed(() => {
+const leasingNetPrice = computed(() => {
+  const apiNetPrice = netPriceWithProperties.value;
+  if (apiNetPrice !== null) {
+    return apiNetPrice.toFixed(2);
+  }
+
   const grossPrice = priceWithProperties.value;
   const vatRate = props.product?.prices?.default?.vat?.value || 19;
   return (grossPrice / (1 + vatRate / 100)).toFixed(2);
@@ -579,7 +650,7 @@ function getBreadcrumbCategories(): { main: string; sub: string } {
 }
 
 watch(
-  () => [productGetters.getId(props.product), netPrice.value],
+  () => [productGetters.getId(props.product), leasingNetPrice.value],
   async () => {
     // 1. RESET EVERYTHING
     if (typeof window === 'undefined') return;
@@ -590,7 +661,7 @@ watch(
     delete win.purchaseCardCalculator;
     delete win.lgoCalculatorCallbacks;
 
-    if (Number(netPrice.value) <= 2500) return;
+    if (Number(leasingNetPrice.value) <= 2500) return;
 
     await nextTick();
 

@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Cette page intègre une carte Google Maps. Le chargement de la carte établit une connexion aux serveurs de Google. Des données personnelles, notamment votre adresse IP ainsi que des informations sur votre navigateur et votre appareil, peuvent alors être transmises à Google et y être traitées.",
+      "ctaBefore": "En cliquant sur",
+      "loadButton": "Charger la carte",
+      "ctaAfter": "vous consentez au transfert de vos données à Google."
+    }
+  }
+}

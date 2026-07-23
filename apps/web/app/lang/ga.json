@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Tá léarscáil Google Maps leabaithe ar an leathanach seo. Nuair a luchtaítear an léarscáil, bunaítear nasc le freastalaithe Google. D’fhéadfadh sonraí pearsanta, go háirithe do sheoladh IP agus faisnéis faoi do bhrabhsálaí agus do ghléas, a bheith curtha chuig Google agus a phróiseáil ann.",
+      "ctaBefore": "Trí chliceáil ar",
+      "loadButton": "Luchtaigh an léarscáil",
+      "ctaAfter": "toilíonn tú le do shonraí a aistriú chuig Google."
+    }
+  }
+}

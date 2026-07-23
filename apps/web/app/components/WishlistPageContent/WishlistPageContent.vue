@@ -40,8 +40,7 @@
     </div>
     <div v-if="products.length > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
       <span>{{ t('common.labels.asterisk') }}</span>
-      <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
-      <span v-else>{{ t('product.priceInclVAT') }}</span>
+      <span>{{ vatFootnoteLabel }}</span>
       <i18n-t keypath="shipping.excludedLabel" scope="global">
         <template #shipping>
           <SfLink
@@ -61,13 +60,24 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfLink } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
+import { hasProductGrossUnitPrice } from '~/utils/product/getProductNetPrice';
 import { paths } from '~/utils/paths';
 
 const { showNetPrices } = useCart();
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 const { fetchWishlist, data: products, loading } = useWishlist();
+
+const vatFootnoteLabel = computed(() => {
+  const listingShowsGross = products.value.some((product) => hasProductGrossUnitPrice(product));
+  if (listingShowsGross || !showNetPrices.value) {
+    return t('product.priceInclVAT');
+  }
+
+  return t('product.priceExclVAT');
+});
 
 fetchWishlist();
 </script>

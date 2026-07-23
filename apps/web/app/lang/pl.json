@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Na tej stronie osadzona jest mapa Google Maps. Załadowanie mapy nawiązuje połączenie z serwerami Google. W związku z tym dane osobowe, w szczególności Twój adres IP oraz informacje o przeglądarce i urządzeniu, mogą zostać przekazane do Google i tam przetwarzane.",
+      "ctaBefore": "Klikając",
+      "loadButton": "Załaduj mapę",
+      "ctaAfter": "wyrażasz zgodę na przekazanie swoich danych do Google."
+    }
+  }
+}

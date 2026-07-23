@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Sellel lehel on manustatud Google Mapsi kaart. Kaardi laadimisel luuakse ühendus Google’i serveritega. Seejuures võidakse isikuandmed, eelkõige teie IP-aadress ning teave brauseri ja seadme kohta, edastada Google’ile ja seal töödelda.",
+      "ctaBefore": "Klõpsates",
+      "loadButton": "Laadi kaart",
+      "ctaAfter": "nõustute oma andmete edastamisega Google’ile."
+    }
+  }
+}

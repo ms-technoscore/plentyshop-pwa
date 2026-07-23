@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Op deze pagina is een Google Maps-kaart opgenomen. Bij het laden van de kaart wordt een verbinding met de servers van Google tot stand gebracht. Hierbij kunnen persoonsgegevens, met name uw IP-adres en informatie over uw browser en apparaat, aan Google worden doorgegeven en daar worden verwerkt.",
+      "ctaBefore": "Door te klikken op",
+      "loadButton": "Kaart laden",
+      "ctaAfter": "stemt u in met de gegevensoverdracht aan Google."
+    }
+  }
+}

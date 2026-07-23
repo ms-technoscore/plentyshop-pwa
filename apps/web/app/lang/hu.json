@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Ezen az oldalon Google Maps térkép van beágyazva. A térkép betöltésekor kapcsolat jön létre a Google szervereivel. Ennek során személyes adatok, különösen az IP-címe, valamint a böngészőjére és eszközére vonatkozó információk továbbíthatók a Google-nak, és ott feldolgozásra kerülhetnek.",
+      "ctaBefore": "A következőre kattintva",
+      "loadButton": "Térkép betöltése",
+      "ctaAfter": "hozzájárul adatai Google részére történő továbbításához."
+    }
+  }
+}

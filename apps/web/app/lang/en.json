@@ -437,6 +437,12 @@
     "info": {
       "heading": "Contact Information",
       "email": "Email"
+    },
+    "googleMaps": {
+      "message": "This page includes a Google Maps map. Loading the map establishes a connection to Google's servers. In doing so, personal data, in particular your IP address and information about your browser and device, may be transmitted to and processed by Google.",
+      "ctaBefore": "By clicking on",
+      "loadButton": "Load map",
+      "ctaAfter": "you consent to the transfer of your data to Google."
     }
   },
   "CookieBar": {

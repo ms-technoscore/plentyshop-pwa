@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Tälle sivulle on upotettu Google Maps -kartta. Kartan lataaminen muodostaa yhteyden Googlen palvelimiin. Tällöin henkilötietoja, erityisesti IP-osoitteesi sekä tietoja selaimestasi ja laitteestasi, voidaan siirtää Googlelle ja käsitellä siellä.",
+      "ctaBefore": "Napsauttamalla",
+      "loadButton": "Lataa kartta",
+      "ctaAfter": "suostut tietojesi siirtoon Googlelle."
+    }
+  }
+}

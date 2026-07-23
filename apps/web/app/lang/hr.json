@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Na ovoj je stranici ugrađena Google Maps karta. Učitavanjem karte uspostavlja se veza s Googleovim poslužiteljima. Pritom se osobni podaci, osobito vaša IP adresa te informacije o pregledniku i uređaju, mogu prenijeti Googleu i tamo obrađivati.",
+      "ctaBefore": "Klikom na",
+      "loadButton": "Učitaj kartu",
+      "ctaAfter": "pristajete na prijenos svojih podataka Googleu."
+    }
+  }
+}

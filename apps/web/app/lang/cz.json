@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Na této stránce je vložena mapa Google Maps. Načtením mapy se naváže spojení se servery Google. Přitom mohou být osobní údaje, zejména vaše IP adresa a informace o prohlížeči a zařízení, předány společnosti Google a tam zpracovány.",
+      "ctaBefore": "Kliknutím na",
+      "loadButton": "Načíst mapu",
+      "ctaAfter": "souhlasíte s předáním svých údajů společnosti Google."
+    }
+  }
+}

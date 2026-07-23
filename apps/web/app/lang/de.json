@@ -437,6 +437,12 @@
     "info": {
       "heading": "Kontaktinformationen",
       "email": "E-Mail"
+    },
+    "googleMaps": {
+      "message": "Auf dieser Seite ist eine Karte von Google Maps eingebunden. Beim Laden der Karte wird eine Verbindung zu Servern von Google hergestellt. Dabei können personenbezogene Daten, insbesondere Ihre IP-Adresse sowie Informationen zu Ihrem Browser und Gerät, an Google übertragen und dort verarbeitet werden.",
+      "ctaBefore": "Mit Klick auf",
+      "loadButton": "Karte laden",
+      "ctaAfter": "willigen Sie in die Datenübertragung an Google ein."
     }
   },
   "CookieBar": {

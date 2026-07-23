@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "På denne side er der indlejret et Google Maps-kort. Når kortet indlæses, oprettes der forbindelse til Googles servere. Personoplysninger, især din IP-adresse samt oplysninger om din browser og enhed, kan derved blive overført til Google og behandlet dér.",
+      "ctaBefore": "Ved at klikke på",
+      "loadButton": "Indlæs kort",
+      "ctaAfter": "accepterer du overførslen af dine data til Google."
+    }
+  }
+}

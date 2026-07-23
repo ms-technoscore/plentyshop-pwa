@@ -1,5 +1,14 @@
 <template>
-  <div class="google-maps-consent block w-full" data-testid="google-maps-consent">
+  <!--
+    translate="no" / notranslate: Google Translate mutates text nodes into <font> wrappers,
+    which desyncs Vue's virtual DOM and silently breaks @click handlers on this widget.
+  -->
+  <div
+    class="google-maps-consent notranslate block w-full"
+    translate="no"
+    data-testid="google-maps-consent"
+    data-live-map-root
+  >
     <div class="google-maps-consent__frame relative w-full overflow-hidden" :style="aspectRatioStyle">
       <template v-if="!hasConsented">
         <img
@@ -13,17 +22,23 @@
         />
         <div class="absolute inset-0 bg-black/70" aria-hidden="true" />
         <div
+          ref="overlayRef"
           class="google-maps-consent__overlay absolute inset-0 z-10 flex cursor-pointer items-center justify-center overflow-hidden p-4 sm:p-6"
+          role="button"
+          tabindex="0"
+          :aria-label="consentCopy.loadButton"
           @click="grantConsent"
+          @keydown.enter.prevent="grantConsent"
+          @keydown.space.prevent="grantConsent"
         >
           <div
             class="google-maps-consent__content flex w-full max-w-[92%] flex-col items-center text-center text-white sm:max-w-[540px]"
           >
             <p class="google-maps-consent__message m-0 w-full">
-              {{ googleMapsConsentCopy.message }}
+              {{ consentCopy.message }}
             </p>
             <p class="google-maps-consent__cta m-0 mt-4 flex w-full flex-wrap items-center justify-center gap-x-1.5 gap-y-2">
-              <span>Mit Klick auf</span>
+              <span>{{ consentCopy.ctaBefore }}</span>
               <UiButton
                 type="button"
                 variant="primary"
@@ -31,9 +46,9 @@
                 data-testid="google-maps-consent-button"
                 @click.stop="grantConsent"
               >
-                {{ googleMapsConsentCopy.loadButton }}
+                {{ consentCopy.loadButton }}
               </UiButton>
-              <span>willigen Sie in die Datenübertragung an Google ein.</span>
+              <span>{{ consentCopy.ctaAfter }}</span>
             </p>
           </div>
         </div>
@@ -57,7 +72,7 @@
 
 <script setup lang="ts">
 import {
-  googleMapsConsentCopy,
+  getGoogleMapsConsentCopy,
   getGoogleMapsPreviewUrl,
   resolveGoogleMapsEmbedUrl,
 } from '~/configuration/googleMapsConsent.config';
@@ -77,9 +92,35 @@ const props = withDefaults(
   },
 );
 
+const { locale } = useI18n();
+
 const STORAGE_KEY = 'google-maps-consent-granted';
 
 const hasConsented = ref(false);
+const overlayRef = ref<HTMLElement | null>(null);
+/** Language chosen in the Google Translate widget (overrides vue-i18n while set). */
+const googleTranslateLang = ref<string | null>(null);
+
+const readGoogleTranslateLang = (): string | null => {
+  if (!import.meta.client) return null;
+
+  const combo = document.querySelector<HTMLSelectElement>('.goog-te-combo');
+  const comboValue = combo?.value?.trim();
+  if (comboValue && comboValue.toLowerCase() !== 'select' && comboValue !== '') {
+    return comboValue;
+  }
+
+  const cookieMatch = document.cookie.match(/(?:^|; )googtrans=\/[^/;]+\/([^;]+)/);
+  return cookieMatch?.[1] ?? null;
+};
+
+const syncGoogleTranslateLang = () => {
+  googleTranslateLang.value = readGoogleTranslateLang();
+};
+
+const consentCopy = computed(() =>
+  getGoogleMapsConsentCopy(googleTranslateLang.value || locale.value),
+);
 
 const parseDimension = (value: string | undefined, fallback: number) => {
   const numeric = Number.parseFloat((value ?? '').replace(/px$/i, ''));
@@ -105,10 +146,51 @@ const grantConsent = () => {
   }
 };
 
+/** Capture-phase listener survives Google Translate DOM mutations that drop Vue @click. */
+const onOverlayClickCapture = (event: Event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  grantConsent();
+};
+
+let translatePollId: ReturnType<typeof setInterval> | undefined;
+let translateComboEl: HTMLSelectElement | null = null;
+
+const onTranslateComboChange = () => {
+  syncGoogleTranslateLang();
+};
+
 onMounted(() => {
   if (import.meta.client && sessionStorage.getItem(STORAGE_KEY) === '1') {
     hasConsented.value = true;
   }
+
+  overlayRef.value?.addEventListener('click', onOverlayClickCapture, true);
+
+  syncGoogleTranslateLang();
+
+  // Google injects `.goog-te-combo` asynchronously — poll briefly, then listen for changes.
+  let attempts = 0;
+  translatePollId = setInterval(() => {
+    attempts += 1;
+    syncGoogleTranslateLang();
+    const combo = document.querySelector<HTMLSelectElement>('.goog-te-combo');
+    if (combo && combo !== translateComboEl) {
+      translateComboEl?.removeEventListener('change', onTranslateComboChange);
+      translateComboEl = combo;
+      translateComboEl.addEventListener('change', onTranslateComboChange);
+    }
+    if (attempts >= 40) {
+      clearInterval(translatePollId);
+      translatePollId = undefined;
+    }
+  }, 250);
+});
+
+onBeforeUnmount(() => {
+  overlayRef.value?.removeEventListener('click', onOverlayClickCapture, true);
+  translateComboEl?.removeEventListener('change', onTranslateComboChange);
+  if (translatePollId) clearInterval(translatePollId);
 });
 </script>
 

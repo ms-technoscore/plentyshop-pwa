@@ -1,1 +1,10 @@
-{}
+{
+  "contact": {
+    "googleMaps": {
+      "message": "Šajā lapā ir iegulta Google Maps karte. Ielādējot karti, tiek izveidots savienojums ar Google serveriem. Tādējādi personas dati, jo īpaši jūsu IP adrese, kā arī informācija par pārlūkprogrammu un ierīci, var tikt nodoti Google un tur apstrādāti.",
+      "ctaBefore": "Noklikšķinot uz",
+      "loadButton": "Ielādēt karti",
+      "ctaAfter": "jūs piekrītat savu datu nodošanai Google."
+    }
+  }
+}
