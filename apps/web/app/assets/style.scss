@@ -17,7 +17,7 @@ body {
   --kk-mobile-sticky-bottom: calc(
     var(--kk-mobile-nav-h) + var(--kk-mobile-sticky-gap) + env(safe-area-inset-bottom, 0px)
   );
-  /* Exact space so copyright clears sticky, without a dead scroll zone below it */
+  /* Footer bg clearance so copyright sits above centered sticky + nav — no extra dead zone */
   --kk-mobile-footer-pad: calc(
     var(--kk-mobile-nav-h) + var(--kk-mobile-sticky-gap) + var(--kk-mobile-sticky-h) + 0.5rem +
       env(safe-area-inset-bottom, 0px)

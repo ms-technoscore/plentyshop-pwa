@@ -130,7 +130,7 @@
 
       <div 
         v-if="footerData.footnote" 
-        class="mt-12 pt-6 border-t border-white/20 text-center text-sm opacity-60 px-2 break-words"
+        class="mt-12 pt-6 border-t border-white/20 text-center text-sm opacity-60 px-4 break-words"
         v-html="footerData.footnote"
       />
     </div>
