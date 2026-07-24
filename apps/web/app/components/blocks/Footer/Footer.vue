@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="relative z-0 w-full py-10 max-lg:pb-[calc(2.5rem+3.5rem+env(safe-area-inset-bottom,0px))] transition-colors duration-300"
+    class="mobile-bottom-clearance relative z-0 w-full py-10 transition-colors duration-300"
     :style="{ backgroundColor: footerData.backgroundColor || '#333333', color: footerData.textColor || '#ffffff' }"
     data-testid="footer"
   >
@@ -130,7 +130,7 @@
 
       <div 
         v-if="footerData.footnote" 
-        class="mt-12 pt-6 border-t border-white/20 text-center text-sm opacity-60"
+        class="mt-12 pt-6 border-t border-white/20 text-center text-sm opacity-60 px-2 break-words"
         v-html="footerData.footnote"
       />
     </div>

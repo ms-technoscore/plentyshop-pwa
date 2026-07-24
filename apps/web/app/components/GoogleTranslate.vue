@@ -36,7 +36,7 @@ const GOOGLE_TRANSLATE_LOCALE_MAP: Record<string, string> = {
 };
 
 /** Languages shown in the Google Translate dropdown. */
-const INCLUDED_LANGUAGES = [
+const INCLUDED_LANGUAGE_CODES = [
   'de', // German
   'en', // English
   'es', // Spanish
@@ -50,9 +50,54 @@ const INCLUDED_LANGUAGES = [
   'cs', // Czech
   'zh-CN', // Chinese
   'ar', // Arabic
-].join(',');
+] as const;
+
+const INCLUDED_LANGUAGES = INCLUDED_LANGUAGE_CODES.join(',');
+
+/**
+ * Labels used when we have to re-insert a language Google stripped from the
+ * dropdown. Google omits whatever matches `pageLanguage` (e.g. German when
+ * the shop locale is `de`).
+ */
+const LANGUAGE_LABELS: Record<string, string> = {
+  de: 'German',
+  en: 'English',
+  es: 'Spanish',
+  pt: 'Portuguese',
+  ru: 'Russian',
+  nl: 'Dutch',
+  pl: 'Polish',
+  da: 'Danish',
+  fr: 'French',
+  it: 'Italian',
+  cs: 'Czech',
+  'zh-CN': 'Chinese (Simplified)',
+  ar: 'Arabic',
+};
 
 const getGoogleTranslatePageLanguage = () => GOOGLE_TRANSLATE_LOCALE_MAP[locale.value] ?? locale.value;
+
+/**
+ * Google Translate removes the current `pageLanguage` from `.goog-te-combo`.
+ * Re-insert any missing included languages (notably German on the DE shop).
+ */
+const ensureIncludedLanguagesInDropdown = () => {
+  const select = document.querySelector<HTMLSelectElement>('.goog-te-combo');
+  if (!select) return;
+
+  const existing = new Set(Array.from(select.options).map((option) => option.value));
+
+  INCLUDED_LANGUAGE_CODES.forEach((lang, index) => {
+    if (existing.has(lang)) return;
+
+    const option = document.createElement('option');
+    option.value = lang;
+    option.textContent = LANGUAGE_LABELS[lang] ?? lang;
+    // Keep list order: placeholder at 0, then included languages in declared order.
+    select.add(option, select.options[index + 1] ?? null);
+    existing.add(lang);
+  });
+};
 
 const loadGoogleTranslate = async () => {
   const translateWindow = window as GoogleTranslateWindow;
@@ -90,6 +135,11 @@ const loadGoogleTranslate = async () => {
       },
       'google_translate_element'
     );
+
+    // Restore languages Google stripped (usually the current pageLanguage).
+    ensureIncludedLanguagesInDropdown();
+    // Combo can appear a tick later on some loads — retry once.
+    requestAnimationFrame(ensureIncludedLanguagesInDropdown);
   };
 
   // 6. Inject the brand new script

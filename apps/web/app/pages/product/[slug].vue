@@ -3,14 +3,14 @@
     <EditablePage v-if="config.enableProductEditing" :identifier="'0'" :type="'product'" prevent-blocks-request />
 
     <NarrowContainer v-else>
-      <div class="lg:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
-        <section class="grid-in-left-top lg:h-full xl:max-h-[700px]">
+      <div class="lg:grid gap-x-6 grid-areas-product-page grid-cols-product-page min-w-0 max-w-full">
+        <section class="grid-in-left-top lg:h-full xl:max-h-[700px] min-w-0">
           <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
-        <section class="mb-10 grid-in-right lg:mb-0">
+        <section class="mb-10 grid-in-right lg:mb-0 min-w-0">
           <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
         </section>
-        <section class="grid-in-left-bottom lg:mt-8">
+        <section class="grid-in-left-bottom lg:mt-8 min-w-0">
           <UiDivider class="mt-4 mb-2 lg:mt-8" />
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />

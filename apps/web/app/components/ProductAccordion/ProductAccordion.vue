@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="product-accordion">
+  <div data-testid="product-accordion" class="min-w-0 max-w-full">
     <UiAccordionItem
       v-if="productGetters.getDescription(product)?.length"
       v-model="productDetailsOpen"
@@ -10,7 +10,10 @@
           {{ t('product.details') }}
         </h2>
       </template>
-      <div class="no-preflight" v-html="productGetters.getDescription(product)" />
+      <div
+        class="no-preflight min-w-0 max-w-full overflow-x-hidden"
+        v-html="productGetters.getDescription(product)"
+      />
     </UiAccordionItem>
     <UiDivider v-if="productDetailsOpen && productGetters.getDescription(product)?.length" class="mb-2 mt-2" />
     <UiAccordionItem
@@ -23,7 +26,10 @@
           {{ t('common.labels.technicalData') }}
         </h2>
       </template>
-      <div class="no-preflight" v-html="productGetters.getTechnicalData(product)" />
+      <div
+        class="no-preflight min-w-0 max-w-full overflow-x-hidden"
+        v-html="productGetters.getTechnicalData(product)"
+      />
     </UiAccordionItem>
     <UiDivider v-if="technicalDataOpen && productGetters.getTechnicalData(product)?.length" class="mb-2 mt-2" />
   </div>

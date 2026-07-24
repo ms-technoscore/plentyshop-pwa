@@ -1,9 +1,9 @@
 <template>
   <div
-    class="sticky-contact fixed z-[90] flex w-max
-           bottom-[80px] left-1/2 -translate-x-1/2 flex-row justify-center gap-2 p-2 bg-white/95 backdrop-blur-md shadow-[0_5px_20px_rgba(0,0,0,0.12)] rounded-full
+    class="sticky-contact fixed z-[90] flex w-max max-w-[calc(100vw-1rem)]
+           left-1/2 -translate-x-1/2 flex-row justify-center gap-2 p-2 bg-white/95 backdrop-blur-md shadow-[0_5px_20px_rgba(0,0,0,0.12)] rounded-full
            sm:gap-3
-           md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-0 md:translate-x-0 md:flex-col md:gap-2 md:p-0 md:bg-transparent md:shadow-none md:backdrop-blur-none md:rounded-none
+           md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-0 md:translate-x-0 md:max-w-none md:flex-col md:gap-2 md:p-0 md:bg-transparent md:shadow-none md:backdrop-blur-none md:rounded-none
            lg:gap-2.5 xl:gap-3 min-[1367px]:gap-3.5"
   >
     <a
@@ -91,6 +91,16 @@
 </template>
 
 <style scoped>
+.sticky-contact {
+  bottom: var(--kk-mobile-sticky-bottom);
+}
+
+@media (min-width: 768px) {
+  .sticky-contact {
+    bottom: auto;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1536px) {
   .sticky-contact {
     top: 60%;

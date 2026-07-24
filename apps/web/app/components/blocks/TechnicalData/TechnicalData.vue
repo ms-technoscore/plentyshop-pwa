@@ -12,7 +12,12 @@
             {{ content.text.title }}
           </h2>
         </template>
-        <div v-if="text" data-testid="technical-data-innertext" class="no-preflight" v-html="text" />
+        <div
+          v-if="text"
+          data-testid="technical-data-innertext"
+          class="no-preflight min-w-0 max-w-full overflow-x-hidden"
+          v-html="text"
+        />
       </UiAccordionItem>
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
@@ -20,7 +25,7 @@
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
         {{ content.text.title }}
       </h2>
-      <div v-if="text" class="no-preflight" v-html="text" />
+      <div v-if="text" class="no-preflight min-w-0 max-w-full overflow-x-hidden" v-html="text" />
     </div>
   </div>
 </template>

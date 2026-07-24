@@ -262,22 +262,22 @@
                 </template>
               </div>
 
-              <div class="mt-6 mb-4 flex justify-center w-full">
+              <div class="mt-6 mb-4 flex justify-center w-full min-w-0">
                 <img 
                   src="/_nuxt-plenty/images/wider_version_opt.jpg" 
                   alt="Komplett Konzept" 
-                  class="w-auto object-contain rounded shadow-sm" 
+                  class="max-w-full w-auto h-auto object-contain rounded shadow-sm" 
                 />
               </div>
               
               <!-- Internationale Anfrage CTA -->
-              <div class="mt-4 flex items-center justify-between flex-wrap gap-3">
-                <p class="text-sm m-0 flex-1 min-w-[200px] text-red-600 font-semibold">
+              <div class="mt-4 flex items-center justify-between flex-wrap gap-3 min-w-0">
+                <p class="text-sm m-0 flex-1 min-w-0 text-red-600 font-semibold break-words">
                   Sie kommen aus dem Ausland und möchten trotzdem leasen oder finanzieren?
                 </p>
                 <NuxtLink
                   to="/leasing-finanzierung"
-                  class="inline-flex items-center gap-2 px-5 py-3 rounded font-bold text-sm whitespace-nowrap transition-colors hover:opacity-90 no-underline"
+                  class="inline-flex items-center gap-2 px-5 py-3 rounded font-bold text-sm whitespace-nowrap transition-colors hover:opacity-90 no-underline shrink-0"
                   style="background: #F5C00A; color: #152440;"
                 >
                   Europaweit anfragen
@@ -288,7 +288,7 @@
               <div
                 v-if="isWidgetReady"
                 :key="productGetters.getId(product)"
-                class="leasingo-calculator mt-4"
+                class="leasingo-calculator mt-4 min-w-0 max-w-full overflow-x-auto"
                 :data-object-price-netto="leasingNetPrice"
                 data-maturity="48"
                 data-finance-product="1"
@@ -336,6 +336,10 @@ import {
   getProductUnitPriceNet,
   shouldShowProductNetPrice,
 } from '~/utils/product/getProductNetPrice';
+import {
+  getLeasingoCategoryDataAttrs,
+  installLeasingoLocaleInterceptor,
+} from '~/utils/leasingo/locale';
 import { nextTick } from 'vue';
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
@@ -419,6 +423,7 @@ const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(props?.product);
 // const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const localePath = useLocalePath();
+const { locale } = useI18n();
 
 const inlineStyle = computed(() => {
   const layout = props?.configuration?.layout || ({} as PriceCardPadding);
@@ -620,37 +625,8 @@ const leasingNetPrice = computed(() => {
   return (grossPrice / (1 + vatRate / 100)).toFixed(2);
 });
 
-// Helper: Scrape breadcrumbs
-function getBreadcrumbCategories(): { main: string; sub: string } {
-  if (typeof document === 'undefined') return { main: '', sub: '' };
-
-  const containers = document.querySelectorAll('nav, ol, ul, .breadcrumbs');
-  let bestLinks: Element[] = [];
-
-  for (const container of Array.from(containers)) {
-    const links = Array.from(container.querySelectorAll('a'));
-    const firstText = links[0]?.textContent?.trim().toLowerCase() || '';
-    if (links.length >= 2 && (firstText === 'home' || firstText === 'startseite' || firstText === 'home page')) {
-      bestLinks = links;
-      break;
-    }
-  }
-
-  if (bestLinks.length === 0) {
-    const specificLinks = document.querySelectorAll('.breadcrumbs a, nav[aria-label="breadcrumbs"] a');
-    if (specificLinks.length > 0) bestLinks = Array.from(specificLinks);
-  }
-
-  const main = bestLinks[1]?.textContent?.trim() || '';
-  const sub = bestLinks[2]?.textContent?.trim() || '';
-
-  // eslint-disable-next-line no-console
-  console.log('Leasingo Debug - Final Data for Widget:', main, sub);
-  return { main, sub };
-}
-
 watch(
-  () => [productGetters.getId(props.product), leasingNetPrice.value],
+  () => [productGetters.getId(props.product), leasingNetPrice.value, locale.value],
   async () => {
     // 1. RESET EVERYTHING
     if (typeof window === 'undefined') return;
@@ -665,14 +641,12 @@ watch(
 
     await nextTick();
 
-    // 2. WAIT FOR BREADCRUMBS TO EXIST
+    // Match leasinGo taxonomy names to the active shop locale (bundle is DE-only by default).
     setTimeout(() => {
-      // Scrape data FIRST
-      const { main, sub } = getBreadcrumbCategories();
-
-      // Store in reactive variables
-      widgetMainCategory.value = main;
-      widgetSubCategory.value = sub;
+      installLeasingoLocaleInterceptor(locale.value);
+      const { category, subcategory } = getLeasingoCategoryDataAttrs(locale.value);
+      widgetMainCategory.value = category;
+      widgetSubCategory.value = subcategory;
 
       // 3. RENDER THE DIV (Now it has the correct attributes)
       isWidgetReady.value = true;

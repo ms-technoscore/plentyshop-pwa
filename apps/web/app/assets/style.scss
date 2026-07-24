@@ -1,6 +1,27 @@
+html {
+  overscroll-behavior-y: none;
+}
+
 body {
   min-width: 0 !important;
   position: static !important;
+  overscroll-behavior-y: none;
+}
+
+/* Shared mobile chrome sizes: bottom nav + sticky contact (must stay in sync). */
+:root {
+  --kk-mobile-nav-h: 3.5rem;
+  --kk-mobile-sticky-gap: 0.75rem;
+  /* p-2 + 40–44px icon buttons */
+  --kk-mobile-sticky-h: 3.75rem;
+  --kk-mobile-sticky-bottom: calc(
+    var(--kk-mobile-nav-h) + var(--kk-mobile-sticky-gap) + env(safe-area-inset-bottom, 0px)
+  );
+  /* Exact space so copyright clears sticky, without a dead scroll zone below it */
+  --kk-mobile-footer-pad: calc(
+    var(--kk-mobile-nav-h) + var(--kk-mobile-sticky-gap) + var(--kk-mobile-sticky-h) + 0.5rem +
+      env(safe-area-inset-bottom, 0px)
+  );
 }
 
 /* Google Translate injects hidden iframes that can force horizontal scroll on mobile */
@@ -17,10 +38,18 @@ iframe.skiptranslate {
   }
 }
 
-/* Category pages only: prevent horizontal page scroll without breaking in-component sliders */
+/* Prevent horizontal page scroll without breaking in-component sliders */
+.page-overflow-clip,
 .category-page-overflow-clip {
-  overflow-x: clip;
   max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior: none;
+}
+
+@media (max-width: 1023px) {
+  .mobile-bottom-clearance {
+    padding-bottom: var(--kk-mobile-footer-pad) !important;
+  }
 }
 .grid-areas-product-page {
   grid-template-areas: 'left-top right' 'left-bottom right';
@@ -64,8 +93,17 @@ apple-pay-button {
 }
 
 .no-preflight {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+
   :not(iframe) {
     all: revert;
+    // Re-apply after `all: revert` so long URLs/tokens wrap inside the layout.
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   h1 {
